@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour {
     public int maxHorizontalVelocity = 200;
     public int jumpHeight = 400;
 
+    public float crouchMultiplier = 0.5f; //Value height is multiplied by
+
     private Rigidbody2D myRigid;
     private BoxCollider2D myBox;
 
@@ -24,33 +26,61 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
         float horizontalMovement = movementSpeed * Input.GetAxis("Horizontal");
+        float verticalMovement = Input.GetAxis("Vertical");
+
         if((horizontalMovement > 0 && myRigid.velocity.x < maxHorizontalVelocity)
             || (horizontalMovement < 0 && myRigid.velocity.x > -maxHorizontalVelocity))
         {
+
             myRigid.AddForce(new Vector2(horizontalMovement * Time.deltaTime, 0));
+
         }
-        if (Input.GetAxisRaw("Vertical") > 0 && canJump && jumpCounter < maxJumps)
+
+        if (verticalMovement >= 0)
         {
-            myRigid.AddForce(new Vector2(0, jumpHeight));
-            jumpCounter++;
+
+            if (isCrouching)
+            {
+
+                isCrouching = false;
+                myBox.size = new Vector2(myBox.size.x, myBox.size.y / crouchMultiplier);
+
+                myBox.offset = new Vector2(0, 0);
+
+            }
+
+            if (verticalMovement > 0 && canJump && jumpCounter < maxJumps)
+            {
+                myRigid.AddForce(new Vector2(0, jumpHeight));
+                jumpCounter++;
+            }
+
         }
-        else if (Input.GetAxisRaw("Vertical") < 0)
+        else if (verticalMovement < 0)
         {
-            //TODO: add crouching functionality
+            
             if (!isCrouching)
             {
 
-                
+                isCrouching = true;
+                float offset = myBox.size.y * (1.0f - crouchMultiplier) / 2.0f; //How much the center is displaced
+                myBox.size = new Vector2(myBox.size.x, myBox.size.y * crouchMultiplier);
+
+                myBox.offset = new Vector2(0, -offset);
 
             }
 
         }
-        canJump = Input.GetAxis("Vertical") <= 0;
+
+        canJump = verticalMovement <= 0;
+
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
         jumpCounter = 0;
     }
+
 }
