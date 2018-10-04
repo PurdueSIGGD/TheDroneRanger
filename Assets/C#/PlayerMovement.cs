@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour {
     public int movementSpeed = 3000;
     public int maxHorizontalVelocity = 200;
     public int jumpHeight = 400;
+    public int maxJumps = 1;
 
     public float crouchMultiplier = 0.5f; //Value height is multiplied by
 
@@ -16,7 +17,7 @@ public class PlayerMovement : MonoBehaviour {
     private bool isCrouching = false;
 
     private bool canJump;
-    private int jumpCounter, maxJumps = 2;
+    private int jumpCounter;
 
 	// Use this for initialization
 	void Start () {
