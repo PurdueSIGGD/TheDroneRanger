@@ -48,6 +48,8 @@ public class PlayerAttributes {
     public int shoot() {
         if (ammoCount != 0) {
             ammoCount--;
+            if (ammoCount == 0)
+                return -1;
             return 1;
         }
         else {
