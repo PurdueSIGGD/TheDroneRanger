@@ -343,6 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doesRotate: 1
+  centerOffset: {x: 0, y: 0}
 --- !u!1001 &1955153861
 Prefab:
   m_ObjectHideFlags: 0

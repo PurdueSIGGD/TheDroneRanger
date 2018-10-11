@@ -5,10 +5,15 @@ using UnityEngine;
 public class PlayerWeapon : MonoBehaviour {
 
     public bool doesRotate = true;
+    public Vector2 centerOffset = new Vector2(0, 0);
+
+    private Camera cam;
+    private GameObject player;
 
 	void Start () {
-		
 
+        cam = Camera.main;
+        player = transform.parent.gameObject;
 
 	}
 	
@@ -16,14 +21,30 @@ public class PlayerWeapon : MonoBehaviour {
 
         if (doesRotate)
         {
+            
+            Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
+            Vector3 center = new Vector3(transform.position.x , transform.position.y, cam.nearClipPlane);
+            center.x += centerOffset.x;
+            center.y += centerOffset.y;
 
-            //mousePos values -1.0 to 1.0
-            Vector2 mousePos = new Vector2(Input.mousePosition.x / Screen.width - 0.5f, Input.mousePosition.y / Screen.height - 0.5f);
-            mousePos *= 2.0f;
+            int angle = (int)(Mathf.Atan2(mouseWorldPos.y - center.y, mouseWorldPos.x - center.x) * Mathf.Rad2Deg);
 
-            float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+            if (Mathf.Abs(angle) > 90)
+            {
+                transform.rotation = Quaternion.Euler(0, 180, 180 - angle);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 0, angle);
+            }
 
-            transform.rotation = Quaternion.Euler(0, 0, (int)angle);
+        }
+
+        //Left click
+        if (Input.GetMouseButtonDown(0))
+        {
+
+            print("Click");
 
         }
 
