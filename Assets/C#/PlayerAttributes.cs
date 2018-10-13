@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class PlayerAttributes {
-    private double health;
+public class PlayerAttributes : MonoBehaviour {
+    private float health;
     //public Weapon currentWeapon;
 
     //high noon at 100, should not be > 100
-    private double highNoonPercent;
+    private float highNoonPercent;
     
     //may not be needed, depending on what gets put in Weapon class
     private int ammoCount;
@@ -16,14 +16,14 @@ public class PlayerAttributes {
 
     //default constructor
     public PlayerAttributes() {
-        health = 100.0;
-        highNoonPercent = 0.0;
+        health = 100;
+        highNoonPercent = 0;
         ammoCount = 6;
         maxAmmo = 6;
     }
 
     //constructor
-    public PlayerAttributes(double health, double highNoonPercent, int maxAmmo) {
+    public PlayerAttributes(float health, float highNoonPercent, int maxAmmo) {
         this.health = health;
         this.highNoonPercent = highNoonPercent;
         this.ammoCount = maxAmmo;
@@ -31,11 +31,11 @@ public class PlayerAttributes {
     }
 
     //accessors
-    public double getHealth() {
+    public float getHealth() {
         return health;
     }
 
-    public double getHighNoonPercent() {
+    public float getHighNoonPercent() {
         return highNoonPercent;
     }
 
@@ -59,7 +59,7 @@ public class PlayerAttributes {
     }
 
     //returns -1 if player is dead, 1 otherwise
-    public int takeDamage(double damage) {
+    public int takeDamage(float damage) {
         health -= damage;
         if (health <= 0) {
             health = 0;
@@ -69,7 +69,7 @@ public class PlayerAttributes {
     }
 
     //adds percent to the current high noon percent
-    public void addHighNoonPercent(double percent) {
+    public void addHighNoonPercent(float percent) {
         highNoonPercent += percent;
     }
 
