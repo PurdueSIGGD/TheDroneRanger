@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour {
             {
 
                 isCrouching = true;
-                float offset = myBox.size.y * (1.0f - crouchMultiplier) / 2.0f; //How much the center is displaced
+                float offset = myBox.size.y * (1.0f - crouchMultiplier) / 2.0f; //How much the bottom boundary is displaced
                 myBox.size = new Vector2(myBox.size.x, myBox.size.y * crouchMultiplier);
 
                 myBox.offset = new Vector2(0, -offset);
