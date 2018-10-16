@@ -4,28 +4,11 @@ using UnityEngine;
 
 
 public class EnemyAttributes : MonoBehaviour {
-	private float health;
+	public float health = 100;
 	//public Weapon currentWeapon;
-	private float attackRate;
-	private float moveSpeed;
-	private Rigidbody2D aggroRigid;
-
-	//default constructor
-	public EnemyAttributes() {
-		health = 100;
-		attackRate = 1;
-		moveSpeed = 1;
-		aggroRigid = null;
-	}
-
-	//constructor
-	public EnemyAttributes(float health, float rate, float speed) {
-		this.health = health;
-		attackRate = rate;
-		moveSpeed = speed;
-		aggroRigid = null;
-
-	}
+	public float attackRate = 1;
+	public float moveSpeed = 1;
+	public Rigidbody2D aggroRigid = null;
 
 	//accessors
 	public float getHealth() {

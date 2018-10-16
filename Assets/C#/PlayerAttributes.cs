@@ -4,31 +4,15 @@ using UnityEngine;
 
 
 public class PlayerAttributes : MonoBehaviour {
-    private float health;
+    public float health = 100;
     //public Weapon currentWeapon;
 
     //high noon at 100, should not be > 100
-    private float highNoonPercent;
+    public float highNoonPercent = 0;
     
     //may not be needed, depending on what gets put in Weapon class
-    private int ammoCount;
-    private int maxAmmo;
-
-    //default constructor
-    public PlayerAttributes() {
-        health = 100;
-        highNoonPercent = 0;
-        ammoCount = 6;
-        maxAmmo = 6;
-    }
-
-    //constructor
-    public PlayerAttributes(float health, float highNoonPercent, int maxAmmo) {
-        this.health = health;
-        this.highNoonPercent = highNoonPercent;
-        this.ammoCount = maxAmmo;
-        this.maxAmmo = maxAmmo;
-    }
+    public int ammoCount = 6;
+    public int maxAmmo = 6;
 
     //accessors
     public float getHealth() {
