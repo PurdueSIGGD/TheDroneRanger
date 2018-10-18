@@ -6,7 +6,8 @@ public class PlayerWeapon : MonoBehaviour {
 
     public bool doesRotate = true;
     public Vector2 centerOffset = new Vector2(0, 0);
-    public float recoilForce = 150.0f;
+    public Vector2 pivot = new Vector2(0, 0);
+    public float recoilForce = 10.0f;
 
     private Camera cam;
     private GameObject player;
@@ -24,15 +25,26 @@ public class PlayerWeapon : MonoBehaviour {
         transform.position = newPos;
 
     }
-	
-	void Update () {
+
+    void Update () {
 
         Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
-        Vector3 center = new Vector3(transform.position.x, transform.position.y, cam.nearClipPlane);
+        Vector2 plCenter = new Vector2(player.transform.position.x, player.transform.position.y);
 
-        Vector2 direction = new Vector2(mouseWorldPos.x - center.x, mouseWorldPos.y - center.y);
-        direction.Normalize();
+        Vector2 mouseDir = new Vector2(mouseWorldPos.x - plCenter.x, mouseWorldPos.y - plCenter.y);
+        mouseDir.Normalize();
 
+        Vector2 weapDir = new Vector2(transform.position.x - plCenter.x, transform.position.y - plCenter.y);
+        float angle = Vector2.Angle(weapDir, mouseDir);
+
+        Vector2 delta = Quaternion.Euler(0.0f, 0.0f, Vector2.Angle(mouseDir, new Vector2(1, 0))) * centerOffset;
+
+        Vector3 pos = new Vector3(plCenter.x, plCenter.y, transform.position.z);
+        pos.x += delta.x;
+        pos.y += delta.y;
+        transform.position = pos;
+
+        /*
         if (doesRotate)
         {
 
@@ -63,6 +75,6 @@ public class PlayerWeapon : MonoBehaviour {
             playerRigid.AddForce(-direction * recoilForce);
 
         }
-
+        */
     }
 }
