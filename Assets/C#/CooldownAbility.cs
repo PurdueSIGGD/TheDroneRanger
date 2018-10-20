@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Stolen shameless from Andrew Lonsway - edited by Michael Beshear
-public abstract class CooldownAbility
+public abstract class CooldownAbility : MonoBehaviour
 {
     /**
      * Abstract class for repeated instances of cooldowns.
