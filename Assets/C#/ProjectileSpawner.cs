@@ -8,17 +8,11 @@ class ProjectileSpawner : CooldownAbility
 
     private Camera cam;
 
-    public override void cooldown_Start()
-    {
-    }
+    public override void cooldown_Start(){ }
 
-    public override void cooldown_Update()
-    {
-    }
+    public override void cooldown_Update(){ }
 
-    public override void use_CanUse()
-    {
-    }
+    public override void use_CanUse(){ }
 
     public override void use_UseAbility()
     {
@@ -38,7 +32,7 @@ class ProjectileSpawner : CooldownAbility
         cam = Camera.main;
     }
 
-    private void Update()
+    public virtual void Update()
     {
         if (Input.GetButton("Fire1"))
         {
