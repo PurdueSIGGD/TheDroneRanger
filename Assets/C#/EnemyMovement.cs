@@ -3,23 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
-	public int EnemySpeed;
-	public int XMoveDirection;
+	public int xdir = 1;
+	public int ydir = 1;
+	public int radius;
+	public int speed;
+
+	private float timer = 0;
 
 	void Update () {
-		//make sure to Ignore Raycast on the enemy Layer so it doesn't detect itself, do this for anything it doesn't mind running into
-		RaycastHit2D hit = Physics2D.Raycast (transform.position, new Vector2 (XMoveDirection, 0));
-		gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(XMoveDirection, 0) * EnemySpeed;
-		if (hit.distance < 2f) {
-			Debug.Log("uh oh");
-			Flip();
+		gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(xdir, 0) * speed;
+		timer += Time.deltaTime;
+		if (timer >= radius / speed) {
+			timer = 0;
+			Debug.Log("Nice");
+			FlipX();
 		}
 	}
-	void Flip() {
-		if (XMoveDirection > 0) {
-			XMoveDirection = -1;
+	void FlipX() {
+		if (xdir > 0) {
+			xdir = -1;
+			gameObject.GetComponent<SpriteRenderer>().flipX = true;
 		} else {
-			XMoveDirection = 1;
+			xdir = 1;
+			gameObject.GetComponent<SpriteRenderer>().flipX = false;
 		}
 	}
 }
