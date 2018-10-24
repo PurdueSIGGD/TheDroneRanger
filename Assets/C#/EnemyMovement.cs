@@ -5,27 +5,32 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour {
 	public int xdir = 1;
 	public int ydir = 1;
-	public int radius;
-	public int speed;
+	public float radius;
+	public float speed;
+	public bool flipSprite;
 
-	private float timer = 0;
+	void Start() {
+		StartCoroutine(Move());
+	}
 
 	void Update () {
 		gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(xdir, 0) * speed;
-		timer += Time.deltaTime;
-		if (timer >= radius / speed) {
-			timer = 0;
-			Debug.Log("Nice");
-			FlipX();
-		}
 	}
-	void FlipX() {
-		if (xdir > 0) {
-			xdir = -1;
-			gameObject.GetComponent<SpriteRenderer>().flipX = true;
-		} else {
-			xdir = 1;
-			gameObject.GetComponent<SpriteRenderer>().flipX = false;
+
+	IEnumerator Move() {
+		while (true) {
+			if (xdir > 0) {
+				xdir = -1;
+				if (flipSprite) {
+					gameObject.GetComponent<SpriteRenderer>().flipX = true;
+				}
+			} else {
+				xdir = 1;
+				if (flipSprite) {
+					gameObject.GetComponent<SpriteRenderer>().flipX = false;
+				}
+			}
+			yield return new WaitForSeconds(radius / speed);
 		}
 	}
 }
