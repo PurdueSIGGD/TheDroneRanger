@@ -130,7 +130,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4635459508465866, guid: e4d3374e12b31994d88360dd2265e103, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4635459508465866, guid: e4d3374e12b31994d88360dd2265e103, type: 2}
       propertyPath: m_LocalRotation.x
@@ -164,7 +164,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1840780901538968, guid: e4d3374e12b31994d88360dd2265e103, type: 2}
       propertyPath: m_Layer
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4d3374e12b31994d88360dd2265e103, type: 2}
@@ -181,6 +181,8 @@ GameObject:
   - component: {fileID: 298454116}
   - component: {fileID: 298454115}
   - component: {fileID: 298454114}
+  - component: {fileID: 298454120}
+  - component: {fileID: 298454119}
   m_Layer: 2
   m_Name: Enemy
   m_TagString: Untagged
@@ -199,8 +201,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 324faacbd98204811b70336b5e3e3bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemySpeed: 10
-  XMoveDirection: 1
+  xdir: 1
+  ydir: 1
+  radius: 10
+  speed: 5
 --- !u!61 &298454115
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -245,7 +249,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &298454117
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -305,6 +309,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &298454119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 298454113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239e5ef79c1f66b48ae34912dbb474c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 5
+  visionStart: -10
+  visionEnd: 10
+  you: {fileID: 801852745}
+--- !u!114 &298454120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 298454113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6059c6c82a92adf4daf3e580d4c2bffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  attackRate: 1
+  moveSpeed: 1
+  aggroRigid: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,6 +428,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &801852745 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1840780901538968, guid: e4d3374e12b31994d88360dd2265e103,
+    type: 2}
+  m_PrefabInternal: {fileID: 51948471}
 --- !u!1001 &1955153861
 Prefab:
   m_ObjectHideFlags: 0

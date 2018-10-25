@@ -5,15 +5,17 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour {
 	private EnemyAttributes EnemyStats;
 	private Rigidbody2D EnemyRigid;
+	private EnemyMovement EnemyMove;
 	public float range;
 	public float visionStart; //visionStart and visionEnd define between what angles the enemy can see
 	public float visionEnd;
-	public Collider2D attackZone;
+	public GameObject you;
 
 
 	// Use this for initialization
 	void Start () {
 		EnemyStats = GetComponent<EnemyAttributes> ();
+		EnemyMove = GetComponent<EnemyMovement> ();
 		EnemyRigid = GetComponent<Rigidbody2D> ();
 	}
 	
@@ -34,16 +36,19 @@ public class EnemyAttack : MonoBehaviour {
 
 	public void seekTarget()
 	{
-		Collider2D[] hits = new Collider2D[10];
+		Collider2D[] hits;
 		hits = Physics2D.OverlapCircleAll (EnemyRigid.position, range);
 
 		PlayerMovement playerMove = null;
+		//Debug.Log (you.GetComponent<Rigidbody2D>().position + " " + EnemyRigid.position + " " + range + " " + hits.Length);
 		for (int i = 0; i < hits.Length; i++) {
+			
 			if ((playerMove = hits [i].GetComponentInParent<PlayerMovement> ())) {
 				Rigidbody2D playerRigid = playerMove.GetComponentInParent<Rigidbody2D> ();
-				float theta = Vector2.SignedAngle (transform.right, playerRigid.position - EnemyRigid.position);
-				Debug.Log (theta);
+				float theta = Vector2.SignedAngle (transform.right * EnemyMove.xdir, playerRigid.position - EnemyRigid.position);
+				Debug.Log (EnemyMove.xdir);
 				if (theta < visionStart || theta > visionEnd) {
+					EnemyStats.setAggro (null);
 					continue;
 
 				}
