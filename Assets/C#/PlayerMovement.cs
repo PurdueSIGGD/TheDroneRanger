@@ -6,10 +6,10 @@ public class PlayerMovement : MonoBehaviour {
 
     public int movementSpeed = 3000;
     public int maxHorizontalVelocity = 200;
-    public int jumpHeight = 400;
+    public float jumpHeight = 7.0f;
     public int maxJumps = 1;
 
-    public float crouchMultiplier = 0.5f; //Value height is multiplied by
+    public float crouchMultiplier = 0.5f; //Value collider height is multiplied by
     public Sprite crouchSprite;
     private Sprite defaultSprite;
 
@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour {
 
             if (verticalMovement > 0 && canJump && jumpCounter < maxJumps)
             {
-                myRigid.AddForce(new Vector2(0, jumpHeight));
+                myRigid.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
                 jumpCounter++;
             }
 
@@ -91,7 +91,9 @@ public class PlayerMovement : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
+
         jumpCounter = 0;
+
     }
 
 }
