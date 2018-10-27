@@ -10,9 +10,12 @@ public class PlayerMovement : MonoBehaviour {
     public int maxJumps = 1;
 
     public float crouchMultiplier = 0.5f; //Value height is multiplied by
+    public Sprite crouchSprite;
+    private Sprite defaultSprite;
 
     private Rigidbody2D myRigid;
     private BoxCollider2D myBox;
+    private SpriteRenderer myRenderer;
 
     private bool isCrouching = false;
 
@@ -21,8 +24,13 @@ public class PlayerMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
         myRigid = this.GetComponent<Rigidbody2D>();
         myBox = this.GetComponent<BoxCollider2D>();
+        myRenderer = this.GetComponent<SpriteRenderer>();
+
+        defaultSprite = myRenderer.sprite;
+
 	}
 	
 	// Update is called once per frame
@@ -49,6 +57,7 @@ public class PlayerMovement : MonoBehaviour {
                 myBox.size = new Vector2(myBox.size.x, myBox.size.y / crouchMultiplier);
 
                 myBox.offset = new Vector2(0, 0);
+                myRenderer.sprite = defaultSprite;
 
             }
 
@@ -70,6 +79,7 @@ public class PlayerMovement : MonoBehaviour {
                 myBox.size = new Vector2(myBox.size.x, myBox.size.y * crouchMultiplier);
 
                 myBox.offset = new Vector2(0, -offset);
+                myRenderer.sprite = crouchSprite;
 
             }
 

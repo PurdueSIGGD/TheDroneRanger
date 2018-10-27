@@ -203,6 +203,11 @@ Prefab:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 114623225053763910, guid: e4d3374e12b31994d88360dd2265e103,
+        type: 2}
+      propertyPath: crouchSprite
+      value: 
+      objectReference: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents:
     - {fileID: 114510910535929476, guid: e4d3374e12b31994d88360dd2265e103, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: e4d3374e12b31994d88360dd2265e103, type: 2}

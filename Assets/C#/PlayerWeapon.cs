@@ -10,5 +10,14 @@ public class PlayerWeapon : MonoBehaviour {
 
     void Update () {
 
+        //Left Click
+
+        if (Input.GetMouseButtonDown(0))
+        {
+
+            print("Bang");
+
+        }
+
     }
 }
