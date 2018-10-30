@@ -29,7 +29,8 @@ public class Projectile : MonoBehaviour {
         /* CHECKS FOR HIT VALIDIDTY */
         if (hasHit && dieOnHit) return; // We only want to hit one object... for some reason it collides multiple times before destroying itself
         if (col.isTrigger) return; // Only want our own trigger effects
-        //if (!sourcePlayer) return;
+        if (!sourcePlayer) return;
+        if (col == sourcePlayer.GetComponent<Collider2D>()) return;
         Attributes attr;
         if ((attr = col.GetComponentInParent<Attributes>()))
         {

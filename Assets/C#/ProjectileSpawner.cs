@@ -1,10 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
-class ProjectileSpawner : CooldownAbility
+public class ProjectileSpawner : CooldownAbility
 {
     public GameObject projectile;
-    public float thrust;
+    public float thrust = 10;
 
     private Camera cam;
 
