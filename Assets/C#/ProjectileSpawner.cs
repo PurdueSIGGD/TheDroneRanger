@@ -23,6 +23,7 @@ class ProjectileSpawner : CooldownAbility
         Direction.Normalize();
         //TODO add targeting and spawn the bullet
         GameObject Bullet = GameObject.Instantiate(projectile);
+        Bullet.GetComponent<Projectile>().sourcePlayer = this.gameObject;
         Bullet.GetComponent<Transform>().position = SpawnPosition;
         Bullet.GetComponent<Rigidbody2D>().AddForce(Direction * thrust);
     }

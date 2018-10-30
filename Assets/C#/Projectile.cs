@@ -4,7 +4,7 @@ using UnityEngine;
 
 // Shamlessly stolen from Andrew Lonsway - edited by Clayton Detke
 public class Projectile : MonoBehaviour {
-    //[HideInInspector]
+    [HideInInspector]
     public GameObject sourcePlayer;
 
     public float damage = 1;
@@ -23,12 +23,13 @@ public class Projectile : MonoBehaviour {
         Destroy(this.gameObject);
     }
 
-    void OnTriggerEnter(Collider col)
+    void OnTriggerEnter2D(Collider2D col)
     {
+        print("I DID IT!!!");
         /* CHECKS FOR HIT VALIDIDTY */
         if (hasHit && dieOnHit) return; // We only want to hit one object... for some reason it collides multiple times before destroying itself
         if (col.isTrigger) return; // Only want our own trigger effects
-        if (!sourcePlayer) return;
+        //if (!sourcePlayer) return;
         Attributes attr;
         if ((attr = col.GetComponentInParent<Attributes>()))
         {
