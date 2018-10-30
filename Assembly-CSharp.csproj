@@ -57,6 +57,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\C#\Attributes.cs" />
+    <Compile Include="Assets\C#\EnemyAttributes.cs" />
+    <Compile Include="Assets\C#\LoopingBackground.cs" />
+    <Compile Include="Assets\C#\ParallaxScenery.cs" />
+    <Compile Include="Assets\C#\PlayerAttributes.cs" />
+    <Compile Include="Assets\C#\Projectile.cs" />
     <Compile Include="Assets\C#\ProjectileSpawner.cs" />
     <Compile Include="Assets\C#\FollowingCamera.cs" />
     <Compile Include="Assets\C#\PlayerMovement.cs" />
