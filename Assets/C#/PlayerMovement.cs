@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-    public int movementSpeed = 3000;
-    public int maxHorizontalVelocity = 200;
-    public float jumpHeight = 7.0f;
+    public float movementAcceleration = 2000;
+    public float maxHorizontalVelocity = 10;
+    public float jumpImpulse = 7.0f;
     public int maxJumps = 1;
 
     public float crouchMultiplier = 0.5f; //Value collider height is multiplied by
@@ -36,15 +36,23 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        float horizontalMovement = movementSpeed * Input.GetAxis("Horizontal");
+        float horizontalMovement = movementAcceleration * Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
 
         if((horizontalMovement > 0 && myRigid.velocity.x < maxHorizontalVelocity)
             || (horizontalMovement < 0 && myRigid.velocity.x > -maxHorizontalVelocity))
         {
 
-            myRigid.AddForce(new Vector2(horizontalMovement * Time.deltaTime, 0));
+            myRigid.AddForce(new Vector2(myRigid.mass * horizontalMovement * Time.deltaTime, 0));
 
+        }
+        
+        if (Mathf.Abs(myRigid.velocity.x) > maxHorizontalVelocity)
+        {
+            Vector3 velocity = myRigid.velocity;
+            int sign = (velocity.x > 0 ? 1 : -1);
+            velocity.x = sign * maxHorizontalVelocity;
+            myRigid.velocity = velocity;
         }
 
         if (verticalMovement >= 0)
@@ -63,7 +71,7 @@ public class PlayerMovement : MonoBehaviour {
 
             if (verticalMovement > 0 && canJump && jumpCounter < maxJumps)
             {
-                myRigid.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
+                myRigid.AddForce(new Vector2(0, myRigid.mass * jumpImpulse), ForceMode2D.Impulse);
                 jumpCounter++;
             }
 
@@ -91,8 +99,14 @@ public class PlayerMovement : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        Vector2 bottom = (Vector2)transform.position + new Vector2(0, -myBox.size.y / 2.0f);
+        if (Physics2D.Raycast(bottom, -Vector2.up, 0.01f))
+        {
 
-        jumpCounter = 0;
+            //TODO: Check that raycast hit an object with a collider (not sprite, etc.)
+            jumpCounter = 0;
+
+        }
 
     }
 
