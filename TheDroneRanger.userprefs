@@ -3,6 +3,7 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\C#\PlayerMovement.cs">
     <Files>
       <File FileName="Assets\C#\PlayerMovement.cs" Line="10" Column="26" />
+      <File FileName="Assets\C#\ProjectileSpawner.cs" Line="11" Column="32" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
