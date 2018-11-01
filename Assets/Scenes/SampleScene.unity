@@ -203,8 +203,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xdir: 1
   ydir: 1
-  radius: 10
-  speed: 5
+  radius: 5
+  speed: 1
+  flipSprite: 0
 --- !u!61 &298454115
 BoxCollider2D:
   m_ObjectHideFlags: 0
