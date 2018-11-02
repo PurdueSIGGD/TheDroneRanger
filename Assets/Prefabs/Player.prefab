@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 50060999058037688}
   - component: {fileID: 61774235505970178}
   - component: {fileID: 114623225053763910}
+  - component: {fileID: 114522252132890292}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -88,6 +89,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.14, y: 0.14}
   m_EdgeRadius: 0
+--- !u!114 &114522252132890292
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1840780901538968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a7f1bf20349fc84382da512353f922e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationTriggerType: 0
+  CAST_STRING: Cast
+  cooldown: 1
+  hasNotified: 0
+  projectile: {fileID: 0}
+  thrust: 10
 --- !u!114 &114623225053763910
 MonoBehaviour:
   m_ObjectHideFlags: 1
