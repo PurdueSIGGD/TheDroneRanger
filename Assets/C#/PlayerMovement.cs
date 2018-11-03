@@ -100,10 +100,9 @@ public class PlayerMovement : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D col)
     {
         Vector2 bottom = (Vector2)transform.position + new Vector2(0, -myBox.size.y / 2.0f);
-        if (Physics2D.Raycast(bottom, -Vector2.up, 0.01f))
+        if (Physics2D.Raycast(bottom, -Vector2.up, 0.01f).collider != null)
         {
-
-            //TODO: Check that raycast hit an object with a collider (not sprite, etc.)
+            
             jumpCounter = 0;
 
         }

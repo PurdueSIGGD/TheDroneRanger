@@ -16,6 +16,7 @@ public class PlayerWeapon : MonoBehaviour {
         {
 
             print("Bang");
+            //Get position of gun at this moment to spawn bullet
 
         }
 
