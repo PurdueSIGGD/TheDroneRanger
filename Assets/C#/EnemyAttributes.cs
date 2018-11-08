@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 public class EnemyAttributes : MonoBehaviour {
+	public float maxHealth = 100;
 	public float health = 100;
 	//public Weapon currentWeapon;
 	public float attackRate = 1;
@@ -11,6 +12,11 @@ public class EnemyAttributes : MonoBehaviour {
 	public Rigidbody2D aggroRigid = null;
 
 	//accessors
+	public float getMaxHealth()
+	{
+		return maxHealth;
+	}
+
 	public float getHealth() {
 		return health;
 	}
@@ -45,17 +51,20 @@ public class EnemyAttributes : MonoBehaviour {
 		return health <= 0;
 	}
 
+	public void setMaxHealth(float h)
+	{
+		maxHealth = h;
+	}
+
 	public void setHealth(float h)
 	{
 		health = h;
 	}
 
-	//adds percent to the current high noon percent
 	public void setAttackRate(float rate) {
 		attackRate += rate;
 	}
-
-	//returns true if highNoonPercent >= 100
+=
 	public void setMoveSpeed(float speed)
 	{
 		moveSpeed = speed;

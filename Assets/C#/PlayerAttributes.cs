@@ -4,7 +4,8 @@ using UnityEngine;
 
 
 public class PlayerAttributes : MonoBehaviour {
-    public float health = 100;
+	public float maxHealth = 100;
+	public float health = 100;
     //public Weapon currentWeapon;
 
     //high noon at 100, should not be > 100
@@ -15,6 +16,11 @@ public class PlayerAttributes : MonoBehaviour {
     public int maxAmmo = 6;
 
     //accessors
+	public float getMaxHealth()
+	{
+		return maxHealth;
+	}
+
     public float getHealth() {
         return health;
     }
@@ -41,6 +47,11 @@ public class PlayerAttributes : MonoBehaviour {
             return -1;
         }
     }
+
+	public void setMaxHealth(float h)
+	{
+		maxHealth = h;
+	}
 
     //returns -1 if player is dead, 1 otherwise
     public int takeDamage(float damage) {
