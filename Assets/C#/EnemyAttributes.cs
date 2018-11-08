@@ -64,7 +64,7 @@ public class EnemyAttributes : MonoBehaviour {
 	public void setAttackRate(float rate) {
 		attackRate += rate;
 	}
-=
+
 	public void setMoveSpeed(float speed)
 	{
 		moveSpeed = speed;
