@@ -238,6 +238,12 @@ Prefab:
       propertyPath: movementAcceleration
       value: 2000
       objectReference: {fileID: 0}
+    - target: {fileID: 114522252132890292, guid: e4d3374e12b31994d88360dd2265e103,
+        type: 2}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 1979001164161008, guid: a3c88811ab50ca0488c11f7f8449c170,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 114510910535929476, guid: e4d3374e12b31994d88360dd2265e103, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: e4d3374e12b31994d88360dd2265e103, type: 2}
@@ -447,6 +453,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329a82a12844b034b9b9c956b7ace84a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offsetX: 0
+  offsetY: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
