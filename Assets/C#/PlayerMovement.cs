@@ -3,39 +3,110 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
-    public int movementSpeed = 3000;
-    public int maxHorizontalVelocity = 200;
-    public int jumpHeight = 400;
+
+    public float movementAcceleration = 2000;
+    public float maxHorizontalVelocity = 10;
+    public float jumpImpulse = 7.0f;
+    public int maxJumps = 1;
+
+    public float crouchMultiplier = 0.5f; //Value collider height is multiplied by
+    public Sprite crouchSprite;
+    private Sprite defaultSprite;
+
     private Rigidbody2D myRigid;
+    private BoxCollider2D myBox;
+    private SpriteRenderer myRenderer;
+
+    private bool isCrouching = false;
+
     private bool canJump;
-    private int jumpCounter, maxJumps = 2;
+    private int jumpCounter;
 
 	// Use this for initialization
 	void Start () {
+
         myRigid = this.GetComponent<Rigidbody2D>();
+        myBox = this.GetComponent<BoxCollider2D>();
+        myRenderer = this.GetComponent<SpriteRenderer>();
+
+        defaultSprite = myRenderer.sprite;
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        float horizontalMovement = movementSpeed * Input.GetAxis("Horizontal");
-        if((horizontalMovement > 0 && myRigid.velocity.x < maxHorizontalVelocity) || (horizontalMovement < 0 && myRigid.velocity.x > -maxHorizontalVelocity))
+
+        float horizontalMovement = movementAcceleration * Input.GetAxis("Horizontal");
+        float verticalMovement = Input.GetAxis("Vertical");
+
+        if((horizontalMovement > 0 && myRigid.velocity.x < maxHorizontalVelocity)
+            || (horizontalMovement < 0 && myRigid.velocity.x > -maxHorizontalVelocity))
         {
-            myRigid.AddForce(new Vector2(horizontalMovement * Time.deltaTime, 0));
+
+            myRigid.AddForce(new Vector2(myRigid.mass * horizontalMovement * Time.deltaTime, 0));
+
         }
-        if (Input.GetAxisRaw("Vertical") > 0 && canJump && jumpCounter < maxJumps)
+        
+        if (Mathf.Abs(myRigid.velocity.x) > maxHorizontalVelocity)
         {
-            myRigid.AddForce(new Vector2(0, jumpHeight));
-            jumpCounter++;
+            Vector3 velocity = myRigid.velocity;
+            int sign = (velocity.x > 0 ? 1 : -1);
+            velocity.x = sign * maxHorizontalVelocity;
+            myRigid.velocity = velocity;
         }
-        else if (Input.GetAxisRaw("Vertical") < 0)
+
+        if (verticalMovement >= 0)
         {
-            //TODO: add crouching functionality
+
+            if (isCrouching)
+            {
+
+                isCrouching = false;
+                myBox.size = new Vector2(myBox.size.x, myBox.size.y / crouchMultiplier);
+
+                myBox.offset = new Vector2(0, 0);
+                myRenderer.sprite = defaultSprite;
+
+            }
+
+            if (verticalMovement > 0 && canJump && jumpCounter < maxJumps)
+            {
+                myRigid.AddForce(new Vector2(0, myRigid.mass * jumpImpulse), ForceMode2D.Impulse);
+                jumpCounter++;
+            }
+
         }
-        canJump = Input.GetAxis("Vertical") <= 0;
+        else if (verticalMovement < 0)
+        {
+            
+            if (!isCrouching)
+            {
+
+                isCrouching = true;
+                float offset = myBox.size.y * (1.0f - crouchMultiplier) / 2.0f; //How much the bottom boundary is displaced
+                myBox.size = new Vector2(myBox.size.x, myBox.size.y * crouchMultiplier);
+
+                myBox.offset = new Vector2(0, -offset);
+                myRenderer.sprite = crouchSprite;
+
+            }
+
+        }
+
+        canJump = verticalMovement <= 0;
+
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        jumpCounter = 0;
+        Vector2 bottom = (Vector2)transform.position + new Vector2(0, -myBox.size.y / 2.0f);
+        if (Physics2D.Raycast(bottom, -Vector2.up, 0.01f).collider != null)
+        {
+            
+            jumpCounter = 0;
+
+        }
+
     }
+
 }
