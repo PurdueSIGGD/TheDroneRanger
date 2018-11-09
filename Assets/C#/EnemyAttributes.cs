@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class EnemyAttributes : MonoBehaviour {
+public class EnemyAttributes : Attributes {
 	public float maxHealth = 100;
 	public float health = 100;
 	//public Weapon currentWeapon;
@@ -20,7 +19,7 @@ public class EnemyAttributes : MonoBehaviour {
 	public float getHealth() {
 		return health;
 	}
-
+    
 	public float getAttackRate() {
 		return attackRate;
 	}
@@ -35,7 +34,8 @@ public class EnemyAttributes : MonoBehaviour {
 	}
 
 	//mutators
-
+    
+	//adds percent to the current high noon percent
 	//returns -1 if player is dead, 1 otherwise
 	public int takeDamage(float damage) {
 		health -= damage;
@@ -60,7 +60,7 @@ public class EnemyAttributes : MonoBehaviour {
 	{
 		health = h;
 	}
-
+    
 	public void setAttackRate(float rate) {
 		attackRate += rate;
 	}
