@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Prop : MonoBehaviour {
-    public int durability;
+    public int durability = 1;
     public bool destroyed = false; 
 	// Use this for initialization
 	void Start () {
@@ -21,7 +21,9 @@ public class Prop : MonoBehaviour {
     }
 
     // This should be called when the prop gets shot
-    void Destroy() {
-        destroyed = true;
+    void destroy() {
+        durability--;
+        if(durability == 0)
+            destroyed = true;
     }
 }
