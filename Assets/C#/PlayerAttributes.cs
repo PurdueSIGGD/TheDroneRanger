@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class PlayerAttributes : MonoBehaviour {
+public class PlayerAttributes : Attributes {
+
 	public float maxHealth = 100;
 	public float health = 100;
     //public Weapon currentWeapon;
@@ -24,7 +25,7 @@ public class PlayerAttributes : MonoBehaviour {
     public float getHealth() {
         return health;
     }
-
+    
     public float getHighNoonPercent() {
         return highNoonPercent;
     }
@@ -47,7 +48,7 @@ public class PlayerAttributes : MonoBehaviour {
             return -1;
         }
     }
-
+    
 	public void setMaxHealth(float h)
 	{
 		maxHealth = h;
@@ -62,7 +63,7 @@ public class PlayerAttributes : MonoBehaviour {
         }
         return 1;
     }
-
+    
     //adds percent to the current high noon percent
     public void addHighNoonPercent(float percent) {
         highNoonPercent += percent;
