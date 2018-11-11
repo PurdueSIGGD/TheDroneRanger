@@ -109,4 +109,14 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        this.myRigid.gravityScale = 0;
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.GetComponent<Projectile>()) { return; }
+        this.myRigid.gravityScale = 1;
+    }
 }
