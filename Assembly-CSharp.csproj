@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Assets\C#\Attributes.cs" />
     <Compile Include="Assets\C#\EnemyAttributes.cs" />
+    <Compile Include="Assets\C#\Ladder.cs" />
     <Compile Include="Assets\C#\LoopingBackground.cs" />
     <Compile Include="Assets\C#\ParallaxScenery.cs" />
     <Compile Include="Assets\C#\PlayerAttributes.cs" />
@@ -68,7 +69,6 @@
     <Compile Include="Assets\C#\PlayerMovement.cs" />
     <Compile Include="Assets\C#\CooldownAbility.cs" />
     <Compile Include="Assets\C#\PlayerArm.cs" />
-    <Compile Include="Assets\C#\PlayerMovement.cs" />
     <Compile Include="Assets\C#\PlayerWeapon.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>W:/Siggd/TheDroneRanger/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

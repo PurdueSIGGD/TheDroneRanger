@@ -22,19 +22,44 @@ public class PlayerMovement : MonoBehaviour {
     private bool canJump;
     private int jumpCounter;
 
+    private bool nearLadder = false;
+    private bool onLadder = false;
+
 	// Use this for initialization
 	void Start () {
-
         myRigid = this.GetComponent<Rigidbody2D>();
         myBox = this.GetComponent<BoxCollider2D>();
         myRenderer = this.GetComponent<SpriteRenderer>();
 
         defaultSprite = myRenderer.sprite;
-
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (nearLadder && !onLadder && Input.GetAxis("Vertical") > 0)
+        {
+            onLadder = true;
+            myRigid.velocity = new Vector2(0, 0);
+            myRigid.gravityScale = 0;
+        }
+
+        if (onLadder)
+        {
+            if (Input.GetAxis("Horizontal") == 0 && nearLadder)
+            {
+                print(Input.GetAxis("Vertical"));
+                myRigid.velocity = new Vector2(0, Input.GetAxis("Vertical") * 10);
+                return;
+            }
+            else
+            {
+                onLadder = false;
+                myRigid.gravityScale = 1;
+                //Jump
+                myRigid.AddForce(new Vector2(0, myRigid.mass * jumpImpulse), ForceMode2D.Impulse);
+                jumpCounter++;
+            }
+        }
 
         float horizontalMovement = movementAcceleration * Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
@@ -42,9 +67,7 @@ public class PlayerMovement : MonoBehaviour {
         if((horizontalMovement > 0 && myRigid.velocity.x < maxHorizontalVelocity)
             || (horizontalMovement < 0 && myRigid.velocity.x > -maxHorizontalVelocity))
         {
-
             myRigid.AddForce(new Vector2(myRigid.mass * horizontalMovement * Time.deltaTime, 0));
-
         }
         
         if (Mathf.Abs(myRigid.velocity.x) > maxHorizontalVelocity)
@@ -57,18 +80,14 @@ public class PlayerMovement : MonoBehaviour {
 
         if (verticalMovement >= 0)
         {
-
             if (isCrouching)
             {
-
                 isCrouching = false;
                 myBox.size = new Vector2(myBox.size.x, myBox.size.y / crouchMultiplier);
 
                 myBox.offset = new Vector2(0, 0);
                 myRenderer.sprite = defaultSprite;
-
             }
-
             if (verticalMovement > 0 && canJump && jumpCounter < maxJumps)
             {
                 myRigid.AddForce(new Vector2(0, myRigid.mass * jumpImpulse), ForceMode2D.Impulse);
@@ -78,23 +97,17 @@ public class PlayerMovement : MonoBehaviour {
         }
         else if (verticalMovement < 0)
         {
-            
             if (!isCrouching)
             {
-
                 isCrouching = true;
                 float offset = myBox.size.y * (1.0f - crouchMultiplier) / 2.0f; //How much the bottom boundary is displaced
                 myBox.size = new Vector2(myBox.size.x, myBox.size.y * crouchMultiplier);
 
                 myBox.offset = new Vector2(0, -offset);
                 myRenderer.sprite = crouchSprite;
-
             }
-
         }
-
         canJump = verticalMovement <= 0;
-
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -102,11 +115,12 @@ public class PlayerMovement : MonoBehaviour {
         Vector2 bottom = (Vector2)transform.position + new Vector2(0, -myBox.size.y / 2.0f);
         if (Physics2D.Raycast(bottom, -Vector2.up, 0.01f).collider != null)
         {
-            
             jumpCounter = 0;
-
         }
-
     }
 
+    public void setNearLadder(bool near)
+    {
+        nearLadder = near;
+    }
 }
