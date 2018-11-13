@@ -104,7 +104,7 @@ MonoBehaviour:
   CAST_STRING: Cast
   cooldown: 1
   hasNotified: 0
-  projectile: {fileID: 0}
+  projectile: {fileID: 1979001164161008, guid: a3c88811ab50ca0488c11f7f8449c170, type: 2}
   thrust: 10
 --- !u!114 &114623225053763910
 MonoBehaviour:
