@@ -226,7 +226,7 @@ Prefab:
     - target: {fileID: 50060999058037688, guid: e4d3374e12b31994d88360dd2265e103,
         type: 2}
       propertyPath: m_Mass
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114623225053763910, guid: e4d3374e12b31994d88360dd2265e103,
         type: 2}

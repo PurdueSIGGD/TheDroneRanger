@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private bool canJump;
     private int jumpCounter;
+    private float gravity;
 
     private bool nearLadder = false;
     private bool onLadder = false;
@@ -31,12 +32,14 @@ public class PlayerMovement : MonoBehaviour {
         myBox = this.GetComponent<BoxCollider2D>();
         myRenderer = this.GetComponent<SpriteRenderer>();
 
+        gravity = myRigid.gravityScale;
+
         defaultSprite = myRenderer.sprite;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (nearLadder && !onLadder && Input.GetAxis("Vertical") > 0)
+        if (nearLadder && !onLadder && Input.GetAxisRaw("Vertical") != 0)
         {
             onLadder = true;
             myRigid.velocity = new Vector2(0, 0);
@@ -45,18 +48,18 @@ public class PlayerMovement : MonoBehaviour {
 
         if (onLadder)
         {
-            if (Input.GetAxis("Horizontal") == 0 && nearLadder)
+            if (Input.GetAxisRaw("Horizontal") == 0 && nearLadder)
             {
-                print(Input.GetAxis("Vertical"));
-                myRigid.velocity = new Vector2(0, Input.GetAxis("Vertical") * 10);
+                myRigid.velocity = new Vector2(0, Input.GetAxisRaw("Vertical") * 10);
                 return;
             }
             else
             {
                 onLadder = false;
-                myRigid.gravityScale = 1;
+                myRigid.gravityScale = gravity;
+                myRigid.velocity = new Vector2(0, 0);
                 //Jump
-                myRigid.AddForce(new Vector2(0, myRigid.mass * jumpImpulse), ForceMode2D.Impulse);
+                myRigid.AddForce(new Vector2(0, myRigid.mass * jumpImpulse / 2), ForceMode2D.Impulse);
                 jumpCounter++;
             }
         }
@@ -64,7 +67,10 @@ public class PlayerMovement : MonoBehaviour {
         float horizontalMovement = movementAcceleration * Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
 
-        if((horizontalMovement > 0 && myRigid.velocity.x < maxHorizontalVelocity)
+
+        // Add force movement option
+        /*
+        if ((horizontalMovement > 0 && myRigid.velocity.x < maxHorizontalVelocity)
             || (horizontalMovement < 0 && myRigid.velocity.x > -maxHorizontalVelocity))
         {
             myRigid.AddForce(new Vector2(myRigid.mass * horizontalMovement * Time.deltaTime, 0));
@@ -77,6 +83,13 @@ public class PlayerMovement : MonoBehaviour {
             velocity.x = sign * maxHorizontalVelocity;
             myRigid.velocity = velocity;
         }
+        */
+
+        //Instant run movement option
+        if (Input.GetAxisRaw("Horizontal") < 0) myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y);
+        else if (Input.GetAxisRaw("Horizontal") > 0) myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y);
+        else myRigid.velocity = new Vector2(0, myRigid.velocity.y);
+
 
         if (verticalMovement >= 0)
         {
