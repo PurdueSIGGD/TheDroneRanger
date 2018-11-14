@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour {
     public GameObject sourcePlayer;
 
     public float damage = 1;
-    public float lifetime = 10;
+    public float lifetime = 4;
     public bool dieOnHit = true;
 
     private bool hasHit;

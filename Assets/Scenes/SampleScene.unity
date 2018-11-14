@@ -240,12 +240,18 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114522252132890292, guid: e4d3374e12b31994d88360dd2265e103,
         type: 2}
+      propertyPath: cooldown
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114522252132890292, guid: e4d3374e12b31994d88360dd2265e103,
+        type: 2}
       propertyPath: projectile
       value: 
       objectReference: {fileID: 1979001164161008, guid: a3c88811ab50ca0488c11f7f8449c170,
         type: 2}
     m_RemovedComponents:
     - {fileID: 114510910535929476, guid: e4d3374e12b31994d88360dd2265e103, type: 2}
+    - {fileID: 114522252132890292, guid: e4d3374e12b31994d88360dd2265e103, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: e4d3374e12b31994d88360dd2265e103, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &72289291
@@ -571,6 +577,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1670600400}
   - component: {fileID: 1670600401}
+  - component: {fileID: 1670600399}
   m_Layer: 0
   m_Name: PlayerWeapon
   m_TagString: PlayerWeapon
@@ -578,6 +585,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1670600399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1670600398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a7f1bf20349fc84382da512353f922e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationTriggerType: 0
+  CAST_STRING: Cast
+  cooldown: 0.2
+  hasNotified: 0
+  projectile: {fileID: 1979001164161008, guid: a3c88811ab50ca0488c11f7f8449c170, type: 2}
+  thrust: 10
 --- !u!4 &1670600400
 Transform:
   m_ObjectHideFlags: 0

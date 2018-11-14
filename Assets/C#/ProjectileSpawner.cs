@@ -4,7 +4,7 @@ using UnityEngine;
 public class ProjectileSpawner : CooldownAbility
 {
     public GameObject projectile;
-    public float thrust = 10;
+    public float thrust = 30;
 
     private Camera cam;
 
@@ -31,13 +31,5 @@ public class ProjectileSpawner : CooldownAbility
     private void Start()
     {
         cam = Camera.main;
-    }
-
-    public virtual void Update()
-    {
-        if (Input.GetButton("Fire1"))
-        {
-            use();
-        }
     }
 }

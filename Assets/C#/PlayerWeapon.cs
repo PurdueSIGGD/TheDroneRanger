@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour {
 
+    private ProjectileSpawner spawner;
+
 	void Start () {
+
+        spawner = this.GetComponent<ProjectileSpawner>();
 
     }
 
     void Update () {
 
-        //Left Click
-
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetButton("Fire1"))
         {
-
-            print("Bang");
-            //Get position of gun at this moment to spawn bullet
-
+            spawner.use();
         }
 
     }
