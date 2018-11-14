@@ -6,6 +6,7 @@ public class EnemyAttack : MonoBehaviour {
 	private EnemyAttributes EnemyStats;
 	private Rigidbody2D EnemyRigid;
 	private EnemyMovement EnemyMove;
+	private EnemyProjectileSpawner projSpawner;
 	public float range;
 	public float visionStart; //visionStart and visionEnd define between what angles the enemy can see
 	public float visionEnd;
@@ -16,6 +17,7 @@ public class EnemyAttack : MonoBehaviour {
 		EnemyStats = GetComponent<EnemyAttributes> ();
 		EnemyMove = GetComponent<EnemyMovement> ();
 		EnemyRigid = GetComponent<Rigidbody2D> ();
+		projSpawner = GetComponent<EnemyProjectileSpawner> ();
 	}
 	
 	// Update is called once per frame
@@ -31,6 +33,8 @@ public class EnemyAttack : MonoBehaviour {
 	public virtual void attack()
 	{
 		//Debug.Log ("I see you at " + EnemyStats.getAggro().position);
+		projSpawner.use();
+
 	}
 
 	public void seekTarget() 

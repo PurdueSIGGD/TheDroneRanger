@@ -28,7 +28,7 @@ public class ProjectileSpawner : CooldownAbility
         Bullet.GetComponent<Rigidbody2D>().AddForce(Direction * thrust);
     }
 
-    private void Start()
+	public virtual void Start()
     {
         cam = Camera.main;
     }
