@@ -25,18 +25,19 @@ public class PlayerAttributes : Attributes {
     }
     
     //mutators
-    //returns -1 if reload needed, 1 otherwise
-    public int shoot() {
-        if (ammoCount != 0) {
-            ammoCount--;
-            if (ammoCount == 0)
-                return -1;
-            return 1;
+    //returns true if shot, false if no ammo
+    public bool shoot() {
+        if(ammoCount <= 0)
+        {
+            return false;
         }
-        else {
-            ammoCount = maxAmmo;
-            return -1;
-        }
+        ammoCount--;
+        return true;
+    }
+
+    public void reload()
+    {
+        ammoCount = maxAmmo;
     }
     
     //adds percent to the current high noon percent
