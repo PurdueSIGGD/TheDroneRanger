@@ -31,9 +31,19 @@ public class Projectile : MonoBehaviour {
         if (!sourcePlayer) return;
         if (col == sourcePlayer.GetComponent<Collider2D>()) return;
         Attributes attr;
+        Prop p;
         if ((attr = col.GetComponentInParent<Attributes>()))
         {
             if (attr.gameObject == sourcePlayer.gameObject) return;
+        }
+        else if ((p = col.GetComponentInParent<Prop>()))
+        {
+            if (!p.isDestroyed())
+            {
+                p.decreaseDurability(damage);
+                destroyThis();
+            }
+            else { return; }
         }
 
         /* ACTIONS TO TAKE POST-HIT */
@@ -44,6 +54,11 @@ public class Projectile : MonoBehaviour {
             attr.takeDamage(damage);
         }
 
+        destroyThis();
+    }
+
+    private void destroyThis()
+    {
         if (dieOnHit)
         {
             //TODO: should I blow up?
