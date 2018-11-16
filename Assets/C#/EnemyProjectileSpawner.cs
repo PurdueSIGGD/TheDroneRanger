@@ -75,6 +75,10 @@ public class EnemyProjectileSpawner : ProjectileSpawner {
 	{
 		Vector2 SpawnPosition = transform.position;
 		Vector2 Direction = CalcTrajectory ();
+		if (float.IsNaN(Direction.x)) {
+			return;
+		}
+
 		//TODO add targeting and spawn the bullet
 		GameObject Bullet = GameObject.Instantiate(projectile);
 		Bullet.GetComponent<Projectile>().sourcePlayer = this.gameObject;
