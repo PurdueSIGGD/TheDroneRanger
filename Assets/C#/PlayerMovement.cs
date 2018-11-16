@@ -43,8 +43,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print("on: " + onLadder + ", near: " + nearLadder + ", gnd: " + grounded);
-
         if (nearLadder && !onLadder && Input.GetAxisRaw("Vertical") != 0)
         {
             onLadder = true;
@@ -79,12 +77,12 @@ public class PlayerMovement : MonoBehaviour
             myRigid.gravityScale = gravity;
         }
 
-        float horizontalMovement = movementAcceleration * Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
 
-
-        // Add force movement option
         /*
+        float horizontalMovement = movementAcceleration * Input.GetAxis("Horizontal");
+        // Add force movement option
+        
         if ((horizontalMovement > 0 && myRigid.velocity.x < maxHorizontalVelocity)
             || (horizontalMovement < 0 && myRigid.velocity.x > -maxHorizontalVelocity))
         {
