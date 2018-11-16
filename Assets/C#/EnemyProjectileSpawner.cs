@@ -8,7 +8,6 @@ public class EnemyProjectileSpawner : ProjectileSpawner {
 	private float gravScale;
 	public float arc = .5f; //value from 0 to 1 describing how direct the path of thrown object should follow
 
-
 	public void setProjectile(GameObject proj)
 	{
 		projectile = proj;
@@ -76,16 +75,17 @@ public class EnemyProjectileSpawner : ProjectileSpawner {
 		Vector2 SpawnPosition = transform.position;
 		Vector2 Direction = CalcTrajectory ();
 		if (float.IsNaN(Direction.x)) {
+			enemyStats.setInRange (false);
 			return;
 		}
-
+		enemyStats.setInRange (true);
 		//TODO add targeting and spawn the bullet
 		GameObject Bullet = GameObject.Instantiate(projectile);
 		Bullet.GetComponent<Projectile>().sourcePlayer = this.gameObject;
 		Bullet.GetComponent<Transform>().position = SpawnPosition;
 		Bullet.GetComponent<Rigidbody2D>().AddForce(Bullet.GetComponent<Rigidbody2D>().mass * Direction, ForceMode2D.Impulse);
 	}
-
+		
 	public override void Update()//triggering attacks will be handled in an AI script
 	{
 

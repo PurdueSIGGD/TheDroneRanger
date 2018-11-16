@@ -17,10 +17,10 @@ public class EnemyAIMaster : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (EnemyStats.getAggro ()) {
-			//moveScript.enabled = false;
+		if (EnemyStats.getAggro () && EnemyStats.canHit()) {
+			moveScript.enabled = false;
 		} else {
-			//moveScript.enabled = true;
+			moveScript.enabled = true;
 		}
 
 

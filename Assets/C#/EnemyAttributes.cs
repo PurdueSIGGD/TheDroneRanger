@@ -9,6 +9,7 @@ public class EnemyAttributes : Attributes {
 	public float attackRate = 1;
 	public float moveSpeed = 1;
 	public Rigidbody2D aggroRigid = null;
+	private bool inRange;
 
 	//accessors
 	public float getMaxHealth()
@@ -31,6 +32,11 @@ public class EnemyAttributes : Attributes {
 	public Rigidbody2D getAggro()
 	{
 		return aggroRigid;
+	}
+
+	public bool canHit()
+	{
+		return inRange;
 	}
 
 	//mutators
@@ -73,5 +79,10 @@ public class EnemyAttributes : Attributes {
 	public void setAggro(Rigidbody2D playerRigid)
 	{
 		aggroRigid = playerRigid;
+	}
+
+	public void setInRange(bool x)
+	{
+		inRange = x;
 	}
 }

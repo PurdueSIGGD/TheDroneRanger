@@ -8,15 +8,37 @@ public class EnemyMovement : MonoBehaviour {
 	public float radius;
 	public float speed;
 	public bool flipSprite;
+	private float clock;
 
 	void Start() {
-		StartCoroutine(Move());
+		clock = 0;
+		//StartCoroutine(Move());
 	}
 
 	void Update () {
-		gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(xdir, 0) * speed;
+		clock += Time.deltaTime;
+		if (clock >= radius / speed) {
+			clock = 0;
+			xFlip ();
+		}
+		gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(xdir, gameObject.GetComponent<Rigidbody2D>().velocity.y) * speed;
 	}
 
+	public void xFlip()
+	{
+		if (xdir > 0) {
+			xdir = -1;
+			if (flipSprite) {
+				gameObject.GetComponent<SpriteRenderer>().flipX = true;
+			}
+		} else {
+			xdir = 1;
+			if (flipSprite) {
+				gameObject.GetComponent<SpriteRenderer>().flipX = false;
+			}
+		}
+	}
+	/*
 	IEnumerator Move() {
 		while (true) {
 			if (xdir > 0) {
@@ -33,4 +55,5 @@ public class EnemyMovement : MonoBehaviour {
 			yield return new WaitForSeconds(radius / speed);
 		}
 	}
+	*/
 }
