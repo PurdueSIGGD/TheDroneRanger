@@ -5,11 +5,16 @@ using UnityEngine;
 public class Attributes : MonoBehaviour {
 
     public float health = 100;
+    public float maxHealth = 100;
 
     //accessor
     public float getHealth()
     {
         return health;
+    }
+    public float getMaxHealth()
+    {
+        return maxHealth;
     }
 
     public bool isDead()
@@ -32,5 +37,9 @@ public class Attributes : MonoBehaviour {
     public void setHealth(float h)
     {
         health = h;
+    }
+    public void setMaxHealth(float h)
+    {
+        maxHealth = h;
     }
 }
