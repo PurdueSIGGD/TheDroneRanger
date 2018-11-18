@@ -24,7 +24,7 @@ public abstract class CooldownAbility : MonoBehaviour
         cooldown_Start();
     }
 
-    public void use()
+    public bool use()
     {
         // Clients should not worry about magic draw
         if (Time.time - lastUse > cooldown)
@@ -32,8 +32,11 @@ public abstract class CooldownAbility : MonoBehaviour
                 lastUse = Time.time;
                 hasNotified = false;
                 use_UseAbility();
-
+                return true;
         }
+
+        return false;
+
     }
 
     public void ability_Update()

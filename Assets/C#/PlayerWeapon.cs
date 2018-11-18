@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour {
 
-    private ProjectileSpawner spawner;
+    public KeyCode reloadKey = KeyCode.R;
+
+    private WeaponAttributes weapon;
 
 	void Start () {
 
-        spawner = this.GetComponent<ProjectileSpawner>();
+        weapon = this.GetComponent<WeaponAttributes>();
 
     }
 
@@ -16,7 +18,11 @@ public class PlayerWeapon : MonoBehaviour {
 
         if (Input.GetButton("Fire1"))
         {
-            spawner.use();
+            weapon.fire();
+        }
+        else if (Input.GetKeyDown(reloadKey))
+        {
+            weapon.reload();
         }
 
     }
