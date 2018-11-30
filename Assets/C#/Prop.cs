@@ -5,6 +5,7 @@ using UnityEngine;
 public class Prop : MonoBehaviour {
     public float durability = 1;
     public Sprite destroyedSprite;
+    private ParticleSystem ps;
 
     private SpriteRenderer myRenderer;
     private Sprite defaultSprite;
@@ -13,6 +14,9 @@ public class Prop : MonoBehaviour {
     {
         myRenderer = this.GetComponent<SpriteRenderer>();
         defaultSprite = myRenderer.sprite;
+        ps = GetComponent<ParticleSystem>();
+        var emission = ps.emission;
+        emission.enabled = false;
     }
 
     // called to decrease the durability of a prop by amount
@@ -34,6 +38,9 @@ public class Prop : MonoBehaviour {
         if(isDestroyed())
         {
             myRenderer.sprite = destroyedSprite;
+            SpriteRenderer destroyed1;
+            var emission = ps.emission;
+            emission.enabled = true;
         }
     }
 
