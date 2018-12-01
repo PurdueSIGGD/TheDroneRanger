@@ -7,7 +7,6 @@ public class PlayerMovement : MonoBehaviour
 
     public float movementAcceleration = 2000;
     public float maxHorizontalVelocity = 10;
-    public float downSlopeVelocity = 10;
     public float jumpImpulse = 10.0f;
     public int maxJumps = 1;
 
@@ -105,12 +104,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetAxisRaw("Horizontal") < 0) myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y);
             else if (Input.GetAxisRaw("Horizontal") > 0) myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y);
             else myRigid.velocity = new Vector2(0, myRigid.velocity.y);
-            if (jumpCounter == 0)
-            {
-                myRigid.velocity = new Vector2(myRigid.velocity.x, -downSlopeVelocity);
-            }
-        }
-        else
+        }else
         {
             if (Input.GetAxisRaw("Horizontal") < 0) myRigid.velocity = new Vector2(-maxHorizontalVelocity, 0);
             else if (Input.GetAxisRaw("Horizontal") > 0) myRigid.velocity = new Vector2(maxHorizontalVelocity, 0);
