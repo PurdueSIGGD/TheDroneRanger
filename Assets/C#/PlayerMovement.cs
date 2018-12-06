@@ -47,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
         if (nearLadder && !onLadder && Input.GetAxisRaw("Vertical") != 0)
         {
             onLadder = true;
+            jumpCounter = 0;
             myRigid.velocity = new Vector2(0, 0);
             myRigid.gravityScale = 0;
         }
@@ -107,14 +108,16 @@ public class PlayerMovement : MonoBehaviour
             else myRigid.velocity = new Vector2(0, myRigid.velocity.y);
             if (jumpCounter == 0)
             {
-                myRigid.velocity = new Vector2(myRigid.velocity.x, -downSlopeVelocity);
+                if(myRigid.velocity.y < 0) {
+                    myRigid.velocity = new Vector2(myRigid.velocity.x, -downSlopeVelocity);
+                }
             }
         }
         else
         {
-            if (Input.GetAxisRaw("Horizontal") < 0) myRigid.velocity = new Vector2(-maxHorizontalVelocity, 0);
-            else if (Input.GetAxisRaw("Horizontal") > 0) myRigid.velocity = new Vector2(maxHorizontalVelocity, 0);
-            else myRigid.velocity = new Vector2(0, 0);
+            if (Input.GetAxisRaw("Horizontal") < 0) myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y);
+            else if (Input.GetAxisRaw("Horizontal") > 0) myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y);
+            else myRigid.velocity = new Vector2(0, myRigid.velocity.y);
         }
 
 
@@ -155,13 +158,18 @@ public class PlayerMovement : MonoBehaviour
         jumpCounter++;
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnCollisionStay2D(Collision2D col)
     {
         Vector2 bottom = (Vector2)transform.position + new Vector2(0, -myBox.size.y / 2.0f);
         if (Physics2D.Raycast(bottom, -Vector2.up, 0.01f).collider != null)
         {
             jumpCounter = 0;
         }
+    }
+
+    void OnCollisionExit2D(Collision2D col)
+    {
+        if(jumpCounter == 0) { jumpCounter++; }
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -181,6 +189,7 @@ public class PlayerMovement : MonoBehaviour
         if (col.GetComponent<Projectile>()) { return; }
         if (col.GetComponent<Ladder>()) { return; }
         grounded = false;
+        if (jumpCounter == 0) { jumpCounter++; }
     }
     public void setNearLadder(bool near)
     {
