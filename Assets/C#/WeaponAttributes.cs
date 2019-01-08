@@ -31,6 +31,12 @@ public class WeaponAttributes : MonoBehaviour {
 
 	}
 
+    public void setCooldown(float delay)
+    {
+        projectileSpawner.cooldown = delay;
+        fireDelay = delay;
+    }
+
     public int getAmmo()
     {
 
