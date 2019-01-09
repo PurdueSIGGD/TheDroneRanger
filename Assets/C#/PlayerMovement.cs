@@ -44,15 +44,16 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (nearLadder && !onLadder && Input.GetAxisRaw("Vertical") != 0)
+        float verticalMovement = Input.GetAxis("Vertical");
+        float horizontalMovement = Input.GetAxis("Horizontal");
+        if (nearLadder && !onLadder && verticalMovement != 0) // Handle getting on ladders
         {
             onLadder = true;
             jumpCounter = 0;
             myRigid.velocity = new Vector2(0, 0);
             myRigid.gravityScale = 0;
         }
-
-        if (onLadder)
+        if (onLadder) // Handle being on ladders
         {
             if (Input.GetAxisRaw("Horizontal") == 0 && nearLadder)
             {
@@ -68,60 +69,41 @@ public class PlayerMovement : MonoBehaviour
                 jump(0.5f);
             }
         }
-
-        // Deal with slopes
-        if (grounded || onLadder)
+        
+        if (grounded || onLadder) // Prevent slipping off of slopes
         {
             myRigid.gravityScale = 0;
         }
-        else if (!onLadder && !nearLadder)
+        else
         {
             myRigid.gravityScale = gravity;
         }
 
-        float verticalMovement = Input.GetAxis("Vertical");
-
-        /*
-        float horizontalMovement = movementAcceleration * Input.GetAxis("Horizontal");
-        // Add force movement option
-        
-        if ((horizontalMovement > 0 && myRigid.velocity.x < maxHorizontalVelocity)
-            || (horizontalMovement < 0 && myRigid.velocity.x > -maxHorizontalVelocity))
-        {
-            myRigid.AddForce(new Vector2(myRigid.mass * horizontalMovement * Time.deltaTime, 0));
-        }
-        
-        if (Mathf.Abs(myRigid.velocity.x) > maxHorizontalVelocity)
-        {
-            Vector3 velocity = myRigid.velocity;
-            int sign = (velocity.x > 0 ? 1 : -1);
-            velocity.x = sign * maxHorizontalVelocity;
-            myRigid.velocity = velocity;
-        }
-        */
-
-        //Instant run movement option
+        bool goingLeft = Input.GetAxisRaw("Horizontal") < 0;
+        bool goingRight = Input.GetAxisRaw("Horizontal") > 0;
+        //Movement (Left / Right)
         if (!grounded)
         {
-            if (Input.GetAxisRaw("Horizontal") < 0) myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y);
-            else if (Input.GetAxisRaw("Horizontal") > 0) myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y);
-            else myRigid.velocity = new Vector2(0, myRigid.velocity.y);
+            if (goingLeft) { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
+            else if (goingRight) { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
+            else { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
             if (jumpCounter == 0)
             {
                 if(myRigid.velocity.y < 0) {
                     myRigid.velocity = new Vector2(myRigid.velocity.x, -downSlopeVelocity);
+                    print("hi");
                 }
             }
         }
         else
         {
-            if (Input.GetAxisRaw("Horizontal") < 0) myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y);
-            else if (Input.GetAxisRaw("Horizontal") > 0) myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y);
-            else myRigid.velocity = new Vector2(0, myRigid.velocity.y);
+            if (goingLeft) { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
+            else if (goingRight) { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
+            else { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
         }
 
-
-        if (verticalMovement >= 0)
+        // Trying to jump
+        if (verticalMovement > 0)
         {
             if (isCrouching)
             {
@@ -152,44 +134,40 @@ public class PlayerMovement : MonoBehaviour
         canJump = verticalMovement <= 0;
     }
 
-    private void jump(float jumpFactor)
+    void jump(float jumpFactor)
     {
         myRigid.AddForce(new Vector2(0, myRigid.mass * jumpImpulse), ForceMode2D.Impulse);
         jumpCounter++;
     }
 
-    void OnCollisionStay2D(Collision2D col)
+    bool hasJumped()
+    {
+        return jumpCounter > 0;
+    }
+
+    void OnCollisionStay2D(Collision2D col) // Bottom Collider
     {
         Vector2 bottom = (Vector2)transform.position + new Vector2(0, -myBox.size.y / 2.0f);
         if (Physics2D.Raycast(bottom, -Vector2.up, 0.01f).collider != null)
         {
             jumpCounter = 0;
         }
-    }
-
-    void OnCollisionExit2D(Collision2D col)
-    {
-        if(jumpCounter == 0) { jumpCounter++; }
-    }
-
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.GetComponent<Projectile>()) { return; }
-        if (col.GetComponent<Ladder>()) { return; }
         grounded = true;
     }
-    void OnTriggerStay2D(Collider2D col)
+
+    void OnCollisionExit2D(Collision2D col) // Bottom Collider
     {
-        if (col.GetComponent<Projectile>()) { return; }
-        if (col.GetComponent<Ladder>()) { return; }
-        grounded = true;
-    }
-    void OnTriggerExit2D(Collider2D col)
-    {
-        if (col.GetComponent<Projectile>()) { return; }
-        if (col.GetComponent<Ladder>()) { return; }
         grounded = false;
-        if (jumpCounter == 0) { jumpCounter++; }
+    }
+    void OnTriggerStay2D(Collider2D col) // Main Collider
+    {
+        if (col.GetComponent<Projectile>()) { return; }
+        if (col.GetComponent<Ladder>()) { return; }
+    }
+    void OnTriggerExit2D(Collider2D col) // Main Collider
+    {
+        if (col.GetComponent<Projectile>()) { return; }
+        if (col.GetComponent<Ladder>()) { return; }
     }
     public void setNearLadder(bool near)
     {
