@@ -61,6 +61,7 @@
     <Compile Include="Assets\C#\CooldownAbility.cs" />
     <Compile Include="Assets\C#\EnemyAttributes.cs" />
     <Compile Include="Assets\C#\FollowingCamera.cs" />
+    <Compile Include="Assets\C#\HighNoon.cs" />
     <Compile Include="Assets\C#\Ladder.cs" />
     <Compile Include="Assets\C#\LoopingBackground.cs" />
     <Compile Include="Assets\C#\ParallaxScenery.cs" />
