@@ -6,6 +6,9 @@ public class WeaponAttributes : MonoBehaviour {
 
     public int clipSize = 6;
     public float fireDelay = 0.2f;
+    public float reloadDelay = 0.5f;
+
+    public bool rapidFire = false;//Variable used by parent PlayerWeapon class
 
     public float projectileSpeed = 30;
     public GameObject projectile = null;
@@ -13,6 +16,7 @@ public class WeaponAttributes : MonoBehaviour {
     private int ammoCount;
 
     private ProjectileSpawner projectileSpawner;
+    private CooldownAbility reloadAbility = null;
 
     void Start () {
 
@@ -27,9 +31,14 @@ public class WeaponAttributes : MonoBehaviour {
         projectileSpawner.projectile = projectile;
         projectileSpawner.cooldown = fireDelay;
 
+        reloadAbility = this.gameObject.AddComponent<GenericAbility>();
+        reloadAbility.cooldown = reloadDelay;
+
         ammoCount = clipSize;//Start full
 
 	}
+
+
 
     public void setCooldown(float delay)
     {
@@ -62,6 +71,12 @@ public class WeaponAttributes : MonoBehaviour {
 
     public bool fire()
     {
+        //Don't allow fire while reloading
+        if (!reloadAbility.canUse())
+        {
+            return false;
+        }
+
         if (ammoCount <= 0)
         {
             return false;
@@ -78,8 +93,13 @@ public class WeaponAttributes : MonoBehaviour {
 
     public void reload()
     {
-
-        ammoCount = clipSize;
+        if (ammoCount < clipSize) {
+            reloadAbility.cooldown = reloadDelay;
+            if (reloadAbility.use())
+            {
+                ammoCount = clipSize;
+            }
+       }
 
     }
 

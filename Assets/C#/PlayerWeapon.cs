@@ -16,7 +16,8 @@ public class PlayerWeapon : MonoBehaviour {
 
     void Update () {
 
-        if (Input.GetButton("Fire1"))
+        if ((weapon.rapidFire && Input.GetButton("Fire1")) ||
+            (!weapon.rapidFire && Input.GetButtonDown("Fire1")))
         {
             weapon.fire();
         }
