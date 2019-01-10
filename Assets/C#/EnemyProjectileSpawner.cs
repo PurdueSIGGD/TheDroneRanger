@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyProjectileSpawner : ProjectileSpawner {
 	private EnemyAttributes enemyStats;
+	public string label;
 	private bool usesGravity;
 	private float gravScale;
 	public float arc = .5f; //value from 0 to 1 describing how direct the path of thrown object should follow

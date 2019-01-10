@@ -5,8 +5,9 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour {
 	private EnemyAttributes EnemyStats;
 	private Rigidbody2D EnemyRigid;
-	private EnemyMovement EnemyMove;
-	private EnemyProjectileSpawner projSpawner;
+	//private EnemyMovement EnemyMove;
+	//private EnemyProjectileSpawner projSpawner;
+	private EnemyAIMaster master;
 	public float range;
 	public float visionStart; //visionStart and visionEnd define between what angles the enemy can see
 	public float visionEnd;
@@ -15,9 +16,10 @@ public class EnemyAttack : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		EnemyStats = GetComponent<EnemyAttributes> ();
-		EnemyMove = GetComponent<EnemyMovement> ();
+		//EnemyMove = GetComponent<EnemyMovement> ();
 		EnemyRigid = GetComponent<Rigidbody2D> ();
-		projSpawner = GetComponent<EnemyProjectileSpawner> ();
+		master = GetComponent<EnemyAIMaster> ();
+		//projSpawner = GetComponent<EnemyProjectileSpawner> ();
 	}
 	
 	// Update is called once per frame
@@ -33,8 +35,8 @@ public class EnemyAttack : MonoBehaviour {
 	public virtual void attack()
 	{
 		//Debug.Log ("I see you at " + EnemyStats.getAggro().position);
-		projSpawner.use();
-
+		//projSpawner.use();
+		master.getCurrSpawner().use ();
 	}
 
 	public void seekTarget() 
@@ -48,7 +50,7 @@ public class EnemyAttack : MonoBehaviour {
 			
 			if ((playerMove = hits [i].GetComponentInParent<PlayerMovement> ())) {
 				Rigidbody2D playerRigid = playerMove.GetComponentInParent<Rigidbody2D> ();
-				float theta = Vector2.SignedAngle (transform.right * EnemyMove.xdir, playerRigid.position - EnemyRigid.position);
+				float theta = Vector2.SignedAngle (transform.right * master.getCurrMove().xdir, playerRigid.position - EnemyRigid.position);
 				//Debug.Log (EnemyMove.xdir);
 				if (theta < visionStart || theta > visionEnd) {			//check if player is within acceptable angle range for field of vision
 					EnemyStats.setAggro (null);

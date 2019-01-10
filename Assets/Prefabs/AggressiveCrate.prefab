@@ -27,6 +27,10 @@ GameObject:
   - component: {fileID: 114922679725282010}
   - component: {fileID: 114148180450923504}
   - component: {fileID: 114939775262628064}
+  - component: {fileID: 114804489620993320}
+  - component: {fileID: 114593686399277752}
+  - component: {fileID: 114643373654015152}
+  - component: {fileID: 114701677160397766}
   m_Layer: 0
   m_Name: AggressiveCrate
   m_TagString: Untagged
@@ -41,7 +45,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1786939519797682}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.14, y: -0.66, z: 0.017250543}
+  m_LocalPosition: {x: -7.49, y: 3.92, z: 0.017250543}
   m_LocalScale: {x: 2.5981, y: 2.5981, z: 2.5981}
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,9 +111,57 @@ MonoBehaviour:
   CAST_STRING: Cast
   cooldown: 1
   hasNotified: 0
-  projectile: {fileID: 1979001164161008, guid: a3c88811ab50ca0488c11f7f8449c170, type: 2}
-  thrust: 40
-  arc: 0.5
+  projectile: {fileID: 1979001164161008, guid: a53586319ca6da24690aa9328f7cf0a5, type: 2}
+  thrust: 20
+  label: TNTToss
+  arc: 0.2
+--- !u!114 &114593686399277752
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1786939519797682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f852f74f32b1b6847989528cb4a87c0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  label: stat
+  xdir: 1
+  ydir: 1
+  flipSprite: 1
+--- !u!114 &114643373654015152
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1786939519797682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a5dbb5c2fd20be40a6a20251720e801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  label: for
+  xdir: 1
+  ydir: 1
+  flipSprite: 1
+  speed: 2.5
+--- !u!114 &114701677160397766
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1786939519797682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9f36541bc2015044a1174cec89fceac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  label: chase
+  xdir: 1
+  ydir: 1
+  flipSprite: 1
+  speed: 1.5
 --- !u!114 &114718228449468838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -121,9 +173,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 239e5ef79c1f66b48ae34912dbb474c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 90
+  range: 2
   visionStart: -90
   visionEnd: 90
+--- !u!114 &114804489620993320
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1786939519797682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db1b7dc4f7f2bb4d9c6b38f1eccb365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationTriggerType: 0
+  CAST_STRING: Cast
+  cooldown: 1
+  hasNotified: 0
+  projectile: {fileID: 1979001164161008, guid: a3c88811ab50ca0488c11f7f8449c170, type: 2}
+  thrust: 15
+  label: BulletShoot
+  arc: 0
 --- !u!114 &114922679725282010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -135,11 +206,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 324faacbd98204811b70336b5e3e3bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  label: pace
   xdir: 1
   ydir: 1
-  radius: 0.003
-  speed: 0.001
   flipSprite: 1
+  radius: 5
+  speed: 1
 --- !u!114 &114939775262628064
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -151,6 +223,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee27d2631d7ea542afab362567e546d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveScript: {fileID: 114922679725282010}
+  attackScript: {fileID: 114718228449468838}
+  spawnSeq:
+  - BulletShoot
+  - TNTToss
+  - TNTToss
+  moveSeq:
+  - for
+  - for
+  - stat
+  aggromove: chase
+  moveDur:
+  - -1
+  - 1
+  - 1
+  currSpawn: 0
+  currMove: 0
+  cycleTime: 2.5
 --- !u!114 &114983513367892862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -164,7 +254,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   maxHealth: 100
-  health: 100
   attackRate: 1
   moveSpeed: 1
   aggroRigid: {fileID: 0}
