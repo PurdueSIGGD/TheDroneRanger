@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 212339122682323862}
   - component: {fileID: 50060999058037688}
   - component: {fileID: 61774235505970178}
+  - component: {fileID: 61120331190053094}
   - component: {fileID: 114623225053763910}
   - component: {fileID: 114522252132890292}
   - component: {fileID: 114297417838248002}
@@ -154,8 +155,33 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!61 &61120331190053094
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1840780901538968}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.06}
+  m_SpriteTilingProperty:
+    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.14, y: 0.021}
+  m_EdgeRadius: 0
 --- !u!61 &61774235505970178
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -238,7 +264,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementAcceleration: 2000
-  maxHorizontalVelocity: 10
+  maxHorizontalVelocity: 6
+  downSlopeVelocity: 10
   jumpImpulse: 7
   maxJumps: 1
   crouchMultiplier: 0.5

@@ -25,6 +25,7 @@ public class ProjectileSpawner : CooldownAbility
         GameObject Bullet = GameObject.Instantiate(projectile);
         Bullet.GetComponent<Projectile>().sourcePlayer = this.gameObject;
         Bullet.GetComponent<Transform>().position = SpawnPosition;
+        Bullet.GetComponent<Transform>().rotation = Quaternion.FromToRotation(Vector3.right, new Vector3(Direction.x, Direction.y, 0));
         Bullet.GetComponent<Rigidbody2D>().AddForce(Direction * thrust);
     }
 
