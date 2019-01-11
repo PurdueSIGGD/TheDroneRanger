@@ -12,11 +12,14 @@ public class WeaponAttributes : MonoBehaviour {
 
     public float projectileSpeed = 30;
     public GameObject projectile = null;
+    public AudioClip fireSound = null;
+    public AudioClip reloadSound = null;
 
     private int ammoCount;
 
     private ProjectileSpawner projectileSpawner;
     private CooldownAbility reloadAbility = null;
+    private AudioSource audioSource = null;
 
     void Start () {
 
@@ -25,6 +28,8 @@ public class WeaponAttributes : MonoBehaviour {
         {
             projectileSpawner = this.gameObject.AddComponent<ProjectileSpawner>();
         }
+
+        audioSource = this.GetComponent<AudioSource>();
 
         projectileSpawner.thrust = projectileSpeed;
         projectileSpawner.hurtPlayer = false;
@@ -85,6 +90,7 @@ public class WeaponAttributes : MonoBehaviour {
         if (projectileSpawner.use())
         {
             ammoCount--;
+            audioSource.PlayOneShot(fireSound);
             return true;
         }
 
@@ -98,6 +104,7 @@ public class WeaponAttributes : MonoBehaviour {
             if (reloadAbility.use())
             {
                 ammoCount = clipSize;
+                audioSource.PlayOneShot(reloadSound);
             }
        }
 
