@@ -7,7 +7,8 @@ public class PlayerMovement : MonoBehaviour
 
     public float movementAcceleration = 2000;
     public float maxHorizontalVelocity = 10;
-    public float diagonalVelocity = 7;
+    public float upDiagonalVelocity = 7;
+    public float downDiagonalVelocity = 6;
     public float diagVelocityOffset = 0.1f;
     public float jumpImpulse = 10.0f;
     public int maxJumps = 1;
@@ -91,31 +92,31 @@ public class PlayerMovement : MonoBehaviour
             if (goingLeft)
             {
                 if (goingUp && !jumping) { myRigid.velocity = new Vector2(-maxHorizontalVelocity, diagVelocityOffset); }
-                else if (!goingUp && !jumping) { myRigid.velocity = new Vector2(-diagonalVelocity, -diagonalVelocity-diagVelocityOffset); }
+                else if (!goingUp && !jumping) { myRigid.velocity = new Vector2(-downDiagonalVelocity, -downDiagonalVelocity-diagVelocityOffset); }
                 else { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
             }
             else if (goingRight)
             {
                 if (goingUp && !jumping) { myRigid.velocity = new Vector2(maxHorizontalVelocity, diagVelocityOffset); }
-                else if (!goingUp && !jumping) { myRigid.velocity = new Vector2(diagonalVelocity, -diagonalVelocity-diagVelocityOffset); }
+                else if (!goingUp && !jumping) { myRigid.velocity = new Vector2(downDiagonalVelocity, -downDiagonalVelocity-diagVelocityOffset); }
                 else { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
             }
-            else if (!jumping) { myRigid.velocity = new Vector2(0, -diagonalVelocity); }
+            else if (!jumping) { myRigid.velocity = new Vector2(0, -downDiagonalVelocity); }
             else{ myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
         }
         else // on ground
         {
             if (goingLeft)
             {
-                if (goingUp && !jumping) { myRigid.velocity = new Vector2(-diagonalVelocity, diagonalVelocity); }
-                else if (goingDown && !jumping) { myRigid.velocity = new Vector2(-diagonalVelocity, -diagonalVelocity); }
+                if (goingUp && !jumping) { myRigid.velocity = new Vector2(-upDiagonalVelocity, upDiagonalVelocity); }
+                else if (goingDown && !jumping) { myRigid.velocity = new Vector2(-downDiagonalVelocity, -downDiagonalVelocity); }
                 else if (!jumping) { myRigid.velocity = new Vector2(-maxHorizontalVelocity, 0); }
                 else { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
             }
             else if (goingRight)
             {
-                if (goingUp && !jumping) { myRigid.velocity = new Vector2(diagonalVelocity, diagonalVelocity); }
-                else if (goingDown && !jumping) { myRigid.velocity = new Vector2(diagonalVelocity, -diagonalVelocity); }
+                if (goingUp && !jumping) { myRigid.velocity = new Vector2(upDiagonalVelocity, upDiagonalVelocity); }
+                else if (goingDown && !jumping) { myRigid.velocity = new Vector2(downDiagonalVelocity, -downDiagonalVelocity); }
                 else if (!jumping) { myRigid.velocity = new Vector2(maxHorizontalVelocity, 0); }
                 else { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
             }
