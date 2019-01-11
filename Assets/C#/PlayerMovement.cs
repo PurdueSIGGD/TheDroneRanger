@@ -159,10 +159,7 @@ public class PlayerMovement : MonoBehaviour
 
     void jump(float jumpFactor)
     {
-        if(!jumping)
-        {
-            myRigid.velocity = new Vector2(myRigid.velocity.x, 0);
-        }
+        myRigid.velocity = new Vector2(myRigid.velocity.x, 0);
         myRigid.AddForce(new Vector2(0, myRigid.mass * jumpImpulse), ForceMode2D.Impulse);
         jumping = true;
         jumpCounter++;
