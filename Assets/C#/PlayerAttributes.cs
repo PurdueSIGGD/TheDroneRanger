@@ -4,7 +4,9 @@ using UnityEngine;
 
 
 public class PlayerAttributes : Attributes {
-    
+
+    [SerializeField]
+    private PlayerHealthBar healthBar;
     //public Weapon currentWeapon;
 
     //high noon at 100, should not be > 100
@@ -47,5 +49,10 @@ public class PlayerAttributes : Attributes {
     //returns true if highNoonPercent >= 100
     public bool isHighNoon() {
         return (highNoonPercent >= 100.0);
+    }
+
+    private void Update()
+    {
+        this.healthBar.updateHealth(this.health, 0, this.maxHealth);
     }
 }
