@@ -669,6 +669,7 @@ MonoBehaviour:
   projectileSpeed: 30
   projectile: {fileID: 1979001164161008, guid: a3c88811ab50ca0488c11f7f8449c170, type: 3}
   fireSound: {fileID: 8300000, guid: dadf53a7cc91cef4d820f2bf2ccbf936, type: 3}
+  reloadSound: {fileID: 8300000, guid: dadf53a7cc91cef4d820f2bf2ccbf936, type: 3}
 --- !u!82 &1670600403
 AudioSource:
   m_ObjectHideFlags: 0

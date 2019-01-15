@@ -8,8 +8,6 @@ public class PlayerAttributes : Attributes {
     //high noon at 100, should not be > 100
     public float highNoonPercent = 0;
 
-    //accessors
-    
     public float getHighNoonPercent() {
         return highNoonPercent;
     }
