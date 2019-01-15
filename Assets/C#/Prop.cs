@@ -14,7 +14,7 @@ public class Prop : MonoBehaviour {
     {
         myRenderer = this.GetComponent<SpriteRenderer>();
         defaultSprite = myRenderer.sprite;
-        ps = GetComponent<ParticleSystem>();
+        ps = this.GetComponent<ParticleSystem>();
         var emission = ps.emission;
         emission.enabled = false;
     }
@@ -35,12 +35,12 @@ public class Prop : MonoBehaviour {
 
     // This should be called when the prop gets shot
     void destroy() {
-        if(isDestroyed())
+        if (isDestroyed())
         {
             myRenderer.sprite = destroyedSprite;
-            SpriteRenderer destroyed1;
             var emission = ps.emission;
             emission.enabled = true;
+            StartCoroutine(stopAnimation());
         }
     }
 
@@ -48,5 +48,12 @@ public class Prop : MonoBehaviour {
     public bool isDestroyed()
     {
         return this.durability <= 0;
+    }
+
+    //runs a timer to stop destruction animation after a certain amount of time
+    IEnumerator stopAnimation() {
+        yield return new WaitForSeconds(.4f);
+        var emission = ps.emission;
+        emission.enabled = false;
     }
 }
