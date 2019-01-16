@@ -135,7 +135,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 0b9c8dd8d0cbbfd41b41fe3876c95755, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -253,7 +253,6 @@ GameObject:
   - component: {fileID: 61774235505970178}
   - component: {fileID: 61120331190053094}
   - component: {fileID: 114623225053763910}
-  - component: {fileID: 114522252132890292}
   - component: {fileID: 114408862294464370}
   m_Layer: 0
   m_Name: Player
@@ -419,25 +418,6 @@ MonoBehaviour:
   maxJumps: 1
   crouchMultiplier: 0.5
   crouchSprite: {fileID: 0}
---- !u!114 &114522252132890292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1840780901538968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a7f1bf20349fc84382da512353f922e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationTriggerType: 0
-  CAST_STRING: Cast
-  cooldown: 0.2
-  hasNotified: 0
-  projectile: {fileID: 1979001164161008, guid: a3c88811ab50ca0488c11f7f8449c170, type: 3}
-  thrust: 10
-  hurtPlayer: 0
 --- !u!114 &114408862294464370
 MonoBehaviour:
   m_ObjectHideFlags: 0
