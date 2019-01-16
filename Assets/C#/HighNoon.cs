@@ -23,7 +23,6 @@ public class HighNoon : MonoBehaviour
         Time.timeScale = 0.02f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
         active = true;
-        //gun.thrust *= 50;
     }
 
     private void endHighNoon()
@@ -33,7 +32,6 @@ public class HighNoon : MonoBehaviour
         Time.timeScale = 1.0f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
         active = false;
-        //gun.thrust /= 50;
     }
 
     void Update()
