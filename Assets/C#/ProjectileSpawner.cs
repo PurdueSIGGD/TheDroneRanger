@@ -22,6 +22,7 @@ public class ProjectileSpawner : CooldownAbility
 
         //TODO add targeting and spawn the bullet
         GameObject Bullet = GameObject.Instantiate(projectile);
+
         Projectile projec = Bullet.GetComponent<Projectile>();
         projec.sourceObj = this.gameObject;
         projec.hurtPlayer = hurtPlayer;
@@ -31,6 +32,12 @@ public class ProjectileSpawner : CooldownAbility
         Rigidbody2D rigid = Bullet.GetComponent<Rigidbody2D>();
         rigid.velocity = myRigid.velocity;
         rigid.AddForce(Direction * thrust);
+
+        Bullet.GetComponent<Projectile>().sourcePlayer = this.gameObject;
+        Bullet.GetComponent<Transform>().position = SpawnPosition;
+        Bullet.GetComponent<Transform>().rotation = Quaternion.FromToRotation(Vector3.right, new Vector3(Direction.x, Direction.y, 0));
+        Bullet.GetComponent<Rigidbody2D>().AddForce(Direction * thrust);
+        
     }
 
     private void Start()
