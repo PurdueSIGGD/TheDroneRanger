@@ -4,7 +4,7 @@ using UnityEngine;
 public class ProjectileSpawner : CooldownAbility
 {
     public GameObject projectile;
-    public float thrust = 30;
+    public float thrust = 1;
     public bool hurtPlayer = false;
 
     private Rigidbody2D myRigid = null;
@@ -31,12 +31,9 @@ public class ProjectileSpawner : CooldownAbility
         Bullet.transform.position = SpawnPosition;
         Rigidbody2D rigid = Bullet.GetComponent<Rigidbody2D>();
         rigid.velocity = myRigid.velocity;
-        rigid.AddForce(Direction * thrust);
-
-        Bullet.GetComponent<Projectile>().sourcePlayer = this.gameObject;
-        Bullet.GetComponent<Transform>().position = SpawnPosition;
-        Bullet.GetComponent<Transform>().rotation = Quaternion.FromToRotation(Vector3.right, new Vector3(Direction.x, Direction.y, 0));
-        Bullet.GetComponent<Rigidbody2D>().AddForce(Direction * thrust);
+        Bullet.transform.rotation = Quaternion.FromToRotation(Vector3.right, new Vector3(Direction.x, Direction.y, 0));
+        rigid.AddForce(Direction * thrust, ForceMode2D.Impulse);
+        
         
     }
 

@@ -10,7 +10,7 @@ public class WeaponAttributes : MonoBehaviour {
 
     public bool rapidFire = false;//Variable used by parent PlayerWeapon class
 
-    public float projectileSpeed = 30;
+    public float projectileSpeed = 3;
     public GameObject projectile = null;
     public AudioClip fireSound = null;
     public AudioClip reloadSound = null;
