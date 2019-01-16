@@ -15,7 +15,7 @@ public class PlayerWeapon : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
 
-            print("Bang");
+            //print("Bang");
             //Get position of gun at this moment to spawn bullet
 
         }

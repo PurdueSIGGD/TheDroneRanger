@@ -6,7 +6,7 @@ public class HighNoon : MonoBehaviour
 {
     public GameObject Player;
     public ProjectileSpawner gun;
-    public float activeTime;
+    public float activeTime = 6;
 
     private float charge = 100;
     private int shotsLeft = 6;
@@ -18,18 +18,22 @@ public class HighNoon : MonoBehaviour
         print("active");
         //if (charge < 100) return;
         charge = 0;
+        gun.ability_Start();
         startTime = Time.realtimeSinceStartup;
         Time.timeScale = 0.02f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
         active = true;
+        //gun.thrust *= 50;
     }
 
     private void endHighNoon()
     {
+        print("end");
         shotsLeft = 6;
         Time.timeScale = 1.0f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
         active = false;
+        //gun.thrust /= 50;
     }
 
     void Update()
