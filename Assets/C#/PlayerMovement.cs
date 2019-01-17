@@ -48,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         float verticalMovement = Input.GetAxis("Vertical");
-        float horizontalMovement = Input.GetAxis("Horizontal");
         if (nearLadder && !onLadder && verticalMovement != 0) // Handle getting on ladders
         {
             onLadder = true;
