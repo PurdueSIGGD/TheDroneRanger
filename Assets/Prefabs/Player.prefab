@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4322387154571316}
+  - component: {fileID: 8243309526681393141}
   - component: {fileID: 114636112047654578}
   m_Layer: 0
   m_Name: PlayerWeapon
@@ -32,6 +33,26 @@ Transform:
   m_Father: {fileID: 4103082889992742}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -12.3}
+--- !u!114 &8243309526681393141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1026146788967510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded84c3c1d3a61246a023934eaff268a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipSize: 6
+  fireDelay: 0.2
+  reloadDelay: 0.5
+  rapidFire: 0
+  projectileSpeed: 1
+  projectile: {fileID: 1979001164161008, guid: a3c88811ab50ca0488c11f7f8449c170, type: 3}
+  fireSound: {fileID: 0}
+  reloadSound: {fileID: 0}
 --- !u!114 &114636112047654578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,6 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f765621daa55f304fa562a126eb8dab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reloadKey: 114
 --- !u!1 &1038155502953712
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +252,6 @@ GameObject:
   - component: {fileID: 50060999058037688}
   - component: {fileID: 61774235505970178}
   - component: {fileID: 114623225053763910}
-  - component: {fileID: 114522252132890292}
   - component: {fileID: 114297417838248002}
   - component: {fileID: 230575831780405485}
   m_Layer: 0
@@ -364,28 +385,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementAcceleration: 2000
   maxHorizontalVelocity: 10
+  upDiagonalVelocity: 7
+  downDiagonalVelocity: 6
+  diagVelocityOffset: 0.1
   jumpImpulse: 7
   maxJumps: 1
   crouchMultiplier: 0.5
   crouchSprite: {fileID: 0}
---- !u!114 &114522252132890292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1840780901538968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a7f1bf20349fc84382da512353f922e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationTriggerType: 0
-  CAST_STRING: Cast
-  cooldown: 1
-  hasNotified: 0
-  projectile: {fileID: 1979001164161008, guid: a3c88811ab50ca0488c11f7f8449c170, type: 3}
-  thrust: 1
 --- !u!114 &114297417838248002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,8 +407,6 @@ MonoBehaviour:
   health: 80
   maxHealth: 100
   highNoonPercent: 0
-  ammoCount: 6
-  maxAmmo: 6
 --- !u!114 &230575831780405485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,6 +420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1840780901538968}
-  gun: {fileID: 114522252132890292}
+  gun: {fileID: 0}
   activeTime: 6
+  HNTimeScale: 0.02
   charge: 100
