@@ -23,15 +23,15 @@ public class Attributes : MonoBehaviour {
     }
 
     //mutators
-    public int takeDamage(float damage) //returns -1 if player is dead, returns 1 otherwise
+    public bool takeDamage(float damage) //returns true if alive, false if dead
     {
         health -= damage;
         if (health <= 0)
         {
             health = 0;
-            return -1;
+            return false;
         }
-        return 1;
+        return true;
     }
 
     public void setHealth(float h)

@@ -63,6 +63,7 @@
     <Compile Include="Assets\C#\FollowingCamera.cs" />
     <Compile Include="Assets\C#\HealthPack.cs" />
     <Compile Include="Assets\C#\HighNoon.cs" />
+    <Compile Include="Assets\C#\GenericAbility.cs" />
     <Compile Include="Assets\C#\Ladder.cs" />
     <Compile Include="Assets\C#\LoopingBackground.cs" />
     <Compile Include="Assets\C#\ParallaxScenery.cs" />
@@ -73,17 +74,24 @@
     <Compile Include="Assets\C#\Projectile.cs" />
     <Compile Include="Assets\C#\ProjectileSpawner.cs" />
     <Compile Include="Assets\C#\Prop.cs" />
+    <Compile Include="Assets\C#\WeaponAttributes.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>W:/Siggd/TheDroneRanger/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>W:/My Documents/GitHub/TheDroneRanger/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>W:/Siggd/TheDroneRanger/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>W:/My Documents/GitHub/TheDroneRanger/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.CollabProxy.Editor">
+      <HintPath>W:/My Documents/GitHub/TheDroneRanger/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>W:/Siggd/TheDroneRanger/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>W:/Siggd/TheDroneRanger/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>W:/My Documents/GitHub/TheDroneRanger/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.DataPrivacy">
+      <HintPath>W:/My Documents/GitHub/TheDroneRanger/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>W:/Siggd/TheDroneRanger/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
@@ -290,19 +298,19 @@
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Advertisements">
-      <HintPath>W:/Siggd/TheDroneRanger/Library/PackageCache/com.unity.ads@2.3.1/Runtime/UnityEngine.Advertisements.dll</HintPath>
+      <HintPath>W:/My Documents/GitHub/TheDroneRanger/Library/PackageCache/com.unity.ads@2.3.1/Runtime/UnityEngine.Advertisements.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Advertisements.Editor">
-      <HintPath>W:/Siggd/TheDroneRanger/Library/PackageCache/com.unity.ads@2.3.1/Runtime/UnityEngine.Advertisements.Editor.dll</HintPath>
+      <HintPath>W:/My Documents/GitHub/TheDroneRanger/Library/PackageCache/com.unity.ads@2.3.1/Runtime/UnityEngine.Advertisements.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>W:/Siggd/TheDroneRanger/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>W:/My Documents/GitHub/TheDroneRanger/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>W:/Siggd/TheDroneRanger/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>W:/My Documents/GitHub/TheDroneRanger/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>W:/Siggd/TheDroneRanger/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>W:/My Documents/GitHub/TheDroneRanger/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/unity/mscorlib.dll</HintPath>
