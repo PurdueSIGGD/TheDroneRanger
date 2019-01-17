@@ -7,27 +7,26 @@ public class HighNoon : MonoBehaviour
     public GameObject Player;
     public ProjectileSpawner gun;
     public float activeTime = 6;
+    public float HNTimeScale = 0.02f; // How fast time moves in high noon
 
-    private float charge = 100;
+    public float charge = 100;
     private int shotsLeft = 6;
     private bool active = false;
     private float startTime;
 
     private void startHighNoon()
     {
-        print("active");
         //if (charge < 100) return;
         charge = 0;
         gun.ability_Start();
         startTime = Time.realtimeSinceStartup;
-        Time.timeScale = 0.02f;
+        Time.timeScale = HNTimeScale;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
         active = true;
     }
 
     private void endHighNoon()
     {
-        print("end");
         shotsLeft = 6;
         Time.timeScale = 1.0f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;

@@ -55,7 +55,7 @@ public abstract class CooldownAbility : MonoBehaviour
     public abstract void cooldown_Update(); // Called once every frame
     public abstract void use_CanUse(); // Called at the exact time the cooldown timer has reset
 
-    public void Update()
+    public virtual void Update()
     {
         ability_Update();
     }
