@@ -9,7 +9,7 @@ public class PlayerAmmoTracker : MonoBehaviour
 
     private float fillAmount = 1;
     private GameObject Player;
-    private PlayerAttributes stats;
+    private WeaponAttributes stats;
 
     [SerializeField]
     private Image ammo;
@@ -17,12 +17,12 @@ public class PlayerAmmoTracker : MonoBehaviour
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-        stats = Player.GetComponent<PlayerAttributes>();
+        stats = Player.GetComponentInChildren<WeaponAttributes>();
     }
 
     void Update()
     {
-        updateHealth(stats.getAmmoCount(), 0, stats.maxAmmo);
+        updateHealth(stats.getAmmo(), 0, stats.getClipSize());
         ammo.fillAmount = fillAmount;
     }
 
