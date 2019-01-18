@@ -22,6 +22,8 @@ public abstract class CooldownAbility : MonoBehaviour
     public void ability_Start()
     {
         cooldown_Start();
+        lastUse = Time.time;
+        hasNotified = false;
     }
 
     public bool canUse()
@@ -60,5 +62,10 @@ public abstract class CooldownAbility : MonoBehaviour
     public abstract void cooldown_Start(); // Called when the object is alive
     public abstract void cooldown_Update(); // Called once every frame
     public abstract void use_CanUse(); // Called at the exact time the cooldown timer has reset
+
+    public virtual void Update()
+    {
+        ability_Update();
+    }
 }
 
