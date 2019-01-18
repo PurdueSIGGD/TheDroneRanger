@@ -5,7 +5,8 @@ using UnityEngine;
 public class HighNoon : MonoBehaviour
 {
     public GameObject Player;
-    public ProjectileSpawner gun;
+    public WeaponAttributes weapon;
+    private ProjectileSpawner gun;
     public float activeTime = 6;
     public float HNTimeScale = 0.02f; // How fast time moves in high noon
 
@@ -16,6 +17,7 @@ public class HighNoon : MonoBehaviour
 
     private void startHighNoon()
     {
+        gun = weapon.getProjectileSpawner();
         //if (charge < 100) return;
         charge = 0;
         gun.ability_Start();

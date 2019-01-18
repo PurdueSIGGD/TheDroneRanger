@@ -420,7 +420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1840780901538968}
-  gun: {fileID: 0}
+  weapon: {fileID: 8243309526681393141}
   activeTime: 6
   HNTimeScale: 0.02
   charge: 100
