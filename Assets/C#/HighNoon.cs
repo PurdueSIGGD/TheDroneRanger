@@ -18,8 +18,8 @@ public class HighNoon : MonoBehaviour
     private void startHighNoon()
     {
         gun = weapon.getProjectileSpawner();
-        //if (charge < 100) return;
-        charge = 0;
+        if (charge < 100) return;
+        weapon.setAmmo(shotsLeft);
         gun.ability_Start();
         startTime = Time.realtimeSinceStartup;
         Time.timeScale = HNTimeScale;
@@ -29,10 +29,16 @@ public class HighNoon : MonoBehaviour
 
     private void endHighNoon()
     {
+        charge = 0;
         shotsLeft = 6;
         Time.timeScale = 1.0f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
         active = false;
+    }
+
+    public bool isActive()
+    {
+        return active;
     }
 
     void Update()
@@ -49,11 +55,13 @@ public class HighNoon : MonoBehaviour
             }
             else
             {
+                charge = 100 * ((activeTime + startTime - Time.realtimeSinceStartup) / activeTime);
                 //TODO add highnoon implimentation
                 if (Input.GetButtonDown("Fire1"))
                 {
                     gun.use_UseAbility();
                     shotsLeft--;
+                    weapon.setAmmo(shotsLeft);
                     if(shotsLeft == 0)
                     {
                         endHighNoon();

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerClockTime : MonoBehaviour
 {
     private GameObject Player;
-    private PlayerAttributes stats;
+    private HighNoon stats;
     private RectTransform rectTransform;
 
     [SerializeField]
@@ -14,19 +14,19 @@ public class PlayerClockTime : MonoBehaviour
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-        stats = Player.GetComponent<PlayerAttributes>();
+        stats = Player.GetComponent<HighNoon>();
         rectTransform = clockHand.GetComponent<RectTransform>();
     }
 
     void Update()
     {
-        if (stats.isHighNoon())
+        if (stats.charge >= 100 || stats.charge <= 0)
         {
             rectTransform.rotation = Quaternion.Euler(0, 0, 0);
         }
         else
         {
-            float angle = -3.6f * stats.highNoonPercent;
+            float angle = -3.6f * stats.charge;
             rectTransform.rotation = Quaternion.Euler(0, 0, angle);
         }
     }

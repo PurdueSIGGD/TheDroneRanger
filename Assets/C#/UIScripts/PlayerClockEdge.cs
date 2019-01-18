@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerClockEdge : MonoBehaviour
 {
     private GameObject Player;
-    private PlayerAttributes stats;
+    private HighNoon stats;
 
     [SerializeField]
     private Image clockEdge;
@@ -18,12 +18,12 @@ public class PlayerClockEdge : MonoBehaviour
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-        stats = Player.GetComponent<PlayerAttributes>();
+        stats = Player.GetComponent<HighNoon>();
     }
 
     void Update()
     {
-        if (stats.isHighNoon())
+        if (stats.charge >= 100 || stats.isActive())
         {
             clockEdge.sprite = ready;
         }
