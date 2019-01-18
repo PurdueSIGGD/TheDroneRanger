@@ -61,6 +61,8 @@
     <Compile Include="Assets\C#\CooldownAbility.cs" />
     <Compile Include="Assets\C#\EnemyAttributes.cs" />
     <Compile Include="Assets\C#\FollowingCamera.cs" />
+    <Compile Include="Assets\C#\HealthPack.cs" />
+    <Compile Include="Assets\C#\HighNoon.cs" />
     <Compile Include="Assets\C#\GenericAbility.cs" />
     <Compile Include="Assets\C#\Ladder.cs" />
     <Compile Include="Assets\C#\LoopingBackground.cs" />
@@ -82,11 +84,17 @@
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>W:/My Documents/GitHub/TheDroneRanger/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.CollabProxy.Editor">
+      <HintPath>W:/Siggd/TheDroneRanger/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>W:/My Documents/GitHub/TheDroneRanger/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>W:/My Documents/GitHub/TheDroneRanger/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.DataPrivacy">
+      <HintPath>W:/Siggd/TheDroneRanger/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
