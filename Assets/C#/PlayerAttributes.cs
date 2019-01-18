@@ -22,10 +22,32 @@ public class PlayerAttributes : Attributes {
             weapons.Add(preWeps[i].gameObject);
         }
 
+        //TEST weapon below
+        GameObject wep2 = Instantiate(Resources.Load("Weapons/Revolver_Future", typeof(GameObject))) as GameObject;
+        addWeapon(wep2);
+        wep2.transform.localScale *= 1.5f;
+
+    }
+
+    public void Update()
+    {
+        
+        if (Input.GetMouseButtonDown(2))
+        {
+            weapons[0].SetActive(!weapons[0].activeSelf);
+            weapons[1].SetActive(!weapons[1].activeSelf);
+        }
+
     }
 
     public void addWeapon(GameObject wep)
     {
+        wep.transform.position = weapons[0].transform.position;
+        wep.transform.rotation = weapons[0].transform.rotation;
+        wep.transform.parent = weapons[0].transform.parent;
+        wep.transform.eulerAngles = weapons[0].transform.eulerAngles;
+        wep.transform.localScale = weapons[0].transform.localScale;
+        wep.SetActive(false);
         weapons.Add(wep);
     }
 
