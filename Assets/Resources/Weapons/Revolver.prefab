@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6638093583485376288}
   - component: {fileID: 3347999263294230753}
   m_Layer: 0
-  m_Name: Revolver_Future
+  m_Name: Revolver
   m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,7 +120,7 @@ SpriteRenderer:
   m_SortingLayerID: -799989607
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 7ca56e4208743d644b6b16481ac84ecd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bbb8b8240eb7eb249acb8a7a7135a920, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

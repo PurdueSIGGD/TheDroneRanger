@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PlayerAttributes : Attributes {
 
-    private List<GameObject> weapons = new List<GameObject>();
+    public KeyCode reloadKey = KeyCode.R;
+
+    private List<WeaponAttributes> weapons = new List<WeaponAttributes>();
+    private int activeWepSlot = 0;
 
     //high noon at 100, should not be > 100
     public float highNoonPercent = 0;
@@ -19,39 +22,76 @@ public class PlayerAttributes : Attributes {
             {
                 continue;
             }
-            weapons.Add(preWeps[i].gameObject);
+            weapons.Add(preWeps[i]);
         }
 
-        //TEST weapon below
-        GameObject wep2 = Instantiate(Resources.Load("Weapons/Revolver_Future", typeof(GameObject))) as GameObject;
-        addWeapon(wep2);
-        wep2.transform.localScale *= 1.5f;
+        addWeaponByName("Weapons/Revolver");
 
     }
 
     public void Update()
     {
-        
-        if (Input.GetMouseButtonDown(2))
+
+        WeaponAttributes activeWep = weapons[activeWepSlot];
+
+        if ((activeWep.rapidFire && Input.GetButton("Fire1")) ||
+            (!activeWep.rapidFire && Input.GetButtonDown("Fire1")))
         {
-            weapons[0].SetActive(!weapons[0].activeSelf);
-            weapons[1].SetActive(!weapons[1].activeSelf);
+            activeWep.fire();
+        }
+        else if (Input.GetKeyDown(reloadKey))
+        {
+            activeWep.reload();
+        }else if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+        {
+
+            int newSlot = activeWepSlot + ((Input.GetAxis("Mouse ScrollWheel") > 0f) ? 1 : weapons.Count - 1);
+            newSlot %= weapons.Count;
+
+            activeWep.gameObject.SetActive(false);
+            activeWep = weapons[newSlot];
+            activeWep.gameObject.SetActive(true);
+
         }
 
     }
 
-    public void addWeapon(GameObject wep)
+    public WeaponAttributes addWeaponByName(string path)
     {
-        wep.transform.position = weapons[0].transform.position;
-        wep.transform.rotation = weapons[0].transform.rotation;
-        wep.transform.parent = weapons[0].transform.parent;
-        wep.transform.eulerAngles = weapons[0].transform.eulerAngles;
-        wep.transform.localScale = weapons[0].transform.localScale;
-        wep.SetActive(false);
-        weapons.Add(wep);
+        GameObject prefab = Instantiate(Resources.Load(path, typeof(GameObject))) as GameObject;
+        if (prefab == null)
+        {
+            return null;
+        }
+
+        return addWeapon(prefab);
     }
 
-    public List<GameObject> getWeaponList()
+    public WeaponAttributes addWeapon(GameObject obj)
+    {
+        obj.transform.position = weapons[0].transform.position;
+        obj.transform.rotation = weapons[0].transform.rotation;
+        obj.transform.parent = weapons[0].transform.parent;
+        obj.transform.eulerAngles = weapons[0].transform.eulerAngles;
+        obj.transform.localScale = weapons[0].transform.localScale;
+        obj.SetActive(false);
+
+        WeaponAttributes wep = obj.GetComponent<WeaponAttributes>();
+        if (wep == null)
+        {
+            wep = obj.AddComponent<WeaponAttributes>();
+        }
+
+        weapons.Add(wep);
+        return wep;
+    }
+
+    public WeaponAttributes getActiveWeapon()
+    {
+        return weapons[activeWepSlot];
+    }
+
+    public List<WeaponAttributes> getWeaponList()
     {
         return weapons;
     }
