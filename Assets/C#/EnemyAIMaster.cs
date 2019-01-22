@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAIMaster : MonoBehaviour {
-	public EnemyMovement moveScript;
+	//public EnemyMovement moveScript;
 	public EnemyAttack attackScript;
 	//public EnemyProjectileSpawner projSpawner;
 	//public GameObject[] weaponList;
@@ -22,6 +22,7 @@ public class EnemyAIMaster : MonoBehaviour {
 	public float cycleTime = -1;
 	private float timeCounter = 0;
 	private float moveTimer = 0;
+	private float jumpTimer = 0;
 	private EnemyAttributes EnemyStats;
 	private bool aggroed = false;
 
@@ -99,7 +100,7 @@ public class EnemyAIMaster : MonoBehaviour {
 				changeMovement ();
 			}
 		}
-
+		jumpTimer = Mathf.Max (0, jumpTimer - Time.deltaTime);
 
 		if (EnemyStats.getAggro () && EnemyStats.canHit()) {
 			if (!aggroed) {
@@ -119,6 +120,16 @@ public class EnemyAIMaster : MonoBehaviour {
 		}
 
 
+	}
+
+	public bool canJump()
+	{
+		return jumpTimer <= 0;
+	}
+
+	public void resetJumpCool()
+	{
+		jumpTimer = EnemyStats.getJumpCool();
 	}
 
 	public EnemyProjectileSpawner getCurrSpawner()

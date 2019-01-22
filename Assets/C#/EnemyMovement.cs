@@ -7,13 +7,56 @@ public class EnemyMovement : MonoBehaviour {
 	public int xdir = 1;
 	public int ydir = 1;
 	public bool flipSprite = true;
+	public int maxJumps = 1;
+	public float jumpHeight = 3;
+	private int jumpCounter = 0;
+	private EnemyAIMaster master;
+	[HideInInspector]
+	public Rigidbody2D enemyRigid;
 	//public bool flipOnSwitch = false;
+
+	void Start()
+	{
+		enemyRigid = gameObject.GetComponent<Rigidbody2D> ();
+		master = GetComponent<EnemyAIMaster> ();
+		sStart ();
+	}
+
+	public virtual void sStart()
+	{
+
+	}
 
 	// Update is called once per frame
 	public virtual void Update () {
 		//Debug.Log ("still");
-		gameObject.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, gameObject.GetComponent<Rigidbody2D> ().velocity.y);
+
+		Vector2 bottom = (Vector2)transform.position + new Vector2 (0, -gameObject.GetComponent<Collider2D> ().bounds.size.y / 2.0f - .01f);
+
+		if (master.canJump() && Physics2D.Raycast(bottom, -Vector2.up, .01f))
+		{
+			Debug.Log ("ground");
+			jumpCounter = 0;
+		}
+		sUpdate ();
 	}
+
+	public virtual void sUpdate()
+	{
+		enemyRigid.velocity = new Vector2 (0, gameObject.GetComponent<Rigidbody2D> ().velocity.y);
+	}
+
+	public void jump()
+	{
+		if (jumpCounter < maxJumps) {
+			Debug.Log ("jumped");
+			enemyRigid.AddForce (Vector2.up * Mathf.Sqrt(2 * jumpHeight * Physics2D.gravity.magnitude) * enemyRigid.mass, ForceMode2D.Impulse);
+			master.resetJumpCool ();
+			jumpCounter++;
+		}
+			
+	}
+
 
 	public void xFlip()
 	{

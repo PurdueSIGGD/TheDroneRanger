@@ -7,8 +7,8 @@ public class EnemyMoveForward : EnemyMovement {
 	public float speed;
 
 	// Update is called once per frame
-	public override void Update () {
+	public override void sUpdate () {
 		//Debug.Log ("forward");
-		gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(xdir * speed, gameObject.GetComponent<Rigidbody2D>().velocity.y);
+		enemyRigid.velocity = new Vector2(xdir * speed, gameObject.GetComponent<Rigidbody2D>().velocity.y);
 	}
 }

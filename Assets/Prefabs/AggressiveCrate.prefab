@@ -31,6 +31,7 @@ GameObject:
   - component: {fileID: 114593686399277752}
   - component: {fileID: 114643373654015152}
   - component: {fileID: 114701677160397766}
+  - component: {fileID: 114093049456113770}
   m_Layer: 0
   m_Name: AggressiveCrate
   m_TagString: Untagged
@@ -45,7 +46,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1786939519797682}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.49, y: 3.92, z: 0.017250543}
+  m_LocalPosition: {x: -7.65, y: 2.93, z: 0.017250543}
   m_LocalScale: {x: 2.5981, y: 2.5981, z: 2.5981}
   m_Children: []
   m_Father: {fileID: 0}
@@ -96,6 +97,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64, y: 0.64}
   m_EdgeRadius: 0
+--- !u!114 &114093049456113770
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1786939519797682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7204ee73f096c1d4ea50ea3be80bf09f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  label: jum
+  xdir: 1
+  ydir: 1
+  flipSprite: 1
+  maxJumps: 1
+  enemyRigid: {fileID: 0}
+  xLocked: 1
 --- !u!114 &114148180450923504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,6 +149,8 @@ MonoBehaviour:
   xdir: 1
   ydir: 1
   flipSprite: 1
+  maxJumps: 1
+  enemyRigid: {fileID: 0}
 --- !u!114 &114643373654015152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -145,6 +166,8 @@ MonoBehaviour:
   xdir: 1
   ydir: 1
   flipSprite: 1
+  maxJumps: 1
+  enemyRigid: {fileID: 0}
   speed: 2.5
 --- !u!114 &114701677160397766
 MonoBehaviour:
@@ -161,6 +184,8 @@ MonoBehaviour:
   xdir: 1
   ydir: 1
   flipSprite: 1
+  maxJumps: 1
+  enemyRigid: {fileID: 0}
   speed: 1.5
 --- !u!114 &114718228449468838
 MonoBehaviour:
@@ -210,6 +235,8 @@ MonoBehaviour:
   xdir: 1
   ydir: 1
   flipSprite: 1
+  maxJumps: 1
+  enemyRigid: {fileID: 0}
   radius: 5
   speed: 1
 --- !u!114 &114939775262628064
@@ -223,21 +250,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee27d2631d7ea542afab362567e546d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveScript: {fileID: 114922679725282010}
   attackScript: {fileID: 114718228449468838}
   spawnSeq:
   - BulletShoot
   - TNTToss
   - TNTToss
   moveSeq:
-  - for
-  - for
-  - stat
+  - jum
   aggromove: chase
   moveDur:
-  - -1
-  - 1
-  - 1
+  - -1.95
   currSpawn: 0
   currMove: 0
   cycleTime: 2.5
@@ -256,6 +278,7 @@ MonoBehaviour:
   maxHealth: 100
   attackRate: 1
   moveSpeed: 1
+  jumpCool: 1
   aggroRigid: {fileID: 0}
 --- !u!212 &212850039077597828
 SpriteRenderer:

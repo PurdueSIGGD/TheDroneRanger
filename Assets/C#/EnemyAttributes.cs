@@ -6,6 +6,7 @@ public class EnemyAttributes : Attributes {
 	//public Weapon currentWeapon;
 	public float attackRate = 1;
 	public float moveSpeed = 1;
+	public float jumpCool = .5f;
 	public Rigidbody2D aggroRigid = null;
 	private bool inRange;
 
@@ -22,6 +23,11 @@ public class EnemyAttributes : Attributes {
 	public Rigidbody2D getAggro()
 	{
 		return aggroRigid;
+	}
+
+	public float getJumpCool()
+	{
+		return jumpCool;
 	}
 
 	public bool canHit()
@@ -43,6 +49,11 @@ public class EnemyAttributes : Attributes {
 	public void setAggro(Rigidbody2D playerRigid)
 	{
 		aggroRigid = playerRigid;
+	}
+
+	public void setJumpCool(float j)
+	{
+		jumpCool = j;
 	}
 
 	public void setInRange(bool x)

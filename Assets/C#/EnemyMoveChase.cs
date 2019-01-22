@@ -6,16 +6,14 @@ public class EnemyMoveChase : EnemyMovement {
 
 	public float speed;
 	private EnemyAttributes enemyStats;
-	private Rigidbody2D enemyRigid;
 
-	void Start()
+	public override void sStart()
 	{
 		enemyStats = GetComponent<EnemyAttributes> ();
-		enemyRigid = GetComponent<Rigidbody2D> ();
 	}
 
 	// Update is called once per frame
-	public override void Update () {
+	public override void sUpdate () {
 		//Debug.Log ("chase");
 		Rigidbody2D aggroRigid;
 
