@@ -80,3 +80,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+*.info
+*.dll
