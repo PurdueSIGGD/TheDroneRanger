@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowingCamera : MonoBehaviour {
-
-    GameObject[] targets;
+    
     GameObject target;
 
     // Determines the position of the player on the screen (with regards to the camera)
     public float offsetX = 0, offsetY = 0;
     // Determines whether or not the camera will follow the player as he traverses the Y-axis
-    bool followYAxis = false;
+    public bool followYAxis = false;
 
     private float initY, initZ;
 
@@ -19,8 +18,7 @@ public class FollowingCamera : MonoBehaviour {
     {
 
         // Determine the player to have the camera follow
-        targets = GameObject.FindGameObjectsWithTag("Player");
-        target = targets[0];
+        target = GameObject.FindGameObjectWithTag("Player");
         // Get the initial position of the camera
         initY = this.transform.position.y;
         initZ = this.transform.position.z;
@@ -35,16 +33,19 @@ public class FollowingCamera : MonoBehaviour {
     void Update()
     {
         // Move the camera based off of the change in the player's position.
-        if (targets != null)
+        if (target != null)
         {
+            float yPos;
+            float xPos = target.transform.position.x + offsetX;
             if (followYAxis)
             {
-                transform.position = new Vector3(target.transform.position.x + offsetX, target.transform.position.y + offsetY, initZ);
+                yPos = target.transform.position.y + offsetY;
             }
             else
             {
-                transform.position = new Vector3(target.transform.position.x + offsetX, initY, initZ);
+                yPos = initY;
             }
+            transform.position = new Vector3(xPos, yPos, initZ);
         }
     }
 }
