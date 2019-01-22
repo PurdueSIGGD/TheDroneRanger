@@ -14,7 +14,7 @@ public class Prop : MonoBehaviour {
     {
         myRenderer = this.GetComponent<SpriteRenderer>();
         defaultSprite = myRenderer.sprite;
-        ps = this.GetComponent<ParticleSystem>();
+        ps = this.GetComponentInChildren<ParticleSystem>();
         var emission = ps.emission;
         emission.enabled = false;
     }
@@ -22,7 +22,6 @@ public class Prop : MonoBehaviour {
     // called to decrease the durability of a prop by amount
     public void decreaseDurability(float amount)
     {
-        print("hello!");
         this.durability -= durability;
         destroy();
     }
@@ -52,7 +51,7 @@ public class Prop : MonoBehaviour {
 
     //runs a timer to stop destruction animation after a certain amount of time
     IEnumerator stopAnimation() {
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.1f);
         var emission = ps.emission;
         emission.enabled = false;
     }
