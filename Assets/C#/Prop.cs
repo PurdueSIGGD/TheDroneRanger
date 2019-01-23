@@ -5,6 +5,7 @@ using UnityEngine;
 public class Prop : MonoBehaviour {
     public float durability = 1;
     public Sprite destroyedSprite;
+    private ParticleSystem ps;
 
     private SpriteRenderer myRenderer;
     private Sprite defaultSprite;
@@ -13,12 +14,14 @@ public class Prop : MonoBehaviour {
     {
         myRenderer = this.GetComponent<SpriteRenderer>();
         defaultSprite = myRenderer.sprite;
+        ps = this.GetComponentInChildren<ParticleSystem>();
+        var emission = ps.emission;
+        emission.enabled = false;
     }
 
     // called to decrease the durability of a prop by amount
     public void decreaseDurability(float amount)
     {
-        print("hello!");
         this.durability -= durability;
         destroy();
     }
@@ -31,9 +34,14 @@ public class Prop : MonoBehaviour {
 
     // This should be called when the prop gets shot
     void destroy() {
-        if(isDestroyed())
+        if (isDestroyed())
         {
             myRenderer.sprite = destroyedSprite;
+            BoxCollider2D box = this.GetComponent<BoxCollider2D>();
+            Destroy(box, 0);
+            var emission = ps.emission;
+            emission.enabled = true;
+            StartCoroutine(stopAnimation());
         }
     }
 
@@ -41,5 +49,12 @@ public class Prop : MonoBehaviour {
     public bool isDestroyed()
     {
         return this.durability <= 0;
+    }
+
+    //runs a timer to stop destruction animation after a certain amount of time
+    IEnumerator stopAnimation() {
+        yield return new WaitForSeconds(.1f);
+        var emission = ps.emission;
+        emission.enabled = false;
     }
 }
