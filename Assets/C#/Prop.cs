@@ -37,6 +37,8 @@ public class Prop : MonoBehaviour {
         if (isDestroyed())
         {
             myRenderer.sprite = destroyedSprite;
+            BoxCollider2D box = this.GetComponent<BoxCollider2D>();
+            Destroy(box, 0);
             var emission = ps.emission;
             emission.enabled = true;
             StartCoroutine(stopAnimation());
