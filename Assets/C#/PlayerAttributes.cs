@@ -6,6 +6,8 @@ public class PlayerAttributes : Attributes {
 
     public KeyCode reloadKey = KeyCode.R;
 
+    public int maxWeapons = 3; //Values <= 0 allow infinite amount
+
     private List<WeaponAttributes> weapons = new List<WeaponAttributes>();
     private int activeWepSlot = 0;
 
@@ -24,8 +26,6 @@ public class PlayerAttributes : Attributes {
             }
             weapons.Add(preWeps[i]);
         }
-
-        addWeaponByName("Weapons/Revolver");
 
     }
 
@@ -50,6 +50,7 @@ public class PlayerAttributes : Attributes {
 
             activeWep.gameObject.SetActive(false);
             activeWep = weapons[newSlot];
+            activeWepSlot = newSlot;
             activeWep.gameObject.SetActive(true);
 
         }
@@ -58,6 +59,12 @@ public class PlayerAttributes : Attributes {
 
     public WeaponAttributes addWeaponByName(string path)
     {
+        //Returns null if unable to add.
+        if (maxWeapons > 0 && weapons.Count >= maxWeapons)
+        {
+            return null;
+        }
+
         GameObject prefab = Instantiate(Resources.Load(path, typeof(GameObject))) as GameObject;
         if (prefab == null)
         {
@@ -69,6 +76,13 @@ public class PlayerAttributes : Attributes {
 
     public WeaponAttributes addWeapon(GameObject obj)
     {
+
+        //Returns null if unable to add.
+        if (maxWeapons > 0 && weapons.Count >= maxWeapons)
+        {
+            return null;
+        }
+
         obj.transform.position = weapons[0].transform.position;
         obj.transform.rotation = weapons[0].transform.rotation;
         obj.transform.parent = weapons[0].transform.parent;
