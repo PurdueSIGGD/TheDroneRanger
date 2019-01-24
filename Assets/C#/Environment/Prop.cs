@@ -8,12 +8,10 @@ public class Prop : MonoBehaviour {
     private ParticleSystem ps;
 
     private SpriteRenderer myRenderer;
-    private Sprite defaultSprite;
     // Use this for initialization
     void Start ()
     {
         myRenderer = this.GetComponent<SpriteRenderer>();
-        defaultSprite = myRenderer.sprite;
         ps = this.GetComponentInChildren<ParticleSystem>();
         var emission = ps.emission;
         emission.enabled = false;
@@ -38,6 +36,7 @@ public class Prop : MonoBehaviour {
         {
             myRenderer.sprite = destroyedSprite;
             BoxCollider2D box = this.GetComponent<BoxCollider2D>();
+            this.GetComponent<Rigidbody2D>().gravityScale = 0;
             Destroy(box, 0);
             var emission = ps.emission;
             emission.enabled = true;
