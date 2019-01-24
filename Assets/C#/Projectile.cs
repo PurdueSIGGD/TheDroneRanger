@@ -5,17 +5,20 @@ using UnityEngine;
 // Shamlessly stolen from Andrew Lonsway - edited by Clayton Detke
 public class Projectile : MonoBehaviour {
     [HideInInspector]
-    public GameObject sourcePlayer;
+    public GameObject sourceObj;
 
     public float damage = 1;
-    public float lifetime = 10;
+    public float lifetime = 4;
     public bool dieOnHit = true;
+    public bool hurtPlayer = false;
 
     private bool hasHit;
+    private GameObject player;
 
     // Use this for initialization
     void Start () {
         Invoke("DestroyMe", lifetime);
+        player = GameObject.Find("Player");
     }
 
     void DestroyMe()
@@ -29,13 +32,13 @@ public class Projectile : MonoBehaviour {
         /* CHECKS FOR HIT VALIDIDTY */
         if (hasHit && dieOnHit) return; // We only want to hit one object... for some reason it collides multiple times before destroying itself
         if (col.isTrigger) return; // Only want our own trigger effects
-        if (!sourcePlayer) return;
-        if (col == sourcePlayer.GetComponent<Collider2D>()) return;
+        if (!sourceObj) return;
+        if (col == sourceObj.GetComponent<Collider2D>()) return;
         Attributes attr;
         Prop p;
         if ((attr = col.GetComponentInParent<Attributes>()))
         {
-            if (attr.gameObject == sourcePlayer.gameObject) return;
+            if (!hurtPlayer && attr.gameObject == player) return;
         }
         else if ((p = col.GetComponentInParent<Prop>()))
         {

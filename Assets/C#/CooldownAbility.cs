@@ -22,18 +22,28 @@ public abstract class CooldownAbility : MonoBehaviour
     public void ability_Start()
     {
         cooldown_Start();
+        lastUse = Time.time;
+        hasNotified = false;
     }
 
-    public void use()
+    public bool canUse()
+    {
+        return (Time.time - lastUse) > cooldown;
+    }
+
+    public bool use()
     {
         // Clients should not worry about magic draw
-        if (Time.time - lastUse > cooldown)
+        if (canUse())
         {
                 lastUse = Time.time;
                 hasNotified = false;
                 use_UseAbility();
-
+                return true;
         }
+
+        return false;
+
     }
 
     public void ability_Update()
@@ -52,5 +62,10 @@ public abstract class CooldownAbility : MonoBehaviour
     public abstract void cooldown_Start(); // Called when the object is alive
     public abstract void cooldown_Update(); // Called once every frame
     public abstract void use_CanUse(); // Called at the exact time the cooldown timer has reset
+
+    public virtual void Update()
+    {
+        ability_Update();
+    }
 }
 
