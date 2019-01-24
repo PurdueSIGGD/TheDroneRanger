@@ -7,21 +7,19 @@ public class PlayerMovement : MonoBehaviour
 
     public float movementAcceleration = 2000;
     public float maxHorizontalVelocity = 10;
-    public float upDiagonalVelocity = 7;
-    public float downDiagonalVelocity = 6;
-    public float diagVelocityOffset = 0.1f;
+    public float slopeVelocity = 9;
     public float jumpImpulse = 10.0f;
     public int maxJumps = 1;
 
-    public float crouchMultiplier = 0.5f; //Value collider height is multiplied by
-    public Sprite crouchSprite;
-    private Sprite defaultSprite;
+    //public float crouchMultiplier = 0.5f; //Value collider height is multiplied by
+    //public Sprite crouchSprite;
+    //private Sprite defaultSprite;
 
     private Rigidbody2D myRigid;
     private BoxCollider2D myBox;
-    private SpriteRenderer myRenderer;
+    //private SpriteRenderer myRenderer;
 
-    private bool isCrouching = false;
+    //private bool isCrouching = false;
 
     private bool canJump;
     private bool jumping; // The player has hit the jump button and not yet returned to the ground
@@ -31,17 +29,18 @@ public class PlayerMovement : MonoBehaviour
     private bool nearLadder = false;
     private bool onLadder = false;
     private bool grounded = false;
+    private int contactAmount = 0;
+    private ContactPoint2D point;
 
     // Use this for initialization
     void Start()
     {
         myRigid = this.GetComponent<Rigidbody2D>();
         myBox = this.GetComponent<BoxCollider2D>();
-        myRenderer = this.GetComponent<SpriteRenderer>();
+        //myRenderer = this.GetComponent<SpriteRenderer>();
+        //defaultSprite = myRenderer.sprite;
 
         gravity = myRigid.gravityScale;
-
-        defaultSprite = myRenderer.sprite;
     }
 
     // Update is called once per frame
@@ -70,9 +69,9 @@ public class PlayerMovement : MonoBehaviour
                 //Jump
                 jump(0.5f);
             }
-        }
+        } // Done with ladders
 
-        if (grounded || onLadder) // Prevent slipping off of slopes
+        if (onLadder || grounded) // Prevent slipping off of slopes
         {
             myRigid.gravityScale = 0;
         }
@@ -83,57 +82,148 @@ public class PlayerMovement : MonoBehaviour
 
         bool goingLeft = Input.GetAxisRaw("Horizontal") < 0;
         bool goingRight = Input.GetAxisRaw("Horizontal") > 0;
-        bool goingUp = myRigid.velocity.y > 0.02f;
-        bool goingDown = myRigid.velocity.y < -0.01f;
         //Movement (Left / Right)
-        if (!grounded) // in air
+        if(contactAmount == 1 && point.point.y < transform.position.y && !jumping) // on a slope
+        {
+            if(!goingRight && !goingLeft) // standing still
+            {
+                if (!grounded) { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
+                else { myRigid.velocity = new Vector2(0, 0); }
+            }
+            else if (point.point.x < transform.position.x) // on a slope like \
+            {
+                if (goingLeft)
+                {
+                    if (Mathf.Abs(point.normal.x) > Mathf.Abs(point.normal.y))
+                    {
+                        myRigid.velocity = new Vector2(0, 0);
+                    }
+                    else
+                    {
+                        myRigid.velocity = new Vector2(-point.normal.y * slopeVelocity, point.normal.x * slopeVelocity);
+                    }
+                }
+                else if (goingRight)
+                {
+                    myRigid.velocity = new Vector2(point.normal.y * slopeVelocity, -point.normal.x * slopeVelocity);
+                }
+            }
+            else if (point.point.x > transform.position.x) // on a slope like /
+            {
+                if (goingRight)
+                {
+                    if (Mathf.Abs(point.normal.x) > Mathf.Abs(point.normal.y))
+                    {
+                        myRigid.velocity = new Vector2(0, 0);
+                    }
+                    else
+                    {
+                        myRigid.velocity = new Vector2(point.normal.y * slopeVelocity, -point.normal.x * slopeVelocity);
+                    }
+                }
+                else if (goingLeft)
+                {
+                    myRigid.velocity = new Vector2(-point.normal.y * slopeVelocity, point.normal.x * slopeVelocity);
+                }
+            }
+        }
+        else if (contactAmount == 0 && point.point.y < transform.position.y && !jumping) // on a slope
+        {
+            if (!grounded)
+            {
+                print(point.point);
+                if (goingLeft)
+                {
+                    myRigid.velocity = new Vector2(-slopeVelocity, myRigid.velocity.y);
+                }
+                else if (goingRight)
+                {
+                    myRigid.velocity = new Vector2(slopeVelocity, myRigid.velocity.y);
+                }
+                else { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
+            }
+            else if (!goingRight && !goingLeft) // standing still
+            {
+                if (!grounded) { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
+                else { myRigid.velocity = new Vector2(0, 0); }
+            }
+            else if (point.point.x < transform.position.x) // on a slope like \
+            {
+                if (goingLeft)
+                {
+                    if (Mathf.Abs(point.normal.x) > Mathf.Abs(point.normal.y))
+                    {
+                        myRigid.velocity = new Vector2(0, 0);
+                    }
+                    else
+                    {
+                        myRigid.velocity = new Vector2(-point.normal.y * slopeVelocity, point.normal.x * slopeVelocity);
+                    }
+                }
+                else if (goingRight)
+                {
+                    myRigid.velocity = new Vector2(point.normal.y * slopeVelocity, -point.normal.x * slopeVelocity);
+                }
+            }
+            else if (point.point.x > transform.position.x) // on a slope like /
+            {
+                if (goingRight)
+                {
+                    if (Mathf.Abs(point.normal.x) > Mathf.Abs(point.normal.y))
+                    {
+                        myRigid.velocity = new Vector2(0, 0);
+                    }
+                    else
+                    {
+                        myRigid.velocity = new Vector2(point.normal.y * slopeVelocity, -point.normal.x * slopeVelocity);
+                    }
+                }
+                else if (goingLeft)
+                {
+                    myRigid.velocity = new Vector2(-point.normal.y * slopeVelocity, point.normal.x * slopeVelocity);
+                }
+            }
+        }
+        else if (!grounded) // in air
         {
             if (goingLeft)
             {
-                if (goingUp && !jumping) { myRigid.velocity = new Vector2(-maxHorizontalVelocity, diagVelocityOffset); }
-                else if (!goingUp && !jumping) { myRigid.velocity = new Vector2(-downDiagonalVelocity, -downDiagonalVelocity-diagVelocityOffset); }
-                else { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
+                myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y);
             }
             else if (goingRight)
             {
-                if (goingUp && !jumping) { myRigid.velocity = new Vector2(maxHorizontalVelocity, diagVelocityOffset); }
-                else if (!goingUp && !jumping) { myRigid.velocity = new Vector2(downDiagonalVelocity, -downDiagonalVelocity-diagVelocityOffset); }
-                else { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
+                myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y);
             }
-            else if (!jumping) { myRigid.velocity = new Vector2(0, -downDiagonalVelocity); }
+            else if (!jumping) { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
             else{ myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
         }
-        else // on ground
+        // on ground
+        else
         {
             if (goingLeft)
             {
-                if (goingUp && !jumping) { myRigid.velocity = new Vector2(-upDiagonalVelocity, upDiagonalVelocity); }
-                else if (goingDown && !jumping) { myRigid.velocity = new Vector2(-downDiagonalVelocity, -downDiagonalVelocity); }
-                else if (!jumping) { myRigid.velocity = new Vector2(-maxHorizontalVelocity, 0); }
+                if (!jumping) { myRigid.velocity = new Vector2(-maxHorizontalVelocity, 0); }
                 else { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
             }
             else if (goingRight)
             {
-                if (goingUp && !jumping) { myRigid.velocity = new Vector2(upDiagonalVelocity, upDiagonalVelocity); }
-                else if (goingDown && !jumping) { myRigid.velocity = new Vector2(downDiagonalVelocity, -downDiagonalVelocity); }
-                else if (!jumping) { myRigid.velocity = new Vector2(maxHorizontalVelocity, 0); }
+                if (!jumping) { myRigid.velocity = new Vector2(maxHorizontalVelocity, 0); }
                 else { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
             }
-            else if (jumping) { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
-            else { myRigid.velocity = new Vector2(0, 0); }
+            else{ myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
         }
 
         // Trying to jump
         if (verticalMovement > 0)
         {
-            if (isCrouching)
+            /*if (isCrouching)
             {
                 isCrouching = false;
                 myBox.size = new Vector2(myBox.size.x, myBox.size.y / crouchMultiplier);
 
                 myBox.offset = new Vector2(0, 0);
                 myRenderer.sprite = defaultSprite;
-            }
+            }*/
             if (verticalMovement > 0 && canJump && jumpCounter < maxJumps)
             {
                 jump(1.0f);
@@ -141,7 +231,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
         // Trying to crouch
-        else if (verticalMovement < 0 && grounded && (!onLadder && !nearLadder))
+        /*else if (verticalMovement < 0 && grounded && (!onLadder && !nearLadder))
         {
             if (!isCrouching)
             {
@@ -152,7 +242,7 @@ public class PlayerMovement : MonoBehaviour
                 myBox.offset = new Vector2(0, -offset);
                 myRenderer.sprite = crouchSprite;
             }
-        }
+        }*/
         canJump = verticalMovement <= 0;
     }
 
@@ -164,12 +254,16 @@ public class PlayerMovement : MonoBehaviour
         jumpCounter++;
     }
 
-    void OnCollisionEnter2D(Collision2D col) // Bottom Collider
+    void OnCollisionEnter2D(Collision2D col)
     {
+        contactAmount = col.contactCount;
+        point = col.GetContact(0);
         jumping = false;
     }
-    void OnCollisionStay2D(Collision2D col) // Bottom Collider
+    void OnCollisionStay2D(Collision2D col)
     {
+        contactAmount = col.contactCount;
+        point = col.GetContact(0);
         Vector2 bottom = (Vector2)transform.position + new Vector2(0, -myBox.size.y / 2.0f);
         if (Physics2D.Raycast(bottom, -Vector2.up, 0.01f).collider != null && !jumping)
         {
@@ -177,19 +271,10 @@ public class PlayerMovement : MonoBehaviour
         }
         grounded = true;
     }
-    void OnCollisionExit2D(Collision2D col) // Bottom Collider
+    void OnCollisionExit2D(Collision2D col)
     {
+        contactAmount = 0;
         grounded = false;
-    }
-    void OnTriggerStay2D(Collider2D col) // Main Collider
-    {
-        if (col.GetComponent<Projectile>()) { return; }
-        if (col.GetComponent<Ladder>()) { return; }
-    }
-    void OnTriggerExit2D(Collider2D col) // Main Collider
-    {
-        if (col.GetComponent<Projectile>()) { return; }
-        if (col.GetComponent<Ladder>()) { return; }
     }
     public void setNearLadder(bool near)
     {
