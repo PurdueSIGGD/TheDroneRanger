@@ -31,7 +31,7 @@ public class Prop : MonoBehaviour {
     }
 
     // This should be called when the prop gets shot
-    void destroy() {
+    public virtual void destroy() {
         if (isDestroyed())
         {
             myRenderer.sprite = destroyedSprite;
