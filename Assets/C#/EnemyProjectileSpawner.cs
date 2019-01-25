@@ -82,7 +82,7 @@ public class EnemyProjectileSpawner : ProjectileSpawner {
 		enemyStats.setInRange (true);
 		//TODO add targeting and spawn the bullet
 		GameObject Bullet = GameObject.Instantiate(projectile);
-		Bullet.GetComponent<Projectile>().sourcePlayer = this.gameObject;
+		Bullet.GetComponent<Projectile>().sourceObj = this.gameObject;
 		Bullet.GetComponent<Transform>().position = SpawnPosition;
 		Bullet.GetComponent<Rigidbody2D>().AddForce(Bullet.GetComponent<Rigidbody2D>().mass * Direction, ForceMode2D.Impulse);
 	}
