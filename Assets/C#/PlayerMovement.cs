@@ -10,13 +10,14 @@ public class PlayerMovement : MonoBehaviour
     public float slopeVelocity = 9;
     public float jumpImpulse = 10.0f;
     public int maxJumps = 1;
+    private Vector2 platformSpeed;
 
     //public float crouchMultiplier = 0.5f; //Value collider height is multiplied by
     //public Sprite crouchSprite;
     //private Sprite defaultSprite;
 
     private Rigidbody2D myRigid;
-    private BoxCollider2D myBox;
+    //private BoxCollider2D myBox;
     //private SpriteRenderer myRenderer;
 
     //private bool isCrouching = false;
@@ -28,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool nearLadder = false;
     private bool onLadder = false;
+    private bool onSlope = false;
     private bool grounded = false;
     private int contactAmount = 0;
     private ContactPoint2D point;
@@ -36,11 +38,12 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         myRigid = this.GetComponent<Rigidbody2D>();
-        myBox = this.GetComponent<BoxCollider2D>();
+        //myBox = this.GetComponent<BoxCollider2D>();
         //myRenderer = this.GetComponent<SpriteRenderer>();
         //defaultSprite = myRenderer.sprite;
 
         gravity = myRigid.gravityScale;
+        platformSpeed = new Vector2(0, 0);
     }
 
     // Update is called once per frame
@@ -71,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
             }
         } // Done with ladders
 
-        if (onLadder || grounded) // Prevent slipping off of slopes
+        if (onLadder || (grounded && onSlope)) // Prevent slipping off of slopes
         {
             myRigid.gravityScale = 0;
         }
@@ -83,55 +86,11 @@ public class PlayerMovement : MonoBehaviour
         bool goingLeft = Input.GetAxisRaw("Horizontal") < 0;
         bool goingRight = Input.GetAxisRaw("Horizontal") > 0;
         //Movement (Left / Right)
-        if(contactAmount == 1 && point.point.y < transform.position.y && !jumping) // on a slope
+        if(contactAmount <= 1 && point.point.y < transform.position.y) // on a slope
         {
-            if(!goingRight && !goingLeft) // standing still
+            if (!grounded && contactAmount == 0)
             {
-                if (!grounded) { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
-                else { myRigid.velocity = new Vector2(0, 0); }
-            }
-            else if (point.point.x < transform.position.x) // on a slope like \
-            {
-                if (goingLeft)
-                {
-                    if (Mathf.Abs(point.normal.x) > Mathf.Abs(point.normal.y))
-                    {
-                        myRigid.velocity = new Vector2(0, 0);
-                    }
-                    else
-                    {
-                        myRigid.velocity = new Vector2(-point.normal.y * slopeVelocity, point.normal.x * slopeVelocity);
-                    }
-                }
-                else if (goingRight)
-                {
-                    myRigid.velocity = new Vector2(point.normal.y * slopeVelocity, -point.normal.x * slopeVelocity);
-                }
-            }
-            else if (point.point.x > transform.position.x) // on a slope like /
-            {
-                if (goingRight)
-                {
-                    if (Mathf.Abs(point.normal.x) > Mathf.Abs(point.normal.y))
-                    {
-                        myRigid.velocity = new Vector2(0, 0);
-                    }
-                    else
-                    {
-                        myRigid.velocity = new Vector2(point.normal.y * slopeVelocity, -point.normal.x * slopeVelocity);
-                    }
-                }
-                else if (goingLeft)
-                {
-                    myRigid.velocity = new Vector2(-point.normal.y * slopeVelocity, point.normal.x * slopeVelocity);
-                }
-            }
-        }
-        else if (contactAmount == 0 && point.point.y < transform.position.y && !jumping) // on a slope
-        {
-            if (!grounded)
-            {
-                print(point.point);
+                print(point.normal);
                 if (goingLeft)
                 {
                     myRigid.velocity = new Vector2(-slopeVelocity, myRigid.velocity.y);
@@ -142,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
             }
-            else if (!goingRight && !goingLeft) // standing still
+            else if(!goingRight && !goingLeft) // standing still
             {
                 if (!grounded) { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
                 else { myRigid.velocity = new Vector2(0, 0); }
@@ -169,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (goingRight)
                 {
-                    if (Mathf.Abs(point.normal.x) > Mathf.Abs(point.normal.y))
+                    if (Mathf.Abs(point.normal.x) + .2f > Mathf.Abs(point.normal.y))
                     {
                         myRigid.velocity = new Vector2(0, 0);
                     }
@@ -183,6 +142,8 @@ public class PlayerMovement : MonoBehaviour
                     myRigid.velocity = new Vector2(-point.normal.y * slopeVelocity, point.normal.x * slopeVelocity);
                 }
             }
+            if (contactAmount == 1) { onSlope = true; }
+            else { onSlope = false; }
         }
         else if (!grounded) // in air
         {
@@ -194,7 +155,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y);
             }
-            else if (!jumping) { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
             else{ myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
         }
         // on ground
@@ -202,15 +162,18 @@ public class PlayerMovement : MonoBehaviour
         {
             if (goingLeft)
             {
-                if (!jumping) { myRigid.velocity = new Vector2(-maxHorizontalVelocity, 0); }
-                else { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
+                if (!jumping) { myRigid.velocity = new Vector2(-maxHorizontalVelocity, 0) + platformSpeed; }
+                else { myRigid.velocity = new Vector2(-maxHorizontalVelocity + platformSpeed.x, myRigid.velocity.y); }
             }
             else if (goingRight)
             {
-                if (!jumping) { myRigid.velocity = new Vector2(maxHorizontalVelocity, 0); }
-                else { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
+                if (!jumping) { myRigid.velocity = new Vector2(maxHorizontalVelocity, 0) + platformSpeed; }
+                else { myRigid.velocity = new Vector2(maxHorizontalVelocity + platformSpeed.x, myRigid.velocity.y); }
             }
-            else{ myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
+            else{
+                if(!jumping) { myRigid.velocity = platformSpeed; }
+                myRigid.velocity = new Vector2(platformSpeed.x, myRigid.velocity.y);
+            }
         }
 
         // Trying to jump
@@ -264,12 +227,10 @@ public class PlayerMovement : MonoBehaviour
     {
         contactAmount = col.contactCount;
         point = col.GetContact(0);
-        Vector2 bottom = (Vector2)transform.position + new Vector2(0, -myBox.size.y / 2.0f);
-        if (Physics2D.Raycast(bottom, -Vector2.up, 0.01f).collider != null && !jumping)
-        {
+        if(point.point.y < transform.position.y) {
+            grounded = true;
             jumpCounter = 0;
         }
-        grounded = true;
     }
     void OnCollisionExit2D(Collision2D col)
     {
@@ -279,5 +240,17 @@ public class PlayerMovement : MonoBehaviour
     public void setNearLadder(bool near)
     {
         nearLadder = near;
+    }
+
+    public void setPlatformSpeed(float xVelocity, float yVelocity)
+    {
+        platformSpeed.x = xVelocity;
+        platformSpeed.y = yVelocity;
+    }
+
+    public void exitPlatform()
+    {
+        platformSpeed.x = 0;
+        platformSpeed.y = 0;
     }
 }
