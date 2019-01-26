@@ -5,7 +5,7 @@ using UnityEngine;
 public class Prop : MonoBehaviour {
     public float durability = 1;
     public Sprite destroyedSprite;
-    private ParticleSystem ps;
+    protected ParticleSystem ps;
 
     private SpriteRenderer myRenderer;
     // Use this for initialization
@@ -51,7 +51,7 @@ public class Prop : MonoBehaviour {
     }
 
     //runs a timer to stop destruction animation after a certain amount of time
-    IEnumerator stopAnimation() {
+    protected IEnumerator stopAnimation() {
         yield return new WaitForSeconds(.1f);
         var emission = ps.emission;
         emission.enabled = false;
