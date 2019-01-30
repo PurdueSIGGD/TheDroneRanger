@@ -31,8 +31,10 @@ public class PlayerMovement : MonoBehaviour
     private bool onLadder = false;
     private bool onSlope = false;
     private bool grounded = false;
+    private bool hitCeiling = false;
     private int contactAmount = 0;
-    private ContactPoint2D point;
+    private Vector2 slopeContact;
+    private Vector2 ceilingContact;
 
     // Use this for initialization
     void Start()
@@ -74,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
             }
         } // Done with ladders
 
-        if (onLadder || (grounded && onSlope)) // Prevent slipping off of slopes
+        if (onLadder || onSlope) // Prevent slipping off of slopes
         {
             myRigid.gravityScale = 0;
         }
@@ -86,66 +88,8 @@ public class PlayerMovement : MonoBehaviour
         bool goingLeft = Input.GetAxisRaw("Horizontal") < 0;
         bool goingRight = Input.GetAxisRaw("Horizontal") > 0;
         //Movement (Left / Right)
-        if(contactAmount <= 1 && point.point.y < transform.position.y) // on a slope
-        {
-            if (!grounded && contactAmount == 0)
-            {
-                print(point.normal);
-                if (goingLeft)
-                {
-                    myRigid.velocity = new Vector2(-slopeVelocity, myRigid.velocity.y);
-                }
-                else if (goingRight)
-                {
-                    myRigid.velocity = new Vector2(slopeVelocity, myRigid.velocity.y);
-                }
-                else { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
-            }
-            else if(!goingRight && !goingLeft) // standing still
-            {
-                if (!grounded) { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
-                else { myRigid.velocity = new Vector2(0, 0); }
-            }
-            else if (point.point.x < transform.position.x) // on a slope like \
-            {
-                if (goingLeft)
-                {
-                    if (Mathf.Abs(point.normal.x) > Mathf.Abs(point.normal.y))
-                    {
-                        myRigid.velocity = new Vector2(0, 0);
-                    }
-                    else
-                    {
-                        myRigid.velocity = new Vector2(-point.normal.y * slopeVelocity, point.normal.x * slopeVelocity);
-                    }
-                }
-                else if (goingRight)
-                {
-                    myRigid.velocity = new Vector2(point.normal.y * slopeVelocity, -point.normal.x * slopeVelocity);
-                }
-            }
-            else if (point.point.x > transform.position.x) // on a slope like /
-            {
-                if (goingRight)
-                {
-                    if (Mathf.Abs(point.normal.x) + .2f > Mathf.Abs(point.normal.y))
-                    {
-                        myRigid.velocity = new Vector2(0, 0);
-                    }
-                    else
-                    {
-                        myRigid.velocity = new Vector2(point.normal.y * slopeVelocity, -point.normal.x * slopeVelocity);
-                    }
-                }
-                else if (goingLeft)
-                {
-                    myRigid.velocity = new Vector2(-point.normal.y * slopeVelocity, point.normal.x * slopeVelocity);
-                }
-            }
-            if (contactAmount == 1) { onSlope = true; }
-            else { onSlope = false; }
-        }
-        else if (!grounded) // in air
+        // in air
+        if (!grounded && !onSlope) 
         {
             if (goingLeft)
             {
@@ -155,10 +99,72 @@ public class PlayerMovement : MonoBehaviour
             {
                 myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y);
             }
-            else{ myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
+            else { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
+        }
+        // on a slope
+        else if (onSlope && !jumping)
+        {
+            if (contactAmount == 0)
+            {
+                Vector2 fix = new Vector2(-slopeContact.x, -slopeContact.y);
+                float moveFix = 4.5f;
+                print(fix);
+                if (!goingRight && !goingLeft)
+                {
+                    myRigid.velocity = 5 * fix;
+                }
+                else if (slopeContact.x > 0) // on a slope like \
+                {
+                    if (goingLeft)
+                    {
+                        myRigid.velocity = new Vector2(-slopeContact.y * slopeVelocity, slopeContact.x * slopeVelocity) + fix*moveFix;
+                    }
+                    else if (goingRight)
+                    {
+                        myRigid.velocity = new Vector2(slopeContact.y * slopeVelocity, -slopeContact.x * slopeVelocity);
+                    }
+                }
+                else if (slopeContact.x < 0) // on a slope like /
+                {
+                    if (goingRight)
+                    {
+                        myRigid.velocity = new Vector2(slopeContact.y * slopeVelocity, -slopeContact.x * slopeVelocity) + fix*moveFix;
+                    }
+                    else if (goingLeft)
+                    {
+                        myRigid.velocity = new Vector2(-slopeContact.y * slopeVelocity, slopeContact.x * slopeVelocity);
+                    }
+                }
+            }
+            else if (!goingRight && !goingLeft) // standing still
+            {
+                myRigid.velocity = new Vector2(0, 0);
+            }
+            else if (slopeContact.x > 0) // on a slope like \
+            {
+                if (goingLeft)
+                {
+                    myRigid.velocity = new Vector2(-slopeContact.y * slopeVelocity, slopeContact.x * slopeVelocity);
+                }
+                else if (goingRight)
+                {
+                    myRigid.velocity = new Vector2(slopeContact.y * slopeVelocity, -slopeContact.x * slopeVelocity);
+                }
+            }
+            else if (slopeContact.x < 0) // on a slope like /
+            {
+                if (goingRight)
+                {
+                    myRigid.velocity = new Vector2(slopeContact.y * slopeVelocity, -slopeContact.x * slopeVelocity);
+                }
+                else if (goingLeft)
+                {
+                    myRigid.velocity = new Vector2(-slopeContact.y * slopeVelocity, slopeContact.x * slopeVelocity);
+                }
+            }
         }
         // on ground
-        else
+        else if(grounded)
         {
             if (goingLeft)
             {
@@ -219,23 +225,50 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        contactAmount = col.contactCount;
-        point = col.GetContact(0);
         jumping = false;
+        OnCollisionStay2D(col);
     }
     void OnCollisionStay2D(Collision2D col)
     {
         contactAmount = col.contactCount;
-        point = col.GetContact(0);
-        if(point.point.y < transform.position.y) {
-            grounded = true;
-            jumpCounter = 0;
+        ContactPoint2D point;
+        hitCeiling = false;
+        grounded = false;
+        onSlope = false;
+        for(int i=0; i<contactAmount; i++)
+        {
+            point = col.GetContact(i);
+            if (point.normal.x == 0 && point.normal.y == 1) // on flat ground
+            {
+                grounded = true;
+                jumpCounter = 0;
+            }
+            else if (point.normal.y > 0) // on a slope
+            {
+                onSlope = true;
+                slopeContact = point.normal;
+                jumpCounter = 0;
+            }
+            else if(point.normal.y < 0) // hit a ceiling
+            {
+                hitCeiling = true;
+                ceilingContact = point.normal;
+            }
+        }
+        if (!onSlope)
+        {
+            slopeContact = new Vector2(0, 1);
+        }
+        if (!hitCeiling)
+        {
+            ceilingContact = new Vector2(0, -1);
         }
     }
     void OnCollisionExit2D(Collision2D col)
     {
         contactAmount = 0;
         grounded = false;
+        hitCeiling = false;
     }
     public void setNearLadder(bool near)
     {
