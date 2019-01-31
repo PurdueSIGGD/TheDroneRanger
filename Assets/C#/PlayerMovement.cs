@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float movementAcceleration = 2000;
     public float maxHorizontalVelocity = 10;
-    public float diagVelocity = 50;
+    public float diagVelocity = 10;
     public float diagVelocityOffset = .98f;
     public float jumpImpulse = 10.0f;
     public int maxJumps = 1;
@@ -79,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (grounded || onLadder) // Prevent slipping off of slopes
+        if ((grounded && !hitCeiling) || onLadder) // Prevent slipping off of slopes
         {
             myRigid.gravityScale = 0;
         }
@@ -93,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
         bool goingUp = myRigid.velocity.y > 0.1f;
         bool goingDown = myRigid.velocity.y < -0.1f;
         //Movement (Left / Right)
+        print(grounded +" "+ onSlope +" "+ hitCeiling);
         if (!grounded) // in air
         {
             if (goingLeft)
@@ -144,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
                 else
                 { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
             }
-            else if (jumping) { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
+            else if (jumping || hitCeiling) { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
             else { myRigid.velocity = new Vector2(0, 0); }
         }
 
@@ -191,6 +192,9 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        hitCeiling = false;
+        hitCeilLeft = false;
+        hitCeilRight = false;
         ContactPoint2D point = col.GetContact(0);
         if (point.normal.x == 0 && point.normal.y == 1) // on flat ground
         {
@@ -209,6 +213,7 @@ public class PlayerMovement : MonoBehaviour
         else if (point.normal.y < 0) // hit a ceiling
         {
             hitCeiling = true;
+            jumping = false;
             if (point.normal.x > 0)
             {
                 hitCeilLeft = true;
@@ -230,10 +235,10 @@ public class PlayerMovement : MonoBehaviour
         }
         contactAmount = col.contactCount;
         ContactPoint2D point;
+        onSlope = false;
         hitCeiling = false;
         hitCeilLeft = false;
         hitCeilRight = false;
-        onSlope = false;
         for (int i = 0; i < contactAmount; i++)
         {
             point = col.GetContact(i);
@@ -251,6 +256,7 @@ public class PlayerMovement : MonoBehaviour
             else if (point.normal.y < 0) // hit a ceiling
             {
                 hitCeiling = true;
+                jumping = false;
                 if (point.normal.x > 0)
                 {
                     hitCeilLeft = true;
@@ -265,7 +271,6 @@ public class PlayerMovement : MonoBehaviour
     void OnCollisionExit2D(Collision2D col)
     {
         grounded = false;
-        hitCeiling = false;
     }
     public void setNearLadder(bool near)
     {
