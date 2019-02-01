@@ -14,6 +14,12 @@ public class PlayerAttributes : Attributes {
     //high noon at 100, should not be > 100
     public float highNoonPercent = 0;
 
+    public float invTime;
+    public float hurtTime;
+    public float kForce;
+    private bool invincible;
+    private Camera cam;
+
     public void Start()
     {
 
@@ -27,6 +33,7 @@ public class PlayerAttributes : Attributes {
             weapons.Add(preWeps[i]);
         }
 
+        cam = Camera.main;
     }
 
     public void Update()
@@ -55,6 +62,55 @@ public class PlayerAttributes : Attributes {
 
         }
 
+    }
+
+    public override bool takeDamage(float damage)
+    {
+        knockBack();
+        health -= damage;
+        if (health <= 0)
+        {
+            health = 0;
+            return false;
+        }
+        return true;
+    }
+
+    public void knockBack()
+    {
+        if (invincible) return;
+
+        Vector2 direction = Vector2.left;
+        Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
+        if (mouseWorldPos.x < this.transform.position.x)
+        {
+            direction = Vector2.right;
+        }
+        
+        GetComponent<PlayerMovement>().enabled = false;
+        GetComponent<HighNoon>().enabled = false;
+
+        invincible = true;
+
+        StartCoroutine(reEnable());
+
+        Rigidbody2D myRigid = GetComponent<Rigidbody2D>();
+        myRigid.velocity = new Vector2(0, 0);
+        myRigid.AddForce(new Vector2(myRigid.mass, myRigid.mass) * kForce * direction, ForceMode2D.Impulse);
+    }
+
+    private IEnumerator reEnable()
+    {
+        yield return new WaitForSeconds(hurtTime);
+        GetComponent<PlayerMovement>().enabled = true;
+        GetComponent<HighNoon>().enabled = true;
+        StartCoroutine(unInvincible());
+    }
+
+    private IEnumerator unInvincible()
+    {
+        yield return new WaitForSeconds(invTime);
+        invincible = false;
     }
 
     public WeaponAttributes addWeaponByName(string path)

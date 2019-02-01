@@ -264,6 +264,9 @@ MonoBehaviour:
   reloadKey: 114
   maxWeapons: 3
   highNoonPercent: 0
+  invTime: 0.5
+  hurtTime: 1
+  kForce: 10
 --- !u!114 &230575831780405485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +291,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4103082889992742}
     m_Modifications:
+    - target: {fileID: 6634858366013539138, guid: 671dcb61805f8704287cbe1314c190c3,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerWeapon
+      objectReference: {fileID: 0}
     - target: {fileID: 6638093583485376288, guid: 671dcb61805f8704287cbe1314c190c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -352,11 +360,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6634858366013539138, guid: 671dcb61805f8704287cbe1314c190c3,
-        type: 3}
-      propertyPath: m_Name
-      value: PlayerWeapon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 671dcb61805f8704287cbe1314c190c3, type: 3}

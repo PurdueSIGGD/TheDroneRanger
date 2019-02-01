@@ -34,7 +34,7 @@ class TntProp : Prop
             if (col == null) continue;
             if (col.isTrigger) continue;
             if (col.GetComponent<Attributes>() == null) continue;
-            col.GetComponent<Attributes>().health -= damage;
+            col.GetComponent<Attributes>().takeDamage(damage);
         }
     }
 }
