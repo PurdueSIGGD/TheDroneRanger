@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     private bool hitCeiling = false;
     private bool hitCeilLeft = false;
     private bool hitCeilRight = false;
+    private bool hitWall = false;
     private int contactAmount = 0;
     private Vector2 slope; // The normal vector of the slope that we are on.
 
@@ -94,11 +95,14 @@ public class PlayerMovement : MonoBehaviour
         bool goingUp = myRigid.velocity.y > 0.1f;
         bool goingDown = myRigid.velocity.y < -0.1f;
         //Movement (Left / Right)
+        print(grounded);
         if (!grounded) // in air
         {
             if (goingLeft)
             {
-                if(jumping)
+                if (hitWall)
+                { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
+                else if (jumping)
                 { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
                 else if (goingUp && sinceOnSlope > 0 && !hitCeiling && contactAmount < 2 && slope.x != 0) // up a \ slope
                 {
@@ -114,7 +118,9 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (goingRight)
             {
-                if (jumping)
+                if (hitWall)
+                { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
+                else if (jumping)
                 { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
                 else if (goingUp && sinceOnSlope > 0 && !hitCeiling && contactAmount < 2 && slope.x != 0) // up a / slope
                 {
@@ -216,12 +222,17 @@ public class PlayerMovement : MonoBehaviour
         hitCeiling = false;
         hitCeilLeft = false;
         hitCeilRight = false;
+        hitWall = false;
         ContactPoint2D point = col.GetContact(0);
         if (point.normal.x == 0 && point.normal.y == 1) // on flat ground
         {
             grounded = true;
             jumpCounter = 0;
             jumping = false;
+        }
+        else if(Mathf.Abs(point.normal.x) == 1)
+        {
+            hitWall = true;
         }
         else if (point.normal.y > 0) // on a slope
         {
@@ -250,7 +261,7 @@ public class PlayerMovement : MonoBehaviour
     {
         grounded = false;
         Vector2 bottom = (Vector2)transform.position + new Vector2(0, -myBox.size.y / 2.0f);
-        if (Physics2D.Raycast(bottom, -Vector2.up, 0.01f).collider != null && !jumping)
+        if (Physics2D.Raycast(bottom, -Vector2.up, 0.0f).collider != null && !jumping)
         {
             grounded = true;
             jumpCounter = 0;
@@ -261,12 +272,17 @@ public class PlayerMovement : MonoBehaviour
         hitCeiling = false;
         hitCeilLeft = false;
         hitCeilRight = false;
+        hitWall = false;
         for (int i = 0; i < contactAmount; i++)
         {
             point = col.GetContact(i);
             if (point.normal.x == 0 && point.normal.y == 1) // on flat ground
             {
                 grounded = true;
+            }
+            else if (Mathf.Abs(point.normal.x) == 1)
+            {
+                hitWall = true;
             }
             else if (point.normal.y > 0) // on a slope
             {
