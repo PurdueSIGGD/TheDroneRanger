@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private bool onLadder = false;
     private bool grounded = false;
     private bool onSlope = false;
+    private int sinceOnSlope = 0;
     private bool hitCeiling = false;
     private bool hitCeilLeft = false;
     private bool hitCeilRight = false;
@@ -93,15 +94,19 @@ public class PlayerMovement : MonoBehaviour
         bool goingUp = myRigid.velocity.y > 0.1f;
         bool goingDown = myRigid.velocity.y < -0.1f;
         //Movement (Left / Right)
-        print(grounded +" "+ onSlope +" "+ hitCeiling);
         if (!grounded) // in air
         {
             if (goingLeft)
             {
                 if(jumping)
                 { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
-                else if (goingUp && onSlope && !hitCeiling && contactAmount < 2 && slope.x != 0) // up a \ slope
-                { myRigid.velocity = new Vector2(-slope.y * diagVelocity, slope.x * diagVelocity * diagVelocityOffset); }
+                else if (goingUp && sinceOnSlope > 0 && !hitCeiling && contactAmount < 2 && slope.x != 0) // up a \ slope
+                {
+                    if (slope.x > slope.y)
+                    { myRigid.velocity = new Vector2(0, 0); }
+                    else
+                    { myRigid.velocity = new Vector2(-slope.y * diagVelocity, slope.x * diagVelocity * diagVelocityOffset); }
+                }
                 else if (contactAmount >= 2)
                 { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
                 else
@@ -111,8 +116,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (jumping)
                 { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
-                else if (goingUp && onSlope && !hitCeiling && contactAmount < 2 && slope.x != 0) // up a / slope
-                { myRigid.velocity = new Vector2(slope.y * diagVelocity, -slope.x * diagVelocity * diagVelocityOffset); }
+                else if (goingUp && sinceOnSlope > 0 && !hitCeiling && contactAmount < 2 && slope.x != 0) // up a / slope
+                {
+                    if (-slope.x > slope.y)
+                    { myRigid.velocity = new Vector2(0, 0); }
+                    else
+                    { myRigid.velocity = new Vector2(slope.y * diagVelocity, -slope.x * diagVelocity * diagVelocityOffset); }
+                }
                 else if (contactAmount >= 2)
                 { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
                 else
@@ -129,7 +139,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (hitCeilLeft) { myRigid.velocity = new Vector2(0, 0); }
                 else if ((goingUp || goingDown || onSlope) && !jumping && !hitCeiling && contactAmount < 2)
-                { myRigid.velocity = new Vector2(-slope.y * diagVelocity, slope.x * diagVelocity); }
+                {
+                    if (slope.x > slope.y)
+                    { myRigid.velocity = new Vector2(0, 0); }
+                    else
+                    { myRigid.velocity = new Vector2(-slope.y * diagVelocity, slope.x * diagVelocity); }
+                }
                 else if (!jumping)
                 { myRigid.velocity = new Vector2(-maxHorizontalVelocity, 0); }
                 else
@@ -139,7 +154,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (hitCeilRight) { myRigid.velocity = new Vector2(0, 0); }
                 else if ((goingUp || goingDown || onSlope) && !jumping && !hitCeiling && contactAmount < 2)
-                { myRigid.velocity = new Vector2(slope.y * diagVelocity, -slope.x * diagVelocity); }
+                {
+                    if (-slope.x > slope.y)
+                    { myRigid.velocity = new Vector2(0, 0); }
+                    else
+                    { myRigid.velocity = new Vector2(slope.y * diagVelocity, -slope.x * diagVelocity); }
+                }
                 else if (!jumping)
                 { myRigid.velocity = new Vector2(maxHorizontalVelocity, 0); }
                 else
@@ -180,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }*/
         canJump = verticalMovement <= 0;
+        sinceOnSlope--;
     }
 
     void jump(float jumpFactor)
@@ -208,6 +229,7 @@ public class PlayerMovement : MonoBehaviour
             jumpCounter = 0;
             grounded = true;
             onSlope = true;
+            sinceOnSlope = 5;
             slope = point.normal;
         }
         else if (point.normal.y < 0) // hit a ceiling
@@ -250,6 +272,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 grounded = true;
                 onSlope = true;
+                sinceOnSlope = 5;
                 slope = point.normal;
                 jumpCounter = 0;
             }
