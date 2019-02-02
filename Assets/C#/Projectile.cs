@@ -36,7 +36,8 @@ public class Projectile : MonoBehaviour {
         if (col == sourceObj.GetComponent<Collider2D>()) return;
         Attributes attr;
         Prop p;
-        if ((attr = col.GetComponentInParent<Attributes>()))
+        attr = col.GetComponentInParent<Attributes>();
+        if ((attr = col.GetComponentInParent<PlayerAttributes>()))
         {
             if (!hurtPlayer && attr.gameObject == player) return;
         }
