@@ -193,12 +193,12 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 10
   m_LinearDrag: 1
-  m_AngularDrag: 0.05
+  m_AngularDrag: 40
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &61774235505970178
 BoxCollider2D:
@@ -240,13 +240,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementAcceleration: 2000
   maxHorizontalVelocity: 10
-  upDiagonalVelocity: 7
-  downDiagonalVelocity: 6
+  diagVelocity: 10
   diagVelocityOffset: 0.1
   jumpImpulse: 7
   maxJumps: 1
-  crouchMultiplier: 0.5
-  crouchSprite: {fileID: 0}
 --- !u!114 &114297417838248002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,11 +288,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4103082889992742}
     m_Modifications:
-    - target: {fileID: 6634858366013539138, guid: 671dcb61805f8704287cbe1314c190c3,
-        type: 3}
-      propertyPath: m_Name
-      value: PlayerWeapon
-      objectReference: {fileID: 0}
     - target: {fileID: 6638093583485376288, guid: 671dcb61805f8704287cbe1314c190c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -360,6 +352,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634858366013539138, guid: 671dcb61805f8704287cbe1314c190c3,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerWeapon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 671dcb61805f8704287cbe1314c190c3, type: 3}
