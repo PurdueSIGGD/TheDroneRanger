@@ -13,15 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public int maxJumps = 1;
     private Vector2 platformSpeed;
 
-    //public float crouchMultiplier = 0.5f; //Value collider height is multiplied by
-    //public Sprite crouchSprite;
-    //private Sprite defaultSprite;
-
     private Rigidbody2D myRigid;
-    private BoxCollider2D myBox;
-    //private SpriteRenderer myRenderer;
-
-    //private bool isCrouching = false;
 
     private bool canJump;
     private bool jumping; // The player has hit the jump button and not yet returned to the ground
@@ -45,9 +37,6 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         myRigid = this.GetComponent<Rigidbody2D>();
-        myBox = this.GetComponent<BoxCollider2D>();
-        //myRenderer = this.GetComponent<SpriteRenderer>();
-        //defaultSprite = myRenderer.sprite;
 
         gravity = myRigid.gravityScale;
         platformSpeed = new Vector2(0, 0);
@@ -100,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (goingLeft)
             {
-                if (hitWallLeft)
+                if (hitWallLeft || hitCeilLeft)
                 { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
                 else if (jumping)
                 { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
@@ -111,14 +100,14 @@ public class PlayerMovement : MonoBehaviour
                     else
                     { myRigid.velocity = new Vector2(-slope.y * diagVelocity, slope.x * diagVelocity * diagVelocityOffset); }
                 }
-                else if (contactAmount >= 2)
+                else if (contactAmount >= 2 || hitCeilRight)
                 { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
                 else
                 { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y - (diagVelocity / 5)); }
             }
             else if (goingRight)
             {
-                if (hitWallRight)
+                if (hitWallRight || hitCeilRight)
                 { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
                 else if (jumping)
                 { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
@@ -129,12 +118,12 @@ public class PlayerMovement : MonoBehaviour
                     else
                     { myRigid.velocity = new Vector2(slope.y * diagVelocity, -slope.x * diagVelocity * diagVelocityOffset); }
                 }
-                else if (contactAmount >= 2)
-                { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
+                else if (contactAmount >= 2 || hitCeilLeft)
+                { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
                 else
                 { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y - (diagVelocity / 5)); }
             }
-            else if (!jumping)
+            else if (!jumping && !hitCeiling)
             { myRigid.velocity = new Vector2(0, myRigid.velocity.y - (diagVelocity / 5)); }
             else
             { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
@@ -180,35 +169,14 @@ public class PlayerMovement : MonoBehaviour
         // Trying to jump
         if (verticalMovement > 0)
         {
-            /*if (isCrouching)
-            {
-                isCrouching = false;
-                myBox.size = new Vector2(myBox.size.x, myBox.size.y / crouchMultiplier);
-
-                myBox.offset = new Vector2(0, 0);
-                myRenderer.sprite = defaultSprite;
-            }*/
             if (verticalMovement > 0 && canJump && jumpCounter < maxJumps)
             {
                 jump(1.0f);
             }
 
         }
-        // Trying to crouch
-        /*else if (verticalMovement < 0 && grounded && (!onLadder && !nearLadder))
-        {
-            if (!isCrouching)
-            {
-                isCrouching = true;
-                float offset = myBox.size.y * (1.0f - crouchMultiplier) / 2.0f; //How much the bottom boundary is displaced
-                myBox.size = new Vector2(myBox.size.x, myBox.size.y * crouchMultiplier);
-
-                myBox.offset = new Vector2(0, -offset);
-                myRenderer.sprite = crouchSprite;
-            }
-        }*/
         canJump = verticalMovement <= 0;
-        sinceOnSlope--;
+        if(sinceOnSlope > 0) { sinceOnSlope--; }
     }
 
     void jump(float jumpFactor)
