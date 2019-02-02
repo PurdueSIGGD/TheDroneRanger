@@ -23,6 +23,7 @@ public class EnemyAIMaster : MonoBehaviour {
 	private float timeCounter = 0;
 	private float moveTimer = 0;
 	private float jumpTimer = 0;
+	private bool grounded = false;
 	private EnemyAttributes EnemyStats;
 	private bool aggroed = false;
 
@@ -124,7 +125,7 @@ public class EnemyAIMaster : MonoBehaviour {
 
 	public bool canJump()
 	{
-		return jumpTimer <= 0;
+		return jumpTimer <= 0 && grounded;
 	}
 
 	public void resetJumpCool()
@@ -183,6 +184,24 @@ public class EnemyAIMaster : MonoBehaviour {
 		} 
 		moveList [currMove].enabled = true;
 	}
+
+	void OnCollisionStay2D(Collision2D other)
+	{
+		int i = 0;
+		while (i < other.contacts.Length) {
+			if (other.contacts [i].point.y < transform.position.y) {
+				grounded = true;
+				break;
+			}
+			i++;
+		}
+	}
+
+	void OnCollisionExit2D(Collision2D other)
+	{
+		grounded = false;
+	}
+
 }
 
 /*

@@ -7,9 +7,7 @@ public class EnemyMovement : MonoBehaviour {
 	public int xdir = 1;
 	public int ydir = 1;
 	public bool flipSprite = true;
-	public int maxJumps = 1;
 	public float jumpHeight = 3;
-	private int jumpCounter = 0;
 	private EnemyAIMaster master;
 	[HideInInspector]
 	public Rigidbody2D enemyRigid;
@@ -36,7 +34,7 @@ public class EnemyMovement : MonoBehaviour {
 		if (master.canJump() && Physics2D.Raycast(bottom, -Vector2.up, .01f))
 		{
 			Debug.Log ("ground");
-			jumpCounter = 0;
+			//jumpCounter = 0;
 		}
 		sUpdate ();
 	}
@@ -48,13 +46,15 @@ public class EnemyMovement : MonoBehaviour {
 
 	public void jump()
 	{
-		if (jumpCounter < maxJumps) {
+		
+
+		if (master.canJump ()) {
 			Debug.Log ("jumped");
-			enemyRigid.AddForce (Vector2.up * Mathf.Sqrt(2 * jumpHeight * Physics2D.gravity.magnitude) * enemyRigid.mass, ForceMode2D.Impulse);
 			master.resetJumpCool ();
-			jumpCounter++;
+			enemyRigid.AddForce (Vector2.up * Mathf.Sqrt (2 * jumpHeight * Physics2D.gravity.magnitude) * enemyRigid.mass, ForceMode2D.Impulse);
 		}
-			
+		//jumpCounter++;
+					
 	}
 
 
