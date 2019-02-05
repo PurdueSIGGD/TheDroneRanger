@@ -5,8 +5,13 @@ using UnityEngine;
 public class MovingPlatforms : MonoBehaviour
 {
 	public float speed;
+	public float pauseTime; //the platform can pause at each node to make it easier to mount and/or dismount
 	public bool loop; //if true move in a loop; if false move back and forth
 	public List<Coordinates> movePoints; //the points the platform will travel to
+
+	private Vector3 lastPosition;
+
+	private Rigidbody2D rb2d;
 
 	[System.Serializable]
 	public class Coordinates : System.Object
@@ -42,7 +47,9 @@ public class MovingPlatforms : MonoBehaviour
 
 	void Start()
     {
+		rb2d = GetComponent<Rigidbody2D>();
 		SetPosition(movePoints[0], gameObject);
+		lastPosition = transform.position;
 		if (!loop)
 		{
 			StartCoroutine(MoveBackAndForth());
@@ -65,6 +72,7 @@ public class MovingPlatforms : MonoBehaviour
 					transform.position = Vector3.MoveTowards(transform.position, nextNode, speed * Time.deltaTime);
 					yield return new WaitForEndOfFrame();
 				}
+				yield return new WaitForSeconds(pauseTime);
 			}
 
 			//moving backwards through the points
@@ -76,6 +84,7 @@ public class MovingPlatforms : MonoBehaviour
 					transform.position = Vector3.MoveTowards(transform.position, nextNode, speed * Time.deltaTime);
 					yield return new WaitForEndOfFrame();
 				}
+				yield return new WaitForSeconds(pauseTime);
 			}
 		}
 	}
@@ -96,5 +105,5 @@ public class MovingPlatforms : MonoBehaviour
 			}
 		}
 	}
-
+	
 }
