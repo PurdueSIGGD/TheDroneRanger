@@ -142,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
                     { myRigid.velocity = new Vector2(-slope.y * diagVelocity, slope.x * diagVelocity); }
                 }
                 else if (!jumping)
-                { myRigid.velocity = new Vector2(-maxHorizontalVelocity, 0); }
+                { myRigid.velocity = new Vector2(-maxHorizontalVelocity, 0) + platformSpeed; }
                 else
                 { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
             }
@@ -158,12 +158,12 @@ public class PlayerMovement : MonoBehaviour
                     { myRigid.velocity = new Vector2(slope.y * diagVelocity, -slope.x * diagVelocity); }
                 }
                 else if (!jumping)
-                { myRigid.velocity = new Vector2(maxHorizontalVelocity, 0); }
+                { myRigid.velocity = new Vector2(maxHorizontalVelocity, 0) + platformSpeed; }
                 else
                 { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
             }
             else if (jumping || hitCeiling) { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
-            else { myRigid.velocity = new Vector2(0, 0); }
+            else { myRigid.velocity = new Vector2(0, 0) + platformSpeed; }
         }
 
         // Trying to jump
