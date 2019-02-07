@@ -45,7 +45,7 @@ public class EnemyAIMaster : MonoBehaviour {
 				{
 					spawnList [i] = allSpawners [x];
 					//spawnList [i].enabled = true;
-					Debug.Log (allSpawners [x].label);
+					//Debug.Log (allSpawners [x].label);
 					break;
 				}
 			}
@@ -65,7 +65,7 @@ public class EnemyAIMaster : MonoBehaviour {
 				{
 					moveList [i] = allMoves [x];
 					//moveList [i].enabled = true;
-					Debug.Log (allMoves [x].label);
+					//Debug.Log (allMoves [x].label);
 					break;
 				}
 			}
@@ -76,7 +76,7 @@ public class EnemyAIMaster : MonoBehaviour {
 			{
 				aMove = allMoves [x];
 				//moveList [i].enabled = true;
-				Debug.Log (allMoves [x].label);
+				//Debug.Log (allMoves [x].label);
 				break;
 			}
 		}

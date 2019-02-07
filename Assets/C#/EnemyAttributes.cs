@@ -60,4 +60,23 @@ public class EnemyAttributes : Attributes {
 	{
 		inRange = x;
 	}
+
+	public override bool takeDamage(float damage) //returns true if alive, false if dead
+	{
+		health -= damage;
+		//Debug.Log ("Enemy Damage taken");
+		if (health <= 0)
+		{
+			health = 0;
+			death ();
+			return false;
+		}
+		return true;
+	}
+
+	public void death()
+	{
+		Destroy (this.gameObject);
+
+	}
 }

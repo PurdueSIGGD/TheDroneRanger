@@ -37,7 +37,7 @@ public class Projectile : MonoBehaviour {
         Attributes attr;
         Prop p;
         attr = col.GetComponentInParent<Attributes>();
-        if ((attr = col.GetComponentInParent<PlayerAttributes>()))
+		if (attr is PlayerAttributes)
         {
             if (!hurtPlayer && attr.gameObject == player) return;
         }
