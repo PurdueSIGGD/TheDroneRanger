@@ -86,7 +86,8 @@ public class PlayerAttributes : Attributes {
         {
             direction = Vector2.right;
         }
-        
+        direction += Vector2.up;
+
         GetComponent<PlayerMovement>().enabled = false;
         GetComponent<HighNoon>().enabled = false;
 
@@ -97,6 +98,7 @@ public class PlayerAttributes : Attributes {
         Rigidbody2D myRigid = GetComponent<Rigidbody2D>();
         myRigid.velocity = new Vector2(0, 0);
         myRigid.AddForce(new Vector2(myRigid.mass, myRigid.mass) * kForce * direction, ForceMode2D.Impulse);
+        myRigid.gravityScale = GetComponent<PlayerMovement>().gravity;
     }
 
     private IEnumerator reEnable()
