@@ -14,6 +14,7 @@ public class EnemyAIMaster : MonoBehaviour {
 	public string aggromove;
 	private EnemyMovement aMove;
 	public float[] moveDur;
+	public int moveLoopStart = 0;
 	public int currSpawn = 0;
 	public int currMove = 0;
 	//public int currWeap = 0;
@@ -94,7 +95,7 @@ public class EnemyAIMaster : MonoBehaviour {
 			}
 
 		}
-		if (!aggroed && moveList.Length > 1) {
+		if (!aggroed) {
 			moveTimer += Time.deltaTime;
 			if (moveTimer >= Mathf.Abs (moveDur [currMove])) {
 				moveTimer -= Mathf.Abs (moveDur [currMove]);
@@ -167,7 +168,7 @@ public class EnemyAIMaster : MonoBehaviour {
 		currMove++;
 
 		if (currMove >= moveList.Length) {
-			currMove = 0;
+			currMove = moveLoopStart;
 		}
 
 		if (moveDur[currMove] < 0) {
@@ -183,6 +184,7 @@ public class EnemyAIMaster : MonoBehaviour {
 			moveList [currMove].xdir = tempxdir;
 		} 
 		moveList [currMove].enabled = true;
+		Debug.Log (moveList [currMove].label);
 	}
 
 	void OnCollisionStay2D(Collision2D other)

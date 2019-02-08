@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 239e5ef79c1f66b48ae34912dbb474c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
+  range: 2
   visionStart: -90
   visionEnd: 90
 --- !u!114 &114983513367892862
@@ -208,14 +208,17 @@ MonoBehaviour:
   - BulletShoot
   - TNTToss
   moveSeq:
+  - stat
   - for
   - jum
   - for
   aggromove: chase
   moveDur:
-  - 1.98
-  - -0.1
   - 0.1
+  - -5.5
+  - 0.1
+  - -2.5
+  moveLoopStart: 2
   currSpawn: 0
   currMove: 0
   cycleTime: 2.5
