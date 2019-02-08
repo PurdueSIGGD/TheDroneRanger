@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-    public float movementAcceleration = 2000;
     public float maxHorizontalVelocity = 10;
     public float diagVelocity = 10;
     public float diagVelocityOffset = .98f;
@@ -18,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canJump;
     private bool jumping; // The player has hit the jump button and not yet returned to the ground
     private int jumpCounter;
-    private float gravity;
+    public float gravity;
 
     private bool nearLadder = false;
     private bool onLadder = false;
@@ -100,10 +98,8 @@ public class PlayerMovement : MonoBehaviour
                     else
                     { myRigid.velocity = new Vector2(-slope.y * diagVelocity, slope.x * diagVelocity * diagVelocityOffset); }
                 }
-                else if (contactAmount >= 2 || hitCeilRight)
-                { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
                 else
-                { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y - (diagVelocity / 5)); }
+                { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
             }
             else if (goingRight)
             {
@@ -118,13 +114,9 @@ public class PlayerMovement : MonoBehaviour
                     else
                     { myRigid.velocity = new Vector2(slope.y * diagVelocity, -slope.x * diagVelocity * diagVelocityOffset); }
                 }
-                else if (contactAmount >= 2 || hitCeilLeft)
-                { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
                 else
-                { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y - (diagVelocity / 5)); }
+                { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
             }
-            else if (!jumping && !hitCeiling)
-            { myRigid.velocity = new Vector2(0, myRigid.velocity.y - (diagVelocity / 5)); }
             else
             { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
         }
