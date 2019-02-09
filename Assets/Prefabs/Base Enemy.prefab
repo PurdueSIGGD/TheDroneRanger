@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1cc5de6e5e08aa34b87d7efc53ccc219, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.64, y: 0.64}
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 239e5ef79c1f66b48ae34912dbb474c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 2
+  range: 10
   visionStart: -90
   visionEnd: 90
 --- !u!114 &114983513367892862
@@ -208,20 +208,20 @@ MonoBehaviour:
   - BulletShoot
   - TNTToss
   moveSeq:
-  - stat
+  - for
   - for
   - jum
-  - for
   aggromove: chase
   moveDur:
-  - 0.1
-  - -5.5
-  - 0.1
-  - -2.5
-  moveLoopStart: 2
+  - 3
+  - 2.5
+  - -0.1
+  moveLoopStart: 1
+  aggroDelay: 1
   currSpawn: 0
   currMove: 0
   cycleTime: 2.5
+  aggroed: 0
 --- !u!114 &114804489620993320
 MonoBehaviour:
   m_ObjectHideFlags: 0

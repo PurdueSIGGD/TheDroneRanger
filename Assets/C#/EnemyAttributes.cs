@@ -25,6 +25,12 @@ public class EnemyAttributes : Attributes {
 		return aggroRigid;
 	}
 
+	public bool hasAggroRigid ()
+	{
+		Debug.Log ("Checking" + (aggroRigid != null));
+		return (aggroRigid != null);
+	}
+
 	public float getJumpCool()
 	{
 		return jumpCool;

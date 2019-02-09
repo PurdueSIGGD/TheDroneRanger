@@ -15,6 +15,7 @@ public class EnemyAIMaster : MonoBehaviour {
 	private EnemyMovement aMove;
 	public float[] moveDur;
 	public int moveLoopStart = 0;
+	public bool aggroDelay = true;
 	public int currSpawn = 0;
 	public int currMove = 0;
 	//public int currWeap = 0;
@@ -26,7 +27,8 @@ public class EnemyAIMaster : MonoBehaviour {
 	private float jumpTimer = 0;
 	private bool grounded = false;
 	private EnemyAttributes EnemyStats;
-	private bool aggroed = false;
+	//[HideInInspector]
+	public bool aggroed = false;
 
 
 	// Use this for initialization
@@ -71,6 +73,9 @@ public class EnemyAIMaster : MonoBehaviour {
 				}
 			}
 		}
+		if (GetComponent<SpriteRenderer> ().flipX) {
+			moveList [0].xdir = -1;
+		}
 		moveList [0].enabled = true;
 		for (int x = 0; x < allMoves.Length; x++) {
 			if (aggromove.Equals(allMoves[x].label))
@@ -104,11 +109,14 @@ public class EnemyAIMaster : MonoBehaviour {
 		}
 		jumpTimer = Mathf.Max (0, jumpTimer - Time.deltaTime);
 
-		if (EnemyStats.getAggro () && EnemyStats.canHit()) {
-			if (!aggroed) {
-				aggroed = true;
-				getCurrMove ().enabled = false;
-				aMove.enabled = true;
+
+		if (EnemyStats.getAggro () != null) {
+			if (!aggroDelay || currMove >= moveLoopStart) {
+				if (!aggroed) {
+					aggroed = true;
+					getCurrMove ().enabled = false;
+					aMove.enabled = true;
+				}
 			}
 
 		} else {
@@ -184,7 +192,7 @@ public class EnemyAIMaster : MonoBehaviour {
 			moveList [currMove].xdir = tempxdir;
 		} 
 		moveList [currMove].enabled = true;
-		Debug.Log (moveList [currMove].label);
+		//Debug.Log (moveList [currMove].label);
 	}
 
 	void OnCollisionStay2D(Collision2D other)

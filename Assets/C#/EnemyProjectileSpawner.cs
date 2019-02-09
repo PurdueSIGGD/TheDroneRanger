@@ -8,6 +8,7 @@ public class EnemyProjectileSpawner : ProjectileSpawner {
 	private bool usesGravity;
 	private float gravScale;
 	public float arc = .5f; //value from 0 to 1 describing how direct the path of thrown object should follow
+	private bool started = false;
 
 	public void setProjectile(GameObject proj)
 	{
@@ -21,16 +22,19 @@ public class EnemyProjectileSpawner : ProjectileSpawner {
 	{
 		enemyStats = GetComponent<EnemyAttributes> ();
 		setProjectile (projectile);
+		started = true;
 	}
 
 	public Vector2 CalcTrajectory()
 	{
 		//float g = projectile.GetComponent<Rigidbody2D> ().gravityScale;
+		Vector2 Direction = new Vector2(float.NaN, float.NaN);
+
 		Vector2 SpawnPosition = transform.position;
 		Vector2 TargetPos = enemyStats.getAggro ().position;
-		Vector2 Direction;
+
 		if (!usesGravity) {
-			
+		
 			Direction = TargetPos - SpawnPosition;
 			Direction.Normalize ();
 			return Direction * thrust;
@@ -41,12 +45,12 @@ public class EnemyProjectileSpawner : ProjectileSpawner {
 		float g = -Physics2D.gravity.y * gravScale;
 
 		/*
-		float theta = Mathf.Pow(thrust, 4) + 2 * g * yf * thrust * thrust - g * g * xf * xf;
-		theta = -xf * Mathf.Sqrt( -Mathf.Sqrt(theta) + g * yf + thrust * thrust);
-		theta = Mathf.Acos(theta / (thrust * Mathf.Sqrt(2*yf * yf + 2*xf * xf)));
+	float theta = Mathf.Pow(thrust, 4) + 2 * g * yf * thrust * thrust - g * g * xf * xf;
+	theta = -xf * Mathf.Sqrt( -Mathf.Sqrt(theta) + g * yf + thrust * thrust);
+	theta = Mathf.Acos(theta / (thrust * Mathf.Sqrt(2*yf * yf + 2*xf * xf)));
 
-		float vx = Mathf.Cos(theta);
-		float vyo = Mathf.Sin(theta);
+	float vx = Mathf.Cos(theta);
+	float vyo = Mathf.Sin(theta);
 */
 		//float vx = thrust / Mathf.Sqrt (Mathf.Pow ((yf - Physics2D.gravity.y * xf * xf / 2) / xf, 2) + 1);
 		//float vyo = Mathf.Sqrt (thrust * thrust - vx * vx); 
@@ -66,6 +70,7 @@ public class EnemyProjectileSpawner : ProjectileSpawner {
 		//Debug.Log (Direction.magnitude);
 		//Direction.Normalize ();
 
+		//return Direction;
 		return Direction;
 	}
 
@@ -73,7 +78,12 @@ public class EnemyProjectileSpawner : ProjectileSpawner {
 
 	public override void use_UseAbility()
 	{
+		if (!started) {
+			return;
+		}
+
 		Vector2 SpawnPosition = transform.position;
+		//Debug.Log ("Using");
 		Vector2 Direction = CalcTrajectory ();
 		if (float.IsNaN(Direction.x)) {
 			enemyStats.setInRange (false);

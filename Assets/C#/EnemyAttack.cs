@@ -26,7 +26,7 @@ public class EnemyAttack : MonoBehaviour {
 	void Update () {
 		seekTarget ();
 
-		if (EnemyStats.getAggro () != null) {
+		if (master.aggroed && EnemyStats.getAggro () != null) {
 			attack ();
 
 		}
