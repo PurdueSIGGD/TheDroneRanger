@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1038155502953712}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.026, y: 0.201, z: 0}
+  m_LocalPosition: {x: -0.026, y: 0.043, z: 0}
   m_LocalScale: {x: -0.5, y: 0.5, z: 0.1}
   m_Children:
   - {fileID: 4322387154571316}
@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 114623225053763910}
   - component: {fileID: 114297417838248002}
   - component: {fileID: 230575831780405485}
+  - component: {fileID: 1053514739}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -173,7 +174,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.64}
+  m_Size: {x: 0.175, y: 0.455}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -213,12 +214,12 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.16}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.29604846, y: 0.3151689}
-    oldSize: {x: 0.32, y: 0.64}
-    newSize: {x: 0.32, y: 0.64}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.175, y: 0.455}
+    newSize: {x: 0.175, y: 0.455}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -238,12 +239,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6c1d84e789af045a61ee405092bd42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementAcceleration: 2000
   maxHorizontalVelocity: 10
   diagVelocity: 10
   diagVelocityOffset: 0.1
   jumpImpulse: 7
   maxJumps: 1
+  gravity: 0
 --- !u!114 &114297417838248002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +282,25 @@ MonoBehaviour:
   activeTime: 6
   HNTimeScale: 0.02
   charge: 100
+--- !u!95 &1053514739
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840780901538968}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 24613284493c6cc488aaf4c7f30af48b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &6633914132927874836
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -288,6 +308,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4103082889992742}
     m_Modifications:
+    - target: {fileID: 6634858366013539138, guid: 671dcb61805f8704287cbe1314c190c3,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerWeapon
+      objectReference: {fileID: 0}
     - target: {fileID: 6638093583485376288, guid: 671dcb61805f8704287cbe1314c190c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -352,11 +377,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6634858366013539138, guid: 671dcb61805f8704287cbe1314c190c3,
-        type: 3}
-      propertyPath: m_Name
-      value: PlayerWeapon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 671dcb61805f8704287cbe1314c190c3, type: 3}
