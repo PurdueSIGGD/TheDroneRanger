@@ -23,7 +23,7 @@ public class Attributes : MonoBehaviour {
     }
 
     //mutators
-    public bool takeDamage(float damage) //returns true if alive, false if dead
+    public virtual bool takeDamage(float damage) //returns true if alive, false if dead
     {
         health -= damage;
         if (health <= 0)
