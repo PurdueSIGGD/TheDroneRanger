@@ -5,15 +5,13 @@ using UnityEngine;
 public class Prop : MonoBehaviour {
     public float durability = 1;
     public Sprite destroyedSprite;
-    private ParticleSystem ps;
+    protected ParticleSystem ps;
 
     private SpriteRenderer myRenderer;
-    private Sprite defaultSprite;
     // Use this for initialization
     void Start ()
     {
         myRenderer = this.GetComponent<SpriteRenderer>();
-        defaultSprite = myRenderer.sprite;
         ps = this.GetComponentInChildren<ParticleSystem>();
         var emission = ps.emission;
         emission.enabled = false;
@@ -33,11 +31,12 @@ public class Prop : MonoBehaviour {
     }
 
     // This should be called when the prop gets shot
-    void destroy() {
+    public virtual void destroy() {
         if (isDestroyed())
         {
             myRenderer.sprite = destroyedSprite;
             BoxCollider2D box = this.GetComponent<BoxCollider2D>();
+            this.GetComponent<Rigidbody2D>().gravityScale = 0;
             Destroy(box, 0);
             var emission = ps.emission;
             emission.enabled = true;
@@ -52,7 +51,7 @@ public class Prop : MonoBehaviour {
     }
 
     //runs a timer to stop destruction animation after a certain amount of time
-    IEnumerator stopAnimation() {
+    protected IEnumerator stopAnimation() {
         yield return new WaitForSeconds(.1f);
         var emission = ps.emission;
         emission.enabled = false;
