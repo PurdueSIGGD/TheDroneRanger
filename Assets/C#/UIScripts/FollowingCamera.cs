@@ -7,9 +7,9 @@ public class FollowingCamera : MonoBehaviour {
     GameObject target;
 
     // Determines the position of the player on the screen (with regards to the camera)
-    public float offsetX = 0, offsetY = 0;
+    public float offsetX = 0, offsetY = 4;
     // Determines whether or not the camera will follow the player as he traverses the Y-axis
-    public bool followYAxis = false;
+    public bool followYAxis = true;
 
     private float initY, initZ;
 
