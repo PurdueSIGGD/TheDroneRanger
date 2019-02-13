@@ -489,7 +489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6257051010974800626}
   - component: {fileID: 5933759932151829751}
-  - component: {fileID: 3522289280307466964}
+  - component: {fileID: 3046943665576785462}
   m_Layer: 5
   m_Name: Character
   m_TagString: Untagged
@@ -524,7 +524,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3662630811706353266}
   m_CullTransparentMesh: 0
---- !u!114 &3522289280307466964
+--- !u!114 &3046943665576785462
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -533,7 +533,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3662630811706353266}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -544,15 +544,13 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 2ad38d6baeef0994bb8f25dc824ca045, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 1
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
+  m_Texture: {fileID: 2800000, guid: 2ad38d6baeef0994bb8f25dc824ca045, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: -0.2
+    y: 0.5
+    width: 1
+    height: 0.5
 --- !u!1 &5352996617723159373
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,6 +726,7 @@ GameObject:
   - component: {fileID: 6485828910378696105}
   - component: {fileID: 6485828910378696104}
   - component: {fileID: 6485828910378696087}
+  - component: {fileID: 3238820937208290737}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -818,6 +817,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3238820937208290737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6485828910378696086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8af474d145d25140bbf8ed1d459428c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 3662630811706353266}
+  text: {fileID: 7128275208569860017}
 --- !u!1 &6485828910786966473
 GameObject:
   m_ObjectHideFlags: 0
