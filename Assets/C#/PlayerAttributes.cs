@@ -66,6 +66,8 @@ public class PlayerAttributes : Attributes {
 
     public override bool takeDamage(float damage)
     {
+        if (invincible) return true;
+
         knockBack();
         health -= damage;
         if (health <= 0)
@@ -78,8 +80,6 @@ public class PlayerAttributes : Attributes {
 
     public void knockBack()
     {
-        if (invincible) return;
-
         Vector2 direction = Vector2.left;
         Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
         if (mouseWorldPos.x < this.transform.position.x)
