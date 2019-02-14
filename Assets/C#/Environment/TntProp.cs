@@ -10,7 +10,6 @@ class TntProp : Prop
     public override void destroy(){
         if (isDestroyed())
         {
-            explode();
             this.GetComponent<SpriteRenderer>().sprite = destroyedSprite;
             BoxCollider2D box = this.GetComponent<BoxCollider2D>();
             this.GetComponent<Rigidbody2D>().gravityScale = 0;
@@ -18,6 +17,7 @@ class TntProp : Prop
             emission.enabled = true;
             Destroy(box, 0);
             StartCoroutine(stopAnimation());
+            explode();
         }
     }
 
@@ -33,8 +33,8 @@ class TntProp : Prop
         {
             if (col == null) continue;
             if (col.isTrigger) continue;
-            if (col.GetComponent<Attributes>() == null) continue;
-            col.GetComponent<Attributes>().takeDamage(damage);
+            if (col.GetComponent<Attributes>() != null) col.GetComponent<Attributes>().takeDamage(damage);
+            if (col.GetComponent<Prop>() != null) col.GetComponent<Prop>().decreaseDurability(damage);
         }
     }
 }

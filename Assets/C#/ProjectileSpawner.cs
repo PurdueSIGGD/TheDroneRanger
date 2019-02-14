@@ -36,7 +36,7 @@ public class ProjectileSpawner : CooldownAbility
         
     }
 
-    private void Start()
+	public virtual void Start()
     {
 
         myRigid = this.GetComponentInParent<Rigidbody2D>();
