@@ -88,6 +88,11 @@ public class PlayerMovement : MonoBehaviour
         bool goingRight = Input.GetAxisRaw("Horizontal") > 0;
         bool goingUp = myRigid.velocity.y > 0.1f;
         bool goingDown = myRigid.velocity.y < -0.1f;
+        if(!audioSource.isPlaying)
+        {
+            if (goingRight) audioSource.PlayOneShot(walkRightSound);
+            else if (goingLeft) audioSource.PlayOneShot(walkLeftSound);
+        }
         //Movement (Left / Right)
         if (!grounded) // in air
         {
