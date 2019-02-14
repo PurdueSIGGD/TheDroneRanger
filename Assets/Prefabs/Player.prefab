@@ -380,6 +380,7 @@ MonoBehaviour:
   weapon: {fileID: 8243309526681393141}
   activeTime: 6
   HNTimeScale: 0.02
+  tickSound: {fileID: 8300000, guid: dadf53a7cc91cef4d820f2bf2ccbf936, type: 3}
   charge: 100
 --- !u!82 &4659501517351855033
 AudioSource:

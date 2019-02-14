@@ -9,14 +9,22 @@ public class HighNoon : MonoBehaviour
     private ProjectileSpawner gun;
     public float activeTime = 6;
     public float HNTimeScale = 0.02f; // How fast time moves in high noon
+    public AudioClip tickSound = null;
 
     public float charge = 100;
     private int shotsLeft = 6;
     private bool active = false;
     private float startTime;
+    private AudioSource audioSource = null;
+
+    private void Start()
+    {
+        audioSource = this.GetComponent<AudioSource>();
+    }
 
     private void startHighNoon()
     {
+        audioSource.pitch = .5f;
         gun = weapon.getProjectileSpawner();
         if (charge < 100) return;
         weapon.setAmmo(shotsLeft);
@@ -29,6 +37,7 @@ public class HighNoon : MonoBehaviour
 
     private void endHighNoon()
     {
+        audioSource.pitch = 1;
         charge = 0;
         shotsLeft = 6;
         Time.timeScale = 1.0f;
@@ -55,7 +64,11 @@ public class HighNoon : MonoBehaviour
             }
             else
             {
-                charge = 100 * ((activeTime + startTime - Time.realtimeSinceStartup) / activeTime);
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.PlayOneShot(tickSound);
+                }
+                    charge = 100 * ((activeTime + startTime - Time.realtimeSinceStartup) / activeTime);
                 //TODO add highnoon implimentation
                 if (Input.GetButtonDown("Fire1"))
                 {
