@@ -8,6 +8,7 @@ public class MovingPlatforms : MonoBehaviour
 	public float pauseTime; //the platform can pause at each node to make it easier to mount and/or dismount
 	public bool loop; //if true move in a loop; if false move back and forth
 	public List<Coordinates> movePoints; //the points the platform will travel to
+	public int nextNodeIndex; //used for setplatform speed
 
 	private Vector3 lastPosition;
 
@@ -67,6 +68,7 @@ public class MovingPlatforms : MonoBehaviour
 			for (int i = 0; i < movePoints.Count; i++)
 			{
 				Vector3 nextNode = new Vector3(movePoints[i].getX(), movePoints[i].getY(), 0f);
+				nextNodeIndex = i;
 				while (transform.position != nextNode)
 				{
 					transform.position = Vector3.MoveTowards(transform.position, nextNode, speed * Time.deltaTime);
@@ -79,6 +81,7 @@ public class MovingPlatforms : MonoBehaviour
 			for (int i = movePoints.Count - 1; i >= 0; i--)
 			{
 				Vector3 nextNode = new Vector3(movePoints[i].getX(), movePoints[i].getY(), 0f);
+				nextNodeIndex = i;
 				while (transform.position != nextNode)
 				{
 					transform.position = Vector3.MoveTowards(transform.position, nextNode, speed * Time.deltaTime);
@@ -97,13 +100,23 @@ public class MovingPlatforms : MonoBehaviour
 			for (int i = 0; i < movePoints.Count; i++)
 			{
 				Vector3 nextNode = new Vector3(movePoints[i].getX(), movePoints[i].getY(), 0f);
+				nextNodeIndex = i;
 				while (transform.position != nextNode)
 				{
 					transform.position = Vector3.MoveTowards(transform.position, nextNode, speed * Time.deltaTime);
 					yield return new WaitForEndOfFrame();
 				}
+				yield return new WaitForSeconds(pauseTime);
 			}
 		}
 	}
-	
+
+	private void OnTriggerStay2D(Collider2D collision)
+	{
+		collision.gameObject.transform.parent = transform;
+	}
+	private void OnTriggerExit2D(Collider2D collision)
+	{
+		collision.gameObject.transform.parent = null;
+	}
 }

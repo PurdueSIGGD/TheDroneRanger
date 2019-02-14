@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6408197494431262198}
   - component: {fileID: 6408197494431262197}
   - component: {fileID: 6408197494431262090}
+  - component: {fileID: 1235036668}
   m_Layer: 0
   m_Name: MovingPlatform
   m_TagString: Untagged
@@ -113,10 +114,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.057636082, y: -0.029458396}
+  m_Offset: {x: 0.062253326, y: 0.29347527}
   m_SpriteTilingProperty:
     border: {x: 0.26999998, y: 0.21, z: 0.14999999, w: 0.26999998}
     pivot: {x: 0.5, y: 0.5}
@@ -127,7 +128,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8624598, y: 0.16098154}
+  m_Size: {x: 0.8532253, y: 0.4887452}
   m_EdgeRadius: 0
 --- !u!114 &6408197494431262090
 MonoBehaviour:
@@ -141,14 +142,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704ffc4a5365ec249b8e63b1c550a0dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  pauseTime: 0.5
-  loop: 0
+  speed: 1
+  pauseTime: 0
+  loop: 1
   movePoints:
-  - x: 18
-    y: -2
-  - x: 17
-    y: 4
-  - x: 10
-    y: 5
-  velocity: 0
+  - x: 2
+    y: 2
+  - x: 4
+    y: 2
+  nextNodeIndex: 0
+--- !u!61 &1235036668
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6408197494431262193}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.060834616, y: -0.030399188}
+  m_SpriteTilingProperty:
+    border: {x: 0.26999998, y: 0.21, z: 0.14999999, w: 0.26999998}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.28, y: 0.64}
+    newSize: {x: 1.28, y: 0.64}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.8663234, y: 0.16065824}
+  m_EdgeRadius: 0
