@@ -2089,9 +2089,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.92, y: -0.05}
+  m_Offset: {x: -2.92, y: -0.076}
   serializedVersion: 2
-  m_Radius: 0.23
+  m_Radius: 0.25
 --- !u!1001 &734129722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7117,7 +7117,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offsetX: 0
-  offsetY: 0
+  offsetY: 4
+  followYAxis: 1
 --- !u!1001 &952540600769604681
 PrefabInstance:
   m_ObjectHideFlags: 0
