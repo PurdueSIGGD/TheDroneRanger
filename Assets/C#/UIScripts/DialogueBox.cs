@@ -11,10 +11,40 @@ public class DialogueBox : MonoBehaviour
     private float messageTime = -1;
     private bool advance = false;
 
+    /* This class uses a lookup of characters stored in three arrays:
+     * characterFaces, characterCrop, characterNames
+     * characterNames acts as a lookup for the other two with the functions
+     * getTexture(string name) and getCrop(string name)
+     * These three arrays must be updated in the script object in the unity editor
+     */
+
+    public Texture[] characterFaces;
+    public Rect[] characterCrop;
+    public string[] characterNames;
+
     [SerializeField]
-    private GameObject character;
+    private GameObject characterProfile; //What renders the character
     [SerializeField]
-    private GameObject text;
+    private GameObject textbox; //What displays the text
+    [SerializeField]
+    private GameObject messageBox; //The entire dialouge box class
+
+    private void Start()
+    {
+        textbox.GetComponent<Text>().text = "";
+        DialogueMessage mes = new DialogueMessage();
+        mes.Character = "cowboy";
+        mes.Message = "Howdy!";
+        this.Message(mes);
+        mes.Character = "bullet";
+        mes.Message = "Some people think they can outsmart me.\nMaybe ...";
+        mes.Time = 1;
+        Message(mes);
+        mes.Character = "bullet";
+        mes.Message = "I have yet to meet man that can outsmart bullet.";
+        mes.Time = 2;
+        Message(mes);
+    }
 
 
     public void Message(DialogueMessage mes)
@@ -22,26 +52,59 @@ public class DialogueBox : MonoBehaviour
         messages[firstEmpty] = mes;
         firstEmpty++;
         if (firstEmpty >= 100) firstEmpty = 0;
+        messageBox.SetActive(true);
     }
+
+    public Texture getTexture(string name)
+    {
+        for (int i = 0; i < characterNames.Length; i++)
+        {
+            if (characterNames[i].ToLower() == name.ToLower())
+            {
+                return characterFaces[i];
+            }
+        }
+        return characterFaces[0];
+    }
+
+    public Rect getCrop(string name)
+    {
+        for(int i = 0; i < characterNames.Length; i++)
+        {
+            if (characterNames[i].ToLower() == name.ToLower())
+            {
+                return characterCrop[i];
+            }
+        }
+        return characterCrop[0];
+    }
+
+    private int timer = 0;
+    public int textSpeed = 1;
 
     private void Update()
     {
-        if (Input.GetButtonDown("z"))
+        if (messageBox.activeSelf == false)
+        {
+            return;
+        }
+        if (Input.GetButtonDown("Submit"))
         {
             advance = true;
         }
         if(firstEmpty != currentMessage)
         {
-            if (text.GetComponent<Text>().text.Length >= messages[currentMessage].Message.Length) //Compares the length of text displayed to the remaining text of the message
+            if (textbox.GetComponent<Text>().text.Length >= messages[currentMessage].Message.Length) //Compares the length of text displayed to the remaining text of the message
             {
                 if(messages[currentMessage].Time == 0)
                 {
                     if (advance)
                     {
-                        text.GetComponent<Text>().text = ""; //Removes text
+                        textbox.GetComponent<Text>().text = ""; //Removes text
+                        characterProfile.GetComponent<RawImage>().uvRect = getCrop(messages[currentMessage].Character); //Updates character crop
+                        characterProfile.GetComponent<RawImage>().texture = getTexture(messages[currentMessage].Character); //Updates character image
                         currentMessage++;
-                        character.GetComponent<RawImage>().uvRect = messages[currentMessage].crop;
-                        character.GetComponent<RawImage>().texture = messages[currentMessage].Character; //Updates character image
+                        advance = false;
                     }
                 }
                 else if(messageTime == -1)
@@ -50,17 +113,27 @@ public class DialogueBox : MonoBehaviour
                 }
                 else if(Time.realtimeSinceStartup - messageTime >= messages[currentMessage].Time) //Compares the realtime since ending the message with the "time" varible of the message
                 {
-                    text.GetComponent<Text>().text = "";
+                    textbox.GetComponent<Text>().text = "";
                     currentMessage++;
-                    character.GetComponent<RawImage>().uvRect = messages[currentMessage].crop;
-                    character.GetComponent<RawImage>().texture = messages[currentMessage].Character; //Updates character image
+                    characterProfile.GetComponent<RawImage>().uvRect = getCrop(messages[currentMessage].Character); //Updates character crop
+                    characterProfile.GetComponent<RawImage>().texture = getTexture(messages[currentMessage].Character); //Updates character image
                     messageTime = -1;
                 }
             }
             else
             {
-                text.GetComponent<Text>().text += messages[currentMessage].Message[text.GetComponent<Text>().text.Length]; //Appends the next character of the message to the dialogue box text
+                if(timer < textSpeed)
+                {
+                    timer++;
+                    return;
+                }
+                textbox.GetComponent<Text>().text += messages[currentMessage].Message[textbox.GetComponent<Text>().text.Length]; //Appends the next character of the message to the dialogue box text
+                timer = 0;
             }
+        }
+        else
+        {
+            messageBox.SetActive(false);
         }
     }
 }
@@ -69,8 +142,7 @@ public class DialogueBox : MonoBehaviour
 
 public struct DialogueMessage
 {
-    public Texture Character; //The character to display talking
-    public Rect crop;       //The rectangle used to crop the character sprite
-    public char[] Message;  //The message that is displayed
+    public string Character; //The character to display talking, must be present in the character arrays in this script object
+    public string Message;  //The message that is displayed
     public float Time;      //The time that the message is onscreen after it is finished being displayed - time=0 means the player will advance the message
 }

@@ -346,7 +346,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7358247213574609221
 RectTransform:
   m_ObjectHideFlags: 0
@@ -513,8 +513,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 24.999996, y: -50}
-  m_SizeDelta: {x: 50, y: 100}
+  m_AnchoredPosition: {x: 37.500008, y: -37.5}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5933759932151829751
 CanvasRenderer:
@@ -829,8 +829,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8af474d145d25140bbf8ed1d459428c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 3662630811706353266}
-  text: {fileID: 7128275208569860017}
+  characterFaces:
+  - {fileID: 0}
+  - {fileID: 2800000, guid: 2ad38d6baeef0994bb8f25dc824ca045, type: 3}
+  - {fileID: 2800000, guid: a1d66a260f033a94dae068dab26658d1, type: 3}
+  characterCrop:
+  - serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  - serializedVersion: 2
+    x: -0.2
+    y: 0.5
+    width: 1
+    height: 0.5
+  - serializedVersion: 2
+    x: -0.5
+    y: 0
+    width: 2
+    height: 1
+  characterNames:
+  - None
+  - Cowboy
+  - Bullet
+  characterProfile: {fileID: 3662630811706353266}
+  textbox: {fileID: 7128275208569860017}
+  messageBox: {fileID: 1652980248983050380}
+  textSpeed: 1
 --- !u!1 &6485828910786966473
 GameObject:
   m_ObjectHideFlags: 0
