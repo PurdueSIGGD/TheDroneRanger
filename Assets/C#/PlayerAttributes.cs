@@ -33,6 +33,8 @@ public class PlayerAttributes : Attributes {
             weapons.Add(preWeps[i]);
         }
 
+        addWeaponByName("Weapons/Revolver_Blade");
+
         cam = Camera.main;
     }
 

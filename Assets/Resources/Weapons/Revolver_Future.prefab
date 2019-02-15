@@ -49,7 +49,8 @@ MonoBehaviour:
   reloadDelay: 0.5
   rapidFire: 0
   projectileSpeed: 1
-  projectile: {fileID: 1979001164161008, guid: a3c88811ab50ca0488c11f7f8449c170, type: 3}
+  projectile: {fileID: 7739671120292667949, guid: 2ac66e9f39ef1f24ab6a4c90b04065e9,
+    type: 3}
   fireSound: {fileID: 0}
   reloadSound: {fileID: 0}
 --- !u!1 &6635147270537192464
