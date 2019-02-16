@@ -33,9 +33,12 @@ public class DialogueBox : MonoBehaviour
     {
         textbox.GetComponent<Text>().text = "";
         DialogueMessage mes = new DialogueMessage();
+
+        //Debug messages
+        /*
         mes.Character = "cowboy";
         mes.Message = "Howdy!";
-        this.Message(mes);
+        Message(mes);
         mes.Character = "bullet";
         mes.Message = "Some people think they can outsmart me.\nMaybe ...";
         mes.Time = 1;
@@ -44,15 +47,21 @@ public class DialogueBox : MonoBehaviour
         mes.Message = "I have yet to meet man that can outsmart bullet.";
         mes.Time = 2;
         Message(mes);
+        */
     }
 
 
     public void Message(DialogueMessage mes)
     {
         messages[firstEmpty] = mes;
+        if(firstEmpty == currentMessage)
+        {
+            messageBox.SetActive(true);
+            characterProfile.GetComponent<RawImage>().uvRect = getCrop(messages[currentMessage].Character); //Updates character crop
+            characterProfile.GetComponent<RawImage>().texture = getTexture(messages[currentMessage].Character); //Updates character image
+        }
         firstEmpty++;
         if (firstEmpty >= 100) firstEmpty = 0;
-        messageBox.SetActive(true);
     }
 
     public Texture getTexture(string name)
@@ -101,9 +110,15 @@ public class DialogueBox : MonoBehaviour
                     if (advance)
                     {
                         textbox.GetComponent<Text>().text = ""; //Removes text
+                        currentMessage++;
+                        if (currentMessage >= 100) currentMessage = 0;
+                        if(currentMessage == firstEmpty)
+                        {
+                            messageBox.SetActive(false);
+                            return;
+                        }
                         characterProfile.GetComponent<RawImage>().uvRect = getCrop(messages[currentMessage].Character); //Updates character crop
                         characterProfile.GetComponent<RawImage>().texture = getTexture(messages[currentMessage].Character); //Updates character image
-                        currentMessage++;
                         advance = false;
                     }
                 }
@@ -115,6 +130,12 @@ public class DialogueBox : MonoBehaviour
                 {
                     textbox.GetComponent<Text>().text = "";
                     currentMessage++;
+                    if (currentMessage >= 100) currentMessage = 0;
+                    if (currentMessage == firstEmpty)
+                    {
+                        messageBox.SetActive(false);
+                        return;
+                    }
                     characterProfile.GetComponent<RawImage>().uvRect = getCrop(messages[currentMessage].Character); //Updates character crop
                     characterProfile.GetComponent<RawImage>().texture = getTexture(messages[currentMessage].Character); //Updates character image
                     messageTime = -1;
@@ -122,6 +143,12 @@ public class DialogueBox : MonoBehaviour
             }
             else
             {
+                if (advance && messages[currentMessage].Time == 0)
+                {
+                    textbox.GetComponent<Text>().text = messages[currentMessage].Message;
+                    advance = false;
+                    return;
+                }
                 if(timer < textSpeed)
                 {
                     timer++;
@@ -130,10 +157,6 @@ public class DialogueBox : MonoBehaviour
                 textbox.GetComponent<Text>().text += messages[currentMessage].Message[textbox.GetComponent<Text>().text.Length]; //Appends the next character of the message to the dialogue box text
                 timer = 0;
             }
-        }
-        else
-        {
-            messageBox.SetActive(false);
         }
     }
 }
