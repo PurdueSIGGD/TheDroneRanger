@@ -9,9 +9,14 @@ public class PlayerMovement : MonoBehaviour
     public float diagVelocityOffset = .98f;
     public float jumpImpulse = 10.0f;
     public int maxJumps = 1;
+    public AudioClip walkLeftSound = null;
+    public AudioClip walkRightSound = null;
+    public AudioClip jumpSound = null;
+
     private Vector2 platformSpeed;
 
     private Rigidbody2D myRigid;
+    private AudioSource audioSource = null;
 
     private bool canJump;
     private bool jumping; // The player has hit the jump button and not yet returned to the ground
@@ -35,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         myRigid = this.GetComponent<Rigidbody2D>();
+        audioSource = this.GetComponent<AudioSource>();
 
         gravity = myRigid.gravityScale;
         platformSpeed = new Vector2(0, 0);
@@ -82,6 +88,11 @@ public class PlayerMovement : MonoBehaviour
         bool goingRight = Input.GetAxisRaw("Horizontal") > 0;
         bool goingUp = myRigid.velocity.y > 0.1f;
         bool goingDown = myRigid.velocity.y < -0.1f;
+        if(!audioSource.isPlaying)
+        {
+            if (goingRight) audioSource.PlayOneShot(walkRightSound);
+            else if (goingLeft) audioSource.PlayOneShot(walkLeftSound);
+        }
         //Movement (Left / Right)
         if (!grounded) // in air
         {
@@ -177,6 +188,7 @@ public class PlayerMovement : MonoBehaviour
         myRigid.AddForce(new Vector2(0, myRigid.mass * jumpImpulse), ForceMode2D.Impulse);
         jumping = true;
         jumpCounter++;
+        audioSource.PlayOneShot(jumpSound);
     }
 
     void OnCollisionEnter2D(Collision2D col)
