@@ -113,10 +113,16 @@ public class MovingPlatforms : MonoBehaviour
 
 	private void OnTriggerStay2D(Collider2D collision)
 	{
-		collision.gameObject.transform.parent = transform;
+		if (collision.gameObject.GetComponent<Rigidbody2D>() != null)
+		{
+			collision.gameObject.transform.parent = transform;
+		}
 	}
 	private void OnTriggerExit2D(Collider2D collision)
 	{
-		collision.gameObject.transform.parent = null;
+		if (collision.gameObject.GetComponent<Rigidbody2D>() != null)
+		{
+			collision.gameObject.transform.parent = null;
+		}
 	}
 }
