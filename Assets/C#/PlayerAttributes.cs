@@ -38,6 +38,19 @@ public class PlayerAttributes : Attributes {
         cam = Camera.main;
     }
 
+    private void iterateWeapon(WeaponAttributes activeWep, bool forward)
+    {
+
+        int newSlot = activeWepSlot +( forward ? 1 : weapons.Count - 1);
+        newSlot %= weapons.Count;
+
+        activeWep.gameObject.SetActive(false);
+        activeWep = weapons[newSlot];
+        activeWepSlot = newSlot;
+        activeWep.gameObject.SetActive(true);
+
+    }
+
     public void Update()
     {
 
@@ -51,17 +64,10 @@ public class PlayerAttributes : Attributes {
         else if (Input.GetKeyDown(reloadKey))
         {
             activeWep.reload();
-        }else if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") != 0f || Input.GetButtonDown("Switch"))
         {
-
-            int newSlot = activeWepSlot + ((Input.GetAxis("Mouse ScrollWheel") > 0f) ? 1 : weapons.Count - 1);
-            newSlot %= weapons.Count;
-
-            activeWep.gameObject.SetActive(false);
-            activeWep = weapons[newSlot];
-            activeWepSlot = newSlot;
-            activeWep.gameObject.SetActive(true);
-
+            iterateWeapon(activeWep, (Input.GetAxis("Mouse ScrollWheel") >= 0f));
         }
 
     }
