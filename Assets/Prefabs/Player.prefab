@@ -206,6 +206,7 @@ GameObject:
   - component: {fileID: 114297417838248002}
   - component: {fileID: 230575831780405485}
   - component: {fileID: 4659501517351855033}
+  - component: {fileID: 1494515507}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -478,6 +479,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &1494515507
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840780901538968}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 24613284493c6cc488aaf4c7f30af48b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &6633914132927874836
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -490,6 +510,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerWeapon
       objectReference: {fileID: 0}
+    - target: {fileID: 3347999263294230753, guid: 671dcb61805f8704287cbe1314c190c3,
+        type: 3}
+      propertyPath: fireSound
+      value: 
+      objectReference: {fileID: 8300000, guid: e419c7d4d3d577e439577007ad4887c2, type: 3}
+    - target: {fileID: 3347999263294230753, guid: 671dcb61805f8704287cbe1314c190c3,
+        type: 3}
+      propertyPath: reloadSound
+      value: 
+      objectReference: {fileID: 8300000, guid: b853337031e77a24491671ffb48741ff, type: 3}
     - target: {fileID: 6638093583485376288, guid: 671dcb61805f8704287cbe1314c190c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -555,21 +585,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.4
       objectReference: {fileID: 0}
-    - target: {fileID: 6634858366013539138, guid: 671dcb61805f8704287cbe1314c190c3,
-        type: 3}
-      propertyPath: m_Name
-      value: PlayerWeapon
-      objectReference: {fileID: 0}
-    - target: {fileID: 3347999263294230753, guid: 671dcb61805f8704287cbe1314c190c3,
-        type: 3}
-      propertyPath: fireSound
-      value: 
-      objectReference: {fileID: 8300000, guid: e419c7d4d3d577e439577007ad4887c2, type: 3}
-    - target: {fileID: 3347999263294230753, guid: 671dcb61805f8704287cbe1314c190c3,
-        type: 3}
-      propertyPath: reloadSound
-      value: 
-      objectReference: {fileID: 8300000, guid: b853337031e77a24491671ffb48741ff, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 671dcb61805f8704287cbe1314c190c3, type: 3}
 --- !u!1 &1026146788967510 stripped
