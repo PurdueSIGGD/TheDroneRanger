@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ded84c3c1d3a61246a023934eaff268a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clipSize: 3
+  clipSize: 4
   fireDelay: 0.2
   reloadDelay: 0.5
   rapidFire: 0

@@ -68,9 +68,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceObj: {fileID: 0}
-  damage: 1
+  damage: 2
   lifetime: 4
-  dieOnHit: 1
+  dieOnHit: 0
   hurtPlayer: 0
 --- !u!70 &7752658697781716645
 CapsuleCollider2D:

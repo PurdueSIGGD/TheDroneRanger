@@ -33,7 +33,7 @@ public class PlayerAttributes : Attributes {
             weapons.Add(preWeps[i]);
         }
 
-        addWeaponByName("Weapons/Revolver_Blade");
+        addWeaponByName("Weapons/Shotgun");
 
         cam = Camera.main;
     }
@@ -72,6 +72,9 @@ public class PlayerAttributes : Attributes {
 
     }
 
+    /*
+     * Returns true if still alive. 
+     */
     public override bool takeDamage(float damage)
     {
         if (invincible) return true;

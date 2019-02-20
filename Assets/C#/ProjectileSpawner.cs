@@ -18,6 +18,7 @@ public class ProjectileSpawner : CooldownAbility
     public override void use_UseAbility()
     {
         Vector2 SpawnPosition = transform.position;
+        
         Vector2 Direction = transform.rotation * Vector2.right;
 
         //TODO add targeting and spawn the bullet
@@ -28,11 +29,18 @@ public class ProjectileSpawner : CooldownAbility
         projec.hurtPlayer = hurtPlayer;
 
         Bullet.transform.position = SpawnPosition;
+        Bullet.transform.rotation = transform.rotation;
+
         Rigidbody2D rigid = Bullet.GetComponent<Rigidbody2D>();
         rigid.velocity = myRigid.velocity;
-        Bullet.transform.rotation = Quaternion.FromToRotation(Vector3.right, new Vector3(Direction.x, Direction.y, 0));
+
+        if (Direction.x < 0)
+        {
+            Bullet.GetComponentInChildren<SpriteRenderer>().flipY = true;
+        }
+
+        Bullet.transform.rotation = Quaternion.FromToRotation(Vector3.right, new Vector3(Direction.x, Direction.y, 0)); ;
         rigid.AddForce(Direction * thrust, ForceMode2D.Impulse);
-        
         
     }
 

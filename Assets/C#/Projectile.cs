@@ -34,6 +34,7 @@ public class Projectile : MonoBehaviour {
         if (col.isTrigger) return; // Only want our own trigger effects
         if (!sourceObj) return;
         if (col == sourceObj.GetComponent<Collider2D>()) return;
+        if (col.GetComponent<Projectile>()) return;
         Attributes attr;
         Prop p;
         attr = col.GetComponentInParent<Attributes>();
