@@ -47,13 +47,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clipSize: 6
   fireDelay: 0.4
-  reloadDelay: 0.8
+  reloadDelay: 0.35
   rapidFire: 0
+  oneReload: 0
   projectileSpeed: 1
-  projectile: {fileID: 7739671120292667949, guid: 2ac66e9f39ef1f24ab6a4c90b04065e9,
+  projectile: {fileID: 7739671120292667949, guid: cdb902e119ee5174ea3afece5bff13b6,
     type: 3}
   fireSound: {fileID: 8300000, guid: e419c7d4d3d577e439577007ad4887c2, type: 3}
-  reloadSound: {fileID: 8300000, guid: b853337031e77a24491671ffb48741ff, type: 3}
+  reloadSound: {fileID: 8300000, guid: 3bca301e5907854439b2fdf45a626d52, type: 3}
 --- !u!82 &606831516880104181
 AudioSource:
   m_ObjectHideFlags: 0
@@ -175,7 +176,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6635147270537192464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.162, y: 0.044, z: 0}
+  m_LocalPosition: {x: -0.14, y: 0.1, z: 0}
   m_LocalScale: {x: 1.81907, y: 1.81907, z: 1.81907}
   m_Children: []
   m_Father: {fileID: 6638093583485376288}

@@ -11,14 +11,37 @@ public class Projectile : MonoBehaviour {
     public float lifetime = 4;
     public bool dieOnHit = true;
     public bool hurtPlayer = false;
+    public int copyAmount = 0; //Amount of copies to create, as used by shotgun
+    public float spreadAngle = 45.0f;
 
     private bool hasHit;
     private GameObject player;
 
     // Use this for initialization
     void Start () {
+
         Invoke("DestroyMe", lifetime);
         player = GameObject.Find("Player");
+
+        if (copyAmount > 0)
+        {
+            int loops = copyAmount;
+            copyAmount = 0;//Set to 0 so that the new spawns don't copy
+            Vector2 velo = this.GetComponent<Rigidbody2D>().velocity;
+
+            for (int i = 0; i < loops; i++)
+            {
+                Rigidbody2D body = GameObject.Instantiate(this.gameObject).GetComponent<Rigidbody2D>();
+                body.gameObject.name = this.gameObject.name;
+                float angle = Random.Range(-spreadAngle/2.0f, spreadAngle/2.0f) * Mathf.Deg2Rad;
+                float sin = Mathf.Sin(angle);
+                float cos = Mathf.Cos(angle);
+                body.velocity = new Vector2(cos * velo.x - sin * velo.y, sin * velo.x + cos * velo.y);
+            }
+
+            copyAmount = loops;
+        }
+
     }
 
     void DestroyMe()
@@ -34,7 +57,7 @@ public class Projectile : MonoBehaviour {
         if (col.isTrigger) return; // Only want our own trigger effects
         if (!sourceObj) return;
         if (col == sourceObj.GetComponent<Collider2D>()) return;
-        if (col.GetComponent<Projectile>()) return;
+        if (col.GetComponent<Projectile>()) return; // Ignore other projectiles
         Attributes attr;
         Prop p;
         attr = col.GetComponentInParent<Attributes>();

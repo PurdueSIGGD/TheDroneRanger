@@ -9,13 +9,16 @@ public class WeaponAttributes : MonoBehaviour {
     public float reloadDelay = 0.5f;
 
     public bool rapidFire = false;//Variable used by parent PlayerWeapon class
+    public bool oneReload = true;
+    public bool fireCancelReload = true;
 
     public float projectileSpeed = 3;
     public GameObject projectile = null;
     public AudioClip fireSound = null;
     public AudioClip reloadSound = null;
 
-    private int ammoCount;
+    private int ammoCount = 0;
+    private bool reloading = false;
 
     private ProjectileSpawner projectileSpawner;
     private CooldownAbility reloadAbility = null;
@@ -74,12 +77,36 @@ public class WeaponAttributes : MonoBehaviour {
         ammoCount = Mathf.Min(clipSize, ammoCount);
     }
 
+    public void Update()
+    {
+        if (reloading && reloadAbility.canUse())
+        {
+            if (ammoCount < clipSize)
+            {
+                ammoCount++;
+                reloadAbility.use();
+                audioSource.PlayOneShot(reloadSound);
+            }
+            else
+            {
+                reloading = false;
+            }
+        }
+    }
+
     public bool fire()
     {
         //Don't allow fire while reloading
-        if (!reloadAbility.canUse())
+        if (!reloadAbility.canUse() || reloading)
         {
-            return false;
+            if (!oneReload && fireCancelReload)
+            {
+                reloading = false;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         if (ammoCount <= 0)
@@ -99,15 +126,25 @@ public class WeaponAttributes : MonoBehaviour {
 
     public void reload()
     {
+        if (reloading)
+            return;
+
         if (ammoCount < clipSize) {
             reloadAbility.cooldown = reloadDelay;
             if (reloadAbility.use())
             {
-                ammoCount = clipSize;
+                if (oneReload)
+                {
+                    ammoCount = clipSize;
+                }
+                else
+                {
+                    ammoCount++;
+                    reloading = true;//Continue reloading after this
+                }
                 audioSource.PlayOneShot(reloadSound);
             }
        }
-
     }
 
     public ProjectileSpawner getProjectileSpawner()
