@@ -11,10 +11,12 @@ public class Projectile : MonoBehaviour {
     public float lifetime = 4;
     public bool dieOnHit = true;
     public bool hurtPlayer = false;
+    public float gracePeriod = 0.2f;//Seconds allowed before self-harm
     public int copyAmount = 0; //Amount of copies to create, as used by shotgun
     public float spreadAngle = 45.0f;
 
     private bool hasHit;
+    private float spawnTime = 0.0f;
     private GameObject player;
 
     // Use this for initialization
@@ -42,6 +44,8 @@ public class Projectile : MonoBehaviour {
             copyAmount = loops;
         }
 
+        spawnTime = Time.time;
+
     }
 
     void DestroyMe()
@@ -64,6 +68,8 @@ public class Projectile : MonoBehaviour {
 		if (attr is PlayerAttributes)
         {
             if (!hurtPlayer && attr.gameObject == player) return;
+            if (hurtPlayer && Time.time - spawnTime < gracePeriod) return;
+
         }
         else if ((p = col.GetComponentInParent<Prop>()))
         {
@@ -74,7 +80,6 @@ public class Projectile : MonoBehaviour {
             }
             else { return; }
         }
-
         /* ACTIONS TO TAKE POST-HIT */
         hasHit = true;
         //TODO: check to see if we can hit the thing that we collided with

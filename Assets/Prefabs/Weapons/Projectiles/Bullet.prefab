@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7708692761331285063}
   - component: {fileID: 7752658697781716645}
   m_Layer: 0
-  m_Name: Bullet 1
+  m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,10 +68,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceObj: {fileID: 0}
-  damage: 1
+  damage: 8
   lifetime: 4
   dieOnHit: 1
   hurtPlayer: 0
+  copyAmount: 0
+  spreadAngle: 45
 --- !u!70 &7752658697781716645
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

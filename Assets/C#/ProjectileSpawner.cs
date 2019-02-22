@@ -26,7 +26,6 @@ public class ProjectileSpawner : CooldownAbility
 
         Projectile projec = Bullet.GetComponent<Projectile>();
         projec.sourceObj = this.gameObject;
-        projec.hurtPlayer = hurtPlayer;
 
         Bullet.transform.position = SpawnPosition;
         Bullet.transform.rotation = transform.rotation;

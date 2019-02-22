@@ -14,6 +14,7 @@ public class WeaponAttributes : MonoBehaviour {
 
     public float projectileSpeed = 3;
     public GameObject projectile = null;
+    public Sprite ammoUI = null;
     public AudioClip fireSound = null;
     public AudioClip reloadSound = null;
 
@@ -35,7 +36,6 @@ public class WeaponAttributes : MonoBehaviour {
         audioSource = this.GetComponent<AudioSource>();
 
         projectileSpawner.thrust = projectileSpeed;
-        projectileSpawner.hurtPlayer = false;
         projectileSpawner.projectile = projectile;
         projectileSpawner.cooldown = fireDelay;
 

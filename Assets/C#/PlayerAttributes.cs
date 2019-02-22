@@ -34,6 +34,7 @@ public class PlayerAttributes : Attributes {
         }
 
         addWeaponByName("Weapons/Shotgun");
+        addWeaponByName("Weapons/Plasma_Cannon");
 
         cam = Camera.main;
     }
