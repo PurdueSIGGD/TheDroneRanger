@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerAttributes : Attributes {
 
@@ -66,20 +67,26 @@ public class PlayerAttributes : Attributes {
 
     public override bool takeDamage(float damage)
     {
-        if (invincible) return true;
-
         knockBack();
         health -= damage;
         if (health <= 0)
         {
             health = 0;
+            die();
             return false;
         }
         return true;
     }
 
+    private void die()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+    }
+
     public void knockBack()
     {
+        if (invincible) return;
+
         Vector2 direction = Vector2.left;
         Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
         if (mouseWorldPos.x < this.transform.position.x)
