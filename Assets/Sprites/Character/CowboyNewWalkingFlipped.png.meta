@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 4543fe8b9bf1f8546bb853a8e3f2b293
+guid: 6d723b508ef4d244085c4433d14207b4
 TextureImporter:
   fileIDToRecycleName:
-    21300000: CowboyWalkingAnimation_0
-    21300002: CowboyWalkingAnimation_1
-    21300004: CowboyWalkingAnimation_2
-    21300006: CowboyWalkingAnimation_3
+    21300000: CowboyNewWalkingFlipped_0
+    21300002: CowboyNewWalkingFlipped_1
+    21300004: CowboyNewWalkingFlipped_2
+    21300006: CowboyNewWalkingFlipped_3
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -67,7 +67,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -78,7 +78,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: 4
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -88,30 +88,10 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CowboyWalkingAnimation_0
+      name: CowboyNewWalkingFlipped_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 28
-        width: 44
-        height: 90
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 53cfbd3c34925aa41a82b58e1e2369c7
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CowboyWalkingAnimation_1
-      rect:
-        serializedVersion: 2
-        x: 63
+        x: 10
         y: 27
         width: 52
         height: 90
@@ -122,18 +102,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 15acc7d1f833cf84cbb2b7588c7cffb9
+      spriteID: bd9597eb431f7fc4eabe9707a6c4584e
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CowboyWalkingAnimation_2
+      name: CowboyNewWalkingFlipped_1
       rect:
         serializedVersion: 2
-        x: 129
+        x: 80
         y: 26
-        width: 46
+        width: 48
         height: 90
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -142,18 +122,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a520e34e8ceecdd45b6819ff8a61148d
+      spriteID: 5b9ef9cb77e2ca04abecf969bae6f86b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CowboyWalkingAnimation_3
+      name: CowboyNewWalkingFlipped_2
       rect:
         serializedVersion: 2
-        x: 193
+        x: 141
         y: 27
-        width: 54
+        width: 52
         height: 90
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -162,7 +142,27 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db747e07f7fc37f44b0dc98fbbcc0bb1
+      spriteID: c041f13c7d141394dbead7893504ceee
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CowboyNewWalkingFlipped_3
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 28
+        width: 52
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17add768ca02cff4fb0ae97262ef22fd
       vertices: []
       indices: 
       edges: []
@@ -170,7 +170,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 35f9afef69239c9439e6195dccb4c52c
+    spriteID: 61405ac28f0568640854ba3e2cf0ca49
     vertices: []
     indices: 
     edges: []
