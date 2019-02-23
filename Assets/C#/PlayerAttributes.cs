@@ -20,10 +20,23 @@ public class PlayerAttributes : Attributes {
     public float kForce;
     private bool invincible;
     private Camera cam;
+    public static GameObject control;
+
+    public void Awake()
+    {
+        if(control == null)
+        {
+            DontDestroyOnLoad(this.gameObject);
+            control = this.gameObject;
+        }
+        else if(control != this.gameObject)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     public void Start()
     {
-
         WeaponAttributes[] preWeps = this.GetComponentsInChildren<WeaponAttributes>();
         for (int i = 0; i < preWeps.Length; i++)
         {
@@ -67,7 +80,6 @@ public class PlayerAttributes : Attributes {
 
     public override bool takeDamage(float damage)
     {
-        knockBack();
         health -= damage;
         if (health <= 0)
         {
@@ -75,6 +87,7 @@ public class PlayerAttributes : Attributes {
             die();
             return false;
         }
+        knockBack();
         return true;
     }
 
