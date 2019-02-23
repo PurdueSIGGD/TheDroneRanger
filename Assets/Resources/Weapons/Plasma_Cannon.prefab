@@ -47,15 +47,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clipSize: 4
   fireDelay: 0.5
-  reloadDelay: 0.5
+  reloadDelay: 0.8
   rapidFire: 1
-  oneReload: 0
-  fireCancelReload: 1
+  oneReload: 1
+  fireCancelReload: 0
   projectileSpeed: 1
   projectile: {fileID: 7739671120292667949, guid: bd5d45f19748a6e41a35561f0fc1e1ec,
     type: 3}
-  fireSound: {fileID: 8300000, guid: e419c7d4d3d577e439577007ad4887c2, type: 3}
-  reloadSound: {fileID: 8300000, guid: 3bca301e5907854439b2fdf45a626d52, type: 3}
+  ammoUI: {fileID: 0}
+  fireSound: {fileID: 8300000, guid: fe05c532c55d4b84d9168c8c14433793, type: 3}
+  reloadSound: {fileID: 8300000, guid: ab7c01ff433f7ce439e923c3c5a2398e, type: 3}
 --- !u!82 &606831516880104181
 AudioSource:
   m_ObjectHideFlags: 0
@@ -177,7 +178,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6635147270537192464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.195, y: -0.03, z: 0}
+  m_LocalPosition: {x: -0.159, y: -0.143, z: 0}
   m_LocalScale: {x: 1.6480775, y: 1.4134173, z: 1.81907}
   m_Children: []
   m_Father: {fileID: 6638093583485376288}

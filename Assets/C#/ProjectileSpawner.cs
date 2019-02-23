@@ -28,7 +28,6 @@ public class ProjectileSpawner : CooldownAbility
         projec.sourceObj = this.gameObject;
 
         Bullet.transform.position = SpawnPosition;
-        Bullet.transform.rotation = transform.rotation;
 
         Rigidbody2D rigid = Bullet.GetComponent<Rigidbody2D>();
         rigid.velocity = myRigid.velocity;
@@ -38,7 +37,7 @@ public class ProjectileSpawner : CooldownAbility
             Bullet.GetComponentInChildren<SpriteRenderer>().flipY = true;
         }
 
-        Bullet.transform.rotation = Quaternion.FromToRotation(Vector3.right, new Vector3(Direction.x, Direction.y, 0)); ;
+        Bullet.transform.rotation = Quaternion.FromToRotation(Vector3.right, new Vector3(Direction.x, Direction.y, 0));
         rigid.AddForce(Direction * thrust, ForceMode2D.Impulse);
         
     }

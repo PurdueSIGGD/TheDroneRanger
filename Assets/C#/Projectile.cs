@@ -14,16 +14,22 @@ public class Projectile : MonoBehaviour {
     public float gracePeriod = 0.2f;//Seconds allowed before self-harm
     public int copyAmount = 0; //Amount of copies to create, as used by shotgun
     public float spreadAngle = 45.0f;
+    public bool explosive = false;
+    public float explosiveRadius = 1.8f;
 
     private bool hasHit;
     private float spawnTime = 0.0f;
     private GameObject player;
+    private Rigidbody2D myRigid;
+    private Collider2D myCollider;
 
     // Use this for initialization
     void Start () {
 
         Invoke("DestroyMe", lifetime);
         player = GameObject.Find("Player");
+        myRigid = this.GetComponent<Rigidbody2D>();
+        myCollider = this.GetComponent<Collider2D>();
 
         if (copyAmount > 0)
         {
@@ -53,6 +59,11 @@ public class Projectile : MonoBehaviour {
         Destroy(this.gameObject);
     }
 
+    void Update()
+    {
+        this.transform.rotation = Quaternion.FromToRotation(Vector3.right, new Vector3(myRigid.velocity.x, myRigid.velocity.y, 0));
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
 
@@ -76,14 +87,37 @@ public class Projectile : MonoBehaviour {
             if (!p.isDestroyed())
             {
                 p.decreaseDurability(damage);
-                destroyThis();
             }
             else { return; }
         }
         /* ACTIONS TO TAKE POST-HIT */
         hasHit = true;
         //TODO: check to see if we can hit the thing that we collided with
-        if (attr != null)
+        if (explosive)
+        {
+            Collider2D[] victims = Physics2D.OverlapCircleAll(this.transform.position, explosiveRadius);
+            for (int i = 0; i < victims.Length; i++)
+            {
+                Attributes mAttr = victims[i].GetComponentInParent<Attributes>();
+                if (mAttr)
+                {
+                    ColliderDistance2D colDist = victims[i].Distance(myCollider);
+                    float hurt = damage * Mathf.Clamp(1 - (colDist.distance / explosiveRadius), 0.0f, 1.0f);
+                    if (hurt < 1.0f)
+                        continue;
+                    mAttr.takeDamage(hurt);
+                    if (mAttr is PlayerAttributes)
+                    {
+                        Vector2 direction = (colDist.pointA - colDist.pointB).normalized;
+                        if (direction.magnitude == 0)
+                        {
+                            direction = (victims[i].gameObject.transform.position - this.transform.position).normalized;
+                        }
+                        ((PlayerAttributes)mAttr).knockBack((colDist.pointA - colDist.pointB).normalized, hurt);
+                    }
+                }
+            }
+        } else if (attr != null)
         {
             attr.takeDamage(damage);
         }

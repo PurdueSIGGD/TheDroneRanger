@@ -16,7 +16,6 @@ public class PlayerAttributes : Attributes {
 
     public float invTime;
     public float hurtTime;
-    public float kForce;
     private bool invincible;
     private Camera cam;
 
@@ -26,10 +25,6 @@ public class PlayerAttributes : Attributes {
         WeaponAttributes[] preWeps = this.GetComponentsInChildren<WeaponAttributes>();
         for (int i = 0; i < preWeps.Length; i++)
         {
-            if (preWeps[i].gameObject == null)
-            {
-                continue;
-            }
             weapons.Add(preWeps[i]);
         }
 
@@ -79,8 +74,7 @@ public class PlayerAttributes : Attributes {
     public override bool takeDamage(float damage)
     {
         if (invincible) return true;
-
-        knockBack();
+        
         health -= damage;
         if (health <= 0)
         {
@@ -90,15 +84,8 @@ public class PlayerAttributes : Attributes {
         return true;
     }
 
-    public void knockBack()
+    public void knockBack(Vector2 direction, float strength)
     {
-        Vector2 direction = Vector2.left;
-        Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
-        if (mouseWorldPos.x < this.transform.position.x)
-        {
-            direction = Vector2.right;
-        }
-        direction += Vector2.up;
 
         GetComponent<PlayerMovement>().enabled = false;
         GetComponent<HighNoon>().enabled = false;
@@ -109,7 +96,7 @@ public class PlayerAttributes : Attributes {
 
         Rigidbody2D myRigid = GetComponent<Rigidbody2D>();
         myRigid.velocity = new Vector2(0, 0);
-        myRigid.AddForce(new Vector2(myRigid.mass, myRigid.mass) * kForce * direction, ForceMode2D.Impulse);
+        myRigid.AddForce(new Vector2(myRigid.mass, myRigid.mass) * strength * direction, ForceMode2D.Impulse);
         myRigid.gravityScale = GetComponent<PlayerMovement>().gravity;
     }
 
