@@ -14,16 +14,12 @@ GameObject:
   - component: {fileID: 61558129678094972}
   - component: {fileID: 114718228449468838}
   - component: {fileID: 114983513367892862}
-  - component: {fileID: 114148180450923504}
   - component: {fileID: 114939775262628064}
-  - component: {fileID: 114804489620993320}
   - component: {fileID: 114593686399277752}
-  - component: {fileID: 114643373654015152}
   - component: {fileID: 114701677160397766}
-  - component: {fileID: 114093049456113770}
-  - component: {fileID: 1538312953853488964}
+  - component: {fileID: 5957321479375890392}
   m_Layer: 0
-  m_Name: Base Enemy
+  m_Name: EnemyStabber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,7 +78,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1cc5de6e5e08aa34b87d7efc53ccc219, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.64, y: 0.64}
@@ -151,8 +147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 10
-  visionStart: -90
-  visionEnd: 90
+  visionStart: -100
+  visionEnd: 100
 --- !u!114 &114983513367892862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,31 +163,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   maxHealth: 100
-  attackRate: 1
   moveSpeed: 1
   jumpCool: 1
   aggroRigid: {fileID: 0}
---- !u!114 &114148180450923504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1786939519797682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5db1b7dc4f7f2bb4d9c6b38f1eccb365, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationTriggerType: 0
-  CAST_STRING: Cast
-  cooldown: 1
-  hasNotified: 0
-  projectile: {fileID: 1979001164161008, guid: a53586319ca6da24690aa9328f7cf0a5, type: 3}
-  thrust: 20
-  hurtPlayer: 0
-  label: TNTToss
-  arc: 0.2
 --- !u!114 &114939775262628064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,44 +180,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackScript: {fileID: 114718228449468838}
   spawnSeq:
-  - BulletShoot
-  - TNTToss
+  - stab
   moveSeq:
-  - for
-  - for
-  - jum
-  aggromove: stat
+  - stat
+  aggromove: chase
   moveDur:
-  - 3
-  - 2.5
-  - -0.1
-  moveLoopStart: 1
+  - -2
+  moveLoopStart: 0
   aggroDelay: 1
   currSpawn: 0
   currMove: 0
   cycleTime: 2.5
   aggroed: 0
---- !u!114 &114804489620993320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1786939519797682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5db1b7dc4f7f2bb4d9c6b38f1eccb365, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationTriggerType: 0
-  CAST_STRING: Cast
-  cooldown: 1
-  hasNotified: 0
-  projectile: {fileID: 1979001164161008, guid: a3c88811ab50ca0488c11f7f8449c170, type: 3}
-  thrust: 15
-  hurtPlayer: 0
-  label: BulletShoot
-  arc: 0
 --- !u!114 &114593686399277752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,25 +210,6 @@ MonoBehaviour:
   flipSprite: 1
   jumpHeight: 3
   enemyRigid: {fileID: 0}
---- !u!114 &114643373654015152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1786939519797682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a5dbb5c2fd20be40a6a20251720e801, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  label: for
-  xdir: 1
-  ydir: 1
-  flipSprite: 1
-  jumpHeight: 3
-  enemyRigid: {fileID: 0}
-  speed: 2.5
 --- !u!114 &114701677160397766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,7 +229,7 @@ MonoBehaviour:
   jumpHeight: 3
   enemyRigid: {fileID: 0}
   speed: 1.5
---- !u!114 &114093049456113770
+--- !u!114 &5957321479375890392
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -309,31 +238,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1786939519797682}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7204ee73f096c1d4ea50ea3be80bf09f, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d558eba9b333e643a01292b2717cf1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  label: jum
-  xdir: 1
-  ydir: 1
-  flipSprite: 1
-  jumpHeight: 3
-  enemyRigid: {fileID: 0}
-  xLocked: 1
---- !u!114 &1538312953853488964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1786939519797682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d223006125fe2ff449f4c698111f5379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  label: track
-  xdir: 1
-  ydir: 1
-  flipSprite: 1
-  jumpHeight: 3
-  enemyRigid: {fileID: 0}
+  animationTriggerType: 0
+  CAST_STRING: Cast
+  cooldown: 0.2
+  hasNotified: 0
+  projectile: {fileID: 1979001164161008, guid: b889a5689bbbdcb488e72864de6517fc, type: 3}
+  thrust: 1
+  hurtPlayer: 0
+  label: stab
+  arc: 0.5
+  enemyStats: {fileID: 0}
+  master: {fileID: 0}
+  offsetDist: 1
+  offsetAngle: 0
+  atkRange: 2
