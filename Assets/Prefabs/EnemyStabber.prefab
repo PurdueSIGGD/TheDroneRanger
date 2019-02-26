@@ -245,13 +245,13 @@ MonoBehaviour:
   CAST_STRING: Cast
   cooldown: 0.2
   hasNotified: 0
-  projectile: {fileID: 1979001164161008, guid: a53586319ca6da24690aa9328f7cf0a5, type: 3}
+  projectile: {fileID: 1979001164161008, guid: b889a5689bbbdcb488e72864de6517fc, type: 3}
   thrust: 1
   hurtPlayer: 0
   label: stab
   arc: 0.5
   enemyStats: {fileID: 0}
   master: {fileID: 0}
-  offsetDist: 2
+  offsetDist: 1
   offsetAngle: 0
   atkRange: 2
