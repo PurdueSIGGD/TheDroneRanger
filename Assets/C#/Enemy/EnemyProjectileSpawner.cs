@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyProjectileSpawner : ProjectileSpawner {
-	private EnemyAttributes enemyStats;
+	
 	public string label;
 	private bool usesGravity;
 	private float gravScale;
 	public float arc = .5f; //value from 0 to 1 describing how direct the path of thrown object should follow
 	private bool started = false;
+	[HideInInspector]
+	public EnemyAttributes enemyStats;
+	[HideInInspector]
+	public EnemyAIMaster master;
 
 	public void setProjectile(GameObject proj)
 	{
@@ -21,6 +25,7 @@ public class EnemyProjectileSpawner : ProjectileSpawner {
 	public override void Start()
 	{
 		enemyStats = GetComponent<EnemyAttributes> ();
+		master = GetComponent<EnemyAIMaster> ();
 		setProjectile (projectile);
 		started = true;
 	}
@@ -82,6 +87,11 @@ public class EnemyProjectileSpawner : ProjectileSpawner {
 			return;
 		}
 
+		sAbility ();
+	}
+
+	public virtual void sAbility()
+	{
 		Vector2 SpawnPosition = transform.position;
 		//Debug.Log ("Using");
 		Vector2 Direction = CalcTrajectory ();

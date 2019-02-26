@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAttributes : Attributes {
 	//public Weapon currentWeapon;
-	public float attackRate = 1;
+	//public float attackRate = 1;
 	public float moveSpeed = 1;
 	public float jumpCool = .5f;
 	public Rigidbody2D aggroRigid = null;
@@ -12,9 +12,10 @@ public class EnemyAttributes : Attributes {
 
 	//accessors
     
+	/*
 	public float getAttackRate() {
 		return attackRate;
-	}
+	}*/
 
 	public float getMoveSpeed() {
 		return moveSpeed;
@@ -43,9 +44,10 @@ public class EnemyAttributes : Attributes {
 
 	//mutators
     
+	/*
 	public void setAttackRate(float rate) {
 		attackRate += rate;
-	}
+	}*/
 
 	public void setMoveSpeed(float speed)
 	{
