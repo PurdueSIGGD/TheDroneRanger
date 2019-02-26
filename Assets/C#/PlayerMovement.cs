@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D myRigid;
     private AudioSource audioSource = null;
+    private Animator anim;
 
     private bool canJump;
     private bool jumping; // The player has hit the jump button and not yet returned to the ground
@@ -41,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     {
         myRigid = this.GetComponent<Rigidbody2D>();
         audioSource = this.GetComponent<AudioSource>();
+        anim = this.GetComponent<Animator>();
 
         gravity = myRigid.gravityScale;
         platformSpeed = new Vector2(0, 0);
@@ -86,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
 
         bool goingLeft = Input.GetAxisRaw("Horizontal") < 0;
         bool goingRight = Input.GetAxisRaw("Horizontal") > 0;
+        anim.SetBool("Walking", goingLeft || goingRight);
         bool goingUp = myRigid.velocity.y > 0.1f;
         bool goingDown = myRigid.velocity.y < -0.1f;
         if(!audioSource.isPlaying)
