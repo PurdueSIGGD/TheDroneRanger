@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class WeaponAttributes : MonoBehaviour {
@@ -11,6 +12,7 @@ public class WeaponAttributes : MonoBehaviour {
     public bool rapidFire = false;//Variable used by parent PlayerWeapon class
     public bool oneReload = true;
     public bool fireCancelReload = true;
+    public bool canZoom = false;
 
     public float projectileSpeed = 3;
     public GameObject projectile = null;
@@ -21,11 +23,27 @@ public class WeaponAttributes : MonoBehaviour {
     private int ammoCount = 0;
     private bool reloading = false;
 
-    private ProjectileSpawner projectileSpawner;
+    private ProjectileSpawner projectileSpawner = null;
     private CooldownAbility reloadAbility = null;
     private AudioSource audioSource = null;
+    private AlternateCamera altCam = null;
+    private FollowingCamera followCam = null;
 
     void Start () {
+
+        GameObject cam = Camera.main.gameObject;
+        followCam = cam.GetComponentInChildren<FollowingCamera>();
+        if (!followCam)
+        {
+            followCam = cam.AddComponent<FollowingCamera>();
+            followCam.enabled = false;
+        }
+        altCam = cam.GetComponentInChildren<AlternateCamera>();
+        if (!altCam)
+        {
+            altCam = cam.AddComponent<AlternateCamera>();
+            altCam.enabled = false;
+        }
 
         projectileSpawner = this.gameObject.GetComponentInParent<ProjectileSpawner>();
         if (projectileSpawner == null)
@@ -46,7 +64,17 @@ public class WeaponAttributes : MonoBehaviour {
 
 	}
 
-
+    void OnDestroy()
+    {
+        try
+        {
+            altCam.enabled = false;
+            followCam.enabled = true;
+        }
+        catch (Exception e){
+            //Prevent errors if destroyed together
+        }
+    }
 
     public void setCooldown(float delay)
     {
@@ -92,6 +120,14 @@ public class WeaponAttributes : MonoBehaviour {
                 reloading = false;
             }
         }
+
+        if (canZoom && (Input.GetButtonDown("Fire2") || Input.GetButtonUp("Fire2")))//On press or release
+        {
+            bool pressed = Input.GetButton("Fire2");
+            altCam.enabled = pressed;
+            followCam.enabled = !pressed;
+        }
+
     }
 
     public bool fire()

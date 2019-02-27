@@ -17,7 +17,6 @@ public class PlayerAttributes : Attributes {
     public float invTime;
     public float hurtTime;
     private bool invincible;
-    private Camera cam;
 
     public void Start()
     {
@@ -30,8 +29,8 @@ public class PlayerAttributes : Attributes {
 
         addWeaponByName("Weapons/Shotgun");
         addWeaponByName("Weapons/Plasma_Cannon");
-
-        cam = Camera.main;
+        addWeaponByName("Weapons/Sniper");
+        
     }
 
     private void iterateWeapon(WeaponAttributes activeWep, bool forward)
