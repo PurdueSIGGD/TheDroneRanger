@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 1786939519797682}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.65, y: 2.93, z: 0.017250543}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 3.4, y: 3.4, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -160,9 +160,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6059c6c82a92adf4daf3e580d4c2bffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  maxHealth: 100
-  attackRate: 0.2
+  health: 10
+  maxHealth: 10
   moveSpeed: 1
   jumpCool: 1
   aggroRigid: {fileID: 0}
@@ -187,6 +186,8 @@ MonoBehaviour:
   hurtPlayer: 0
   label: TNTToss
   arc: 0.2
+  enemyStats: {fileID: 0}
+  master: {fileID: 0}
 --- !u!114 &114939775262628064
 MonoBehaviour:
   m_ObjectHideFlags: 0
