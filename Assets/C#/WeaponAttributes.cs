@@ -11,6 +11,7 @@ public class WeaponAttributes : MonoBehaviour {
 
     public bool rapidFire = false;//Variable used by parent PlayerWeapon class
     public bool oneReload = true;
+    public bool autoReload = false;
     public bool fireCancelReload = true;
     public bool canZoom = false;
 
@@ -19,6 +20,7 @@ public class WeaponAttributes : MonoBehaviour {
     public Sprite ammoUI = null;
     public AudioClip fireSound = null;
     public AudioClip reloadSound = null;
+    public AudioClip emptySound = null;
 
     private int ammoCount = 0;
     private bool reloading = false;
@@ -71,7 +73,7 @@ public class WeaponAttributes : MonoBehaviour {
             altCam.enabled = false;
             followCam.enabled = true;
         }
-        catch (Exception e){
+        catch (Exception){
             //Prevent errors if destroyed together
         }
     }
@@ -121,6 +123,11 @@ public class WeaponAttributes : MonoBehaviour {
             }
         }
 
+        if (autoReload && projectileSpawner.canUse() && ammoCount < clipSize)
+        {
+            reload();
+        }
+
         if (canZoom && (Input.GetButtonDown("Fire2") || Input.GetButtonUp("Fire2")))//On press or release
         {
             bool pressed = Input.GetButton("Fire2");
@@ -132,8 +139,14 @@ public class WeaponAttributes : MonoBehaviour {
 
     public bool fire()
     {
+
+        if (!reloadAbility.canUse())
+        {
+            return false;
+        }
+
         //Don't allow fire while reloading
-        if (!reloadAbility.canUse() || reloading)
+        if (reloading)
         {
             if (!oneReload && fireCancelReload)
             {
@@ -147,6 +160,7 @@ public class WeaponAttributes : MonoBehaviour {
 
         if (ammoCount <= 0)
         {
+            audioSource.PlayOneShot(emptySound);
             return false;
         }
 
@@ -154,6 +168,7 @@ public class WeaponAttributes : MonoBehaviour {
         {
             ammoCount--;
             audioSource.PlayOneShot(fireSound);
+
             return true;
         }
 

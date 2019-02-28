@@ -45,19 +45,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ded84c3c1d3a61246a023934eaff268a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clipSize: 8
+  clipSize: 1
   fireDelay: 0.5
   reloadDelay: 0.5
   rapidFire: 0
   oneReload: 0
+  autoReload: 1
   fireCancelReload: 1
   canZoom: 1
   projectileSpeed: 1.5
   projectile: {fileID: 7739671120292667949, guid: 5afbf06f6004d2149a0710d78325cc8f,
     type: 3}
   ammoUI: {fileID: 21300000, guid: a1d66a260f033a94dae068dab26658d1, type: 3}
-  fireSound: {fileID: 8300000, guid: e419c7d4d3d577e439577007ad4887c2, type: 3}
-  reloadSound: {fileID: 8300000, guid: b853337031e77a24491671ffb48741ff, type: 3}
+  fireSound: {fileID: 8300000, guid: 52cd620dd1fd86f4f93bb75e28d52926, type: 3}
+  reloadSound: {fileID: 8300000, guid: 17c3627c3d5de55488cfcc216ea4c212, type: 3}
+  emptySound: {fileID: 8300000, guid: dadf53a7cc91cef4d820f2bf2ccbf936, type: 3}
 --- !u!82 &606831516880104181
 AudioSource:
   m_ObjectHideFlags: 0

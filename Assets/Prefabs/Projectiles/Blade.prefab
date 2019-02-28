@@ -68,12 +68,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceObj: {fileID: 0}
-  damage: 16
+  damage: 25
   lifetime: 4
   dieOnHit: 0
   hurtPlayer: 0
+  gracePeriod: 0.2
   copyAmount: 0
   spreadAngle: 45
+  explosive: 0
+  explosiveRadius: 1.8
 --- !u!70 &7752658697781716645
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

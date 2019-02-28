@@ -50,11 +50,16 @@ MonoBehaviour:
   reloadDelay: 0.35
   rapidFire: 0
   oneReload: 0
+  autoReload: 0
+  fireCancelReload: 1
+  canZoom: 0
   projectileSpeed: 1
   projectile: {fileID: 7739671120292667949, guid: cdb902e119ee5174ea3afece5bff13b6,
     type: 3}
+  ammoUI: {fileID: 0}
   fireSound: {fileID: 8300000, guid: e419c7d4d3d577e439577007ad4887c2, type: 3}
   reloadSound: {fileID: 8300000, guid: 3bca301e5907854439b2fdf45a626d52, type: 3}
+  emptySound: {fileID: 8300000, guid: dadf53a7cc91cef4d820f2bf2ccbf936, type: 3}
 --- !u!82 &606831516880104181
 AudioSource:
   m_ObjectHideFlags: 0
