@@ -100,7 +100,7 @@ public class EnemyAIMaster : MonoBehaviour {
 			}
 
 		}
-		if (!aggroed) {
+		if (!aggroed || aMove == null) {
 			moveTimer += Time.deltaTime;
 			if (moveTimer >= Mathf.Abs (moveDur [currMove])) {
 				moveTimer -= Mathf.Abs (moveDur [currMove]);
@@ -114,16 +114,26 @@ public class EnemyAIMaster : MonoBehaviour {
 			if (!aggroDelay || currMove >= moveLoopStart) {
 				if (!aggroed) {
 					aggroed = true;
-					getCurrMove ().enabled = false;
-					aMove.enabled = true;
+					if (aMove != null) {
+						getCycleMove ().enabled = false;
+						if (aMove.xdir != getCycleMove ().xdir) {
+							aMove.xdir = getCycleMove ().xdir;
+						}
+						aMove.enabled = true;
+					}
 				}
 			}
 
 		} else {
 			if (aggroed) {
 				aggroed = false;
-				aMove.enabled = false;
-				getCurrMove().enabled = true;
+				if (aMove != null) {
+					aMove.enabled = false;
+					if (aMove.xdir != getCycleMove ().xdir) {
+						getCycleMove ().xdir = aMove.xdir;
+					}
+					getCycleMove ().enabled = true;
+				}
 			}
 
 
@@ -148,6 +158,13 @@ public class EnemyAIMaster : MonoBehaviour {
 	}
 
 	public EnemyMovement getCurrMove()
+	{
+		if (aggroed && aMove != null)
+			return aMove;
+		return moveList [currMove];
+	}
+
+	public EnemyMovement getCycleMove()
 	{
 		return moveList [currMove];
 	}

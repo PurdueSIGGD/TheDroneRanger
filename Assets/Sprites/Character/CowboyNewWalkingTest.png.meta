@@ -1,8 +1,11 @@
 fileFormatVersion: 2
-guid: 2ad38d6baeef0994bb8f25dc824ca045
+guid: fe6978e6ccdfb184bacf0f0a9a1042b4
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Cowboy_Body_0
+    21300000: CowboyNewWalkingTest_0
+    21300002: CowboyNewWalkingTest_1
+    21300004: CowboyNewWalkingTest_2
+    21300006: CowboyNewWalkingTest_3
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -44,8 +47,8 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.29604846, y: 0.3151689}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 200
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -64,7 +67,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -75,7 +78,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: 4
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -85,21 +88,81 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Cowboy_Body_0
+      name: CowboyNewWalkingTest_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 27
-        width: 35
-        height: 91
+        x: 1
+        y: 28
+        width: 52
+        height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 20d2aafd3a910514ba1d9e8dcc9bdf75
+      spriteID: e5aaca992b02cee47807ffee99975546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CowboyNewWalkingTest_1
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 27
+        width: 52
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65e9b202010472344b1c7434bca82b13
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CowboyNewWalkingTest_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 26
+        width: 48
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e84ba7f51a239184a9aa516d1210311f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CowboyNewWalkingTest_3
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 27
+        width: 52
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1230020039f4bed4093184badcfa0151
       vertices: []
       indices: 
       edges: []
@@ -107,7 +170,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 438b72783b70b2745836507c73bba327
+    spriteID: 21b21a6464548b940be02050bbcdb033
     vertices: []
     indices: 
     edges: []

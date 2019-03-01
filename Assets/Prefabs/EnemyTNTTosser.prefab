@@ -16,14 +16,9 @@ GameObject:
   - component: {fileID: 114983513367892862}
   - component: {fileID: 114148180450923504}
   - component: {fileID: 114939775262628064}
-  - component: {fileID: 114804489620993320}
-  - component: {fileID: 114593686399277752}
-  - component: {fileID: 114643373654015152}
-  - component: {fileID: 114701677160397766}
-  - component: {fileID: 114093049456113770}
-  - component: {fileID: 1538312953853488964}
+  - component: {fileID: 855514352700939296}
   m_Layer: 0
-  m_Name: Base Enemy
+  m_Name: EnemyTNTTosser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,8 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 10
-  visionStart: -90
-  visionEnd: 90
+  visionStart: -100
+  visionEnd: 100
 --- !u!114 &114983513367892862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   maxHealth: 100
-  attackRate: 1
+  attackRate: 0.2
   moveSpeed: 1
   jumpCool: 1
   aggroRigid: {fileID: 0}
@@ -206,120 +201,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackScript: {fileID: 114718228449468838}
   spawnSeq:
-  - BulletShoot
   - TNTToss
   moveSeq:
-  - for
-  - for
-  - jum
-  aggromove: stat
+  - track
+  aggromove: 
   moveDur:
-  - 3
-  - 2.5
-  - -0.1
-  moveLoopStart: 1
-  aggroDelay: 1
+  - 20
+  moveLoopStart: 0
+  aggroDelay: 0
   currSpawn: 0
   currMove: 0
   cycleTime: 2.5
   aggroed: 0
---- !u!114 &114804489620993320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1786939519797682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5db1b7dc4f7f2bb4d9c6b38f1eccb365, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationTriggerType: 0
-  CAST_STRING: Cast
-  cooldown: 1
-  hasNotified: 0
-  projectile: {fileID: 1979001164161008, guid: a3c88811ab50ca0488c11f7f8449c170, type: 3}
-  thrust: 15
-  hurtPlayer: 0
-  label: BulletShoot
-  arc: 0
---- !u!114 &114593686399277752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1786939519797682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f852f74f32b1b6847989528cb4a87c0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  label: stat
-  xdir: 1
-  ydir: 1
-  flipSprite: 1
-  jumpHeight: 3
-  enemyRigid: {fileID: 0}
---- !u!114 &114643373654015152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1786939519797682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a5dbb5c2fd20be40a6a20251720e801, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  label: for
-  xdir: 1
-  ydir: 1
-  flipSprite: 1
-  jumpHeight: 3
-  enemyRigid: {fileID: 0}
-  speed: 2.5
---- !u!114 &114701677160397766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1786939519797682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9f36541bc2015044a1174cec89fceac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  label: chase
-  xdir: 1
-  ydir: 1
-  flipSprite: 1
-  jumpHeight: 3
-  enemyRigid: {fileID: 0}
-  speed: 1.5
---- !u!114 &114093049456113770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1786939519797682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7204ee73f096c1d4ea50ea3be80bf09f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  label: jum
-  xdir: 1
-  ydir: 1
-  flipSprite: 1
-  jumpHeight: 3
-  enemyRigid: {fileID: 0}
-  xLocked: 1
---- !u!114 &1538312953853488964
+--- !u!114 &855514352700939296
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
