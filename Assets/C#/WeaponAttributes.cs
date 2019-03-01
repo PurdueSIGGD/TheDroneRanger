@@ -28,6 +28,7 @@ public class WeaponAttributes : MonoBehaviour {
     private ProjectileSpawner projectileSpawner = null;
     private CooldownAbility reloadAbility = null;
     private AudioSource audioSource = null;
+    private AudioSource emptySoundSource = null;
     private AlternateCamera altCam = null;
     private FollowingCamera followCam = null;
 
@@ -53,11 +54,17 @@ public class WeaponAttributes : MonoBehaviour {
             projectileSpawner = this.gameObject.AddComponent<ProjectileSpawner>();
         }
 
-        audioSource = this.GetComponent<AudioSource>();
+        audioSource = this.GetComponentInParent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = this.gameObject.AddComponent<AudioSource>();
+        }
+        emptySoundSource = this.gameObject.AddComponent<AudioSource>();
 
         projectileSpawner.thrust = projectileSpeed;
         projectileSpawner.projectile = projectile;
         projectileSpawner.cooldown = fireDelay;
+        projectileSpawner.mouseAim = true;
 
         reloadAbility = this.gameObject.AddComponent<GenericAbility>();
         reloadAbility.cooldown = reloadDelay;
@@ -111,6 +118,14 @@ public class WeaponAttributes : MonoBehaviour {
     {
         if (reloading && reloadAbility.canUse())
         {
+            if (oneReload)
+            {
+                ammoCount = clipSize;
+            }
+            else
+            {
+                ammoCount++;
+            }
             if (ammoCount < clipSize)
             {
                 ammoCount++;
@@ -139,28 +154,22 @@ public class WeaponAttributes : MonoBehaviour {
 
     public bool fire()
     {
-
-        if (!reloadAbility.canUse())
+        if (fireCancelReload)
+        {
+            reloading = false;
+        }
+        else if (!reloadAbility.canUse())
         {
             return false;
         }
 
-        //Don't allow fire while reloading
-        if (reloading)
-        {
-            if (!oneReload && fireCancelReload)
-            {
-                reloading = false;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         if (ammoCount <= 0)
         {
-            audioSource.PlayOneShot(emptySound);
+            emptySoundSource.clip = emptySound;
+            if (!emptySoundSource.isPlaying)
+            {
+                emptySoundSource.Play();
+            }
             return false;
         }
 
@@ -184,15 +193,7 @@ public class WeaponAttributes : MonoBehaviour {
             reloadAbility.cooldown = reloadDelay;
             if (reloadAbility.use())
             {
-                if (oneReload)
-                {
-                    ammoCount = clipSize;
-                }
-                else
-                {
-                    ammoCount++;
-                    reloading = true;//Continue reloading after this
-                }
+                reloading = true;
                 audioSource.PlayOneShot(reloadSound);
             }
        }

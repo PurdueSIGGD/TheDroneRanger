@@ -6,6 +6,7 @@ public class ProjectileSpawner : CooldownAbility
     public GameObject projectile;
     public float thrust = 1;
     public bool hurtPlayer = false;
+    public bool mouseAim = false;
 
     private Rigidbody2D myRigid = null;
 
@@ -18,10 +19,19 @@ public class ProjectileSpawner : CooldownAbility
     public override void use_UseAbility()
     {
         Vector2 SpawnPosition = transform.position;
+        Vector2 Direction;
         
-        Vector2 Direction = transform.rotation * Vector2.right;
-
-        //TODO add targeting and spawn the bullet
+        if (mouseAim)
+        {
+            Camera cam = Camera.main;
+            Vector2 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
+            Direction = (mouseWorldPos - SpawnPosition).normalized;
+        }
+        else
+        {
+            Direction = transform.rotation * Vector2.right;
+        }
+        
         GameObject Bullet = GameObject.Instantiate(projectile);
 
         Projectile projec = Bullet.GetComponent<Projectile>();

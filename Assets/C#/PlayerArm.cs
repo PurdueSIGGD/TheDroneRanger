@@ -16,7 +16,7 @@ public class PlayerArm : MonoBehaviour {
         player = transform.parent.gameObject;
 
         Vector2 weaponDir = transform.GetChild(0).position - transform.position;
-        weaponAngle = Mathf.Atan2(weaponDir.y, weaponDir.x) * Mathf.Rad2Deg;
+        weaponAngle = Mathf.Atan2(weaponDir.y, weaponDir.x) * Mathf.Rad2Deg / 2.0f;
 
 	}
 	
@@ -25,8 +25,8 @@ public class PlayerArm : MonoBehaviour {
         if (doesRotate)
         {
 
-            Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
-            Vector2 mouseDir = new Vector2(mouseWorldPos.x - transform.position.x, mouseWorldPos.y - transform.position.y);
+            Vector2 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+            Vector2 mouseDir = (mouseWorldPos - (Vector2)this.transform.position).normalized;
             float yRotation = 0.0f;
 
             if (mouseWorldPos.x < player.transform.position.x)

@@ -92,7 +92,7 @@ public class Projectile : MonoBehaviour {
         }
         /* ACTIONS TO TAKE POST-HIT */
         hasHit = true;
-        //TODO: check to see if we can hit the thing that we collided with
+
         if (explosive)
         {
             Collider2D[] victims = Physics2D.OverlapCircleAll(this.transform.position, explosiveRadius);
@@ -129,7 +129,6 @@ public class Projectile : MonoBehaviour {
     {
         if (dieOnHit)
         {
-            //TODO: should I blow up?
             Destroy(this.gameObject);
         }
     }
