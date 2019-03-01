@@ -3270,6 +3270,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a626f123a1e56b44a0c334bdde0f87f, type: 3}
+--- !u!1 &937130178 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1786939519797682, guid: 48fb27be74773c645a8a1f14b17bd93f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1977088141}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &937130179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937130178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2669c071e1fd4be4f9a778180cde5c8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teleportItem: {fileID: 1302588570}
+  offset: {x: 0, y: -0.5, z: 0}
 --- !u!1001 &1026512368
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4124,6 +4144,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1302588570 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2230164350382548410, guid: 0bdf3c0888287f743a1565bbc333a18e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1328828925}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1325977416
 GameObject:
   m_ObjectHideFlags: 0
@@ -4280,7 +4306,7 @@ PrefabInstance:
     - target: {fileID: 2230164350382548412, guid: 0bdf3c0888287f743a1565bbc333a18e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4983358
+      value: -8.48
       objectReference: {fileID: 0}
     - target: {fileID: 2230164350382548412, guid: 0bdf3c0888287f743a1565bbc333a18e,
         type: 3}
