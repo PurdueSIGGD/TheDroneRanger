@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class HighNoon : MonoBehaviour
 {
-    public GameObject Player;
-    public WeaponAttributes weapon;
-    private ProjectileSpawner gun;
+    private PlayerAttributes player = null;
+    private WeaponAttributes weapon = null;
+    private ProjectileSpawner gun = null;
+    private WeaponAttributes prevWep = null;
     public float activeTime = 6;
     public float HNTimeScale = 0.02f; // How fast time moves in high noon
     public AudioClip tickSound = null;
@@ -20,13 +21,20 @@ public class HighNoon : MonoBehaviour
     private void Start()
     {
         audioSource = this.GetComponent<AudioSource>();
+        player = this.GetComponent<PlayerAttributes>();
     }
 
     private void startHighNoon()
     {
-        audioSource.pitch = .5f;
-        gun = weapon.getProjectileSpawner();
         if (charge < 100) return;
+        prevWep = player.getActiveWeapon();
+        if (weapon == null)
+        {
+            weapon = player.addWeaponByName("Weapons/Revolver_Golden", false);
+        }
+        player.setActiveWeapon(weapon);
+        gun = weapon.getProjectileSpawner();
+        audioSource.pitch = .5f;
         weapon.setAmmo(shotsLeft);
         gun.ability_Start();
         startTime = Time.realtimeSinceStartup;
@@ -37,6 +45,7 @@ public class HighNoon : MonoBehaviour
 
     private void endHighNoon()
     {
+        player.setActiveWeapon(prevWep);
         audioSource.pitch = 1;
         charge = 0;
         shotsLeft = 6;
@@ -69,7 +78,6 @@ public class HighNoon : MonoBehaviour
                     audioSource.PlayOneShot(tickSound);
                 }
                     charge = 100 * ((activeTime + startTime - Time.realtimeSinceStartup) / activeTime);
-                //TODO add highnoon implimentation
                 if (Input.GetButtonDown("Fire1"))
                 {
                     gun.use_UseAbility();

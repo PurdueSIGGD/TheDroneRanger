@@ -10,6 +10,7 @@ public class PlayerAttributes : Attributes {
 
     private List<WeaponAttributes> weapons = new List<WeaponAttributes>();
     private int activeWepSlot = 0;
+    private WeaponAttributes activeWep = null;
 
     //high noon at 100, should not be > 100
     public float highNoonPercent = 0;
@@ -30,10 +31,12 @@ public class PlayerAttributes : Attributes {
         addWeaponByName("Weapons/Shotgun");
         addWeaponByName("Weapons/Plasma_Cannon");
         addWeaponByName("Weapons/Sniper");
-        
+
+        activeWep = weapons[0];
+
     }
 
-    private void iterateWeapon(WeaponAttributes activeWep, bool forward)
+    private void iterateWeapon(bool forward)
     {
 
         int newSlot = activeWepSlot +( forward ? 1 : weapons.Count - 1);
@@ -49,8 +52,6 @@ public class PlayerAttributes : Attributes {
     public void Update()
     {
 
-        WeaponAttributes activeWep = weapons[activeWepSlot];
-
         if ((activeWep.rapidFire && Input.GetButton("Fire1")) ||
             (!activeWep.rapidFire && Input.GetButtonDown("Fire1")))
         {
@@ -62,7 +63,7 @@ public class PlayerAttributes : Attributes {
         }
         else if (Input.GetAxis("Mouse ScrollWheel") != 0f || Input.GetButtonDown("Switch"))
         {
-            iterateWeapon(activeWep, (Input.GetAxis("Mouse ScrollWheel") >= 0f));
+            iterateWeapon(Input.GetAxis("Mouse ScrollWheel") >= 0f);
         }
 
     }
@@ -113,10 +114,10 @@ public class PlayerAttributes : Attributes {
         invincible = false;
     }
 
-    public WeaponAttributes addWeaponByName(string path)
+    public WeaponAttributes addWeaponByName(string path, bool addToArray = true)
     {
         //Returns null if unable to add.
-        if (maxWeapons > 0 && weapons.Count >= maxWeapons)
+        if (addToArray && maxWeapons > 0 && weapons.Count >= maxWeapons)
         {
             return null;
         }
@@ -127,14 +128,14 @@ public class PlayerAttributes : Attributes {
             return null;
         }
 
-        return addWeapon(prefab);
+        return addWeapon(prefab, addToArray);
     }
 
-    public WeaponAttributes addWeapon(GameObject obj)
+    public WeaponAttributes addWeapon(GameObject obj, bool addToArray = true)
     {
 
         //Returns null if unable to add.
-        if (maxWeapons > 0 && weapons.Count >= maxWeapons)
+        if (addToArray && maxWeapons > 0 && weapons.Count >= maxWeapons)
         {
             return null;
         }
@@ -152,13 +153,32 @@ public class PlayerAttributes : Attributes {
             wep = obj.AddComponent<WeaponAttributes>();
         }
 
-        weapons.Add(wep);
+        if (addToArray)
+        {
+            weapons.Add(wep);
+        }
         return wep;
+    }
+
+    public void setActiveWeapon(WeaponAttributes wep)
+    {
+        activeWep.gameObject.SetActive(false);
+        wep.gameObject.SetActive(true);
+        activeWep = wep;
+        activeWepSlot = 0;
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            if (wep == weapons[i])
+            {
+                activeWepSlot = i;
+                break;
+            }
+        }
     }
 
     public WeaponAttributes getActiveWeapon()
     {
-        return weapons[activeWepSlot];
+        return activeWep;
     }
 
     public List<WeaponAttributes> getWeaponList()
