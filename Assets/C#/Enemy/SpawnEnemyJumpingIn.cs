@@ -32,7 +32,8 @@ public class SpawnEnemyJumpingIn : MonoBehaviour
                 GameObject enemy = GameObject.Instantiate(EnemyToSpawn);
                 enemy.transform.position = target.transform.position;
                 start = false;
-                DestroyImmediate(this.gameObject);
+                DestroyImmediate(target);
+                DestroyImmediate(this);
             }
         }
     }
