@@ -6,14 +6,12 @@ public class HighNoon : MonoBehaviour
 {
     private PlayerAttributes player = null;
     private WeaponAttributes weapon = null;
-    private ProjectileSpawner gun = null;
     private WeaponAttributes prevWep = null;
     public float activeTime = 6;
     public float HNTimeScale = 0.02f; // How fast time moves in high noon
     public AudioClip tickSound = null;
 
     public float charge = 100;
-    private int shotsLeft = 6;
     private bool active = false;
     private float startTime;
     private AudioSource audioSource = null;
@@ -23,20 +21,21 @@ public class HighNoon : MonoBehaviour
         audioSource = this.GetComponent<AudioSource>();
         player = this.GetComponent<PlayerAttributes>();
     }
-
+    
     private void startHighNoon()
     {
-        if (charge < 100) return;
+        if (charge < 100)
+        {
+            return;
+        }
         prevWep = player.getActiveWeapon();
         if (weapon == null)
         {
             weapon = player.addWeaponByName("Weapons/Revolver_Golden", false);
         }
         player.setActiveWeapon(weapon);
-        gun = weapon.getProjectileSpawner();
         audioSource.pitch = .5f;
-        weapon.setAmmo(shotsLeft);
-        gun.ability_Start();
+        weapon.setAmmo(weapon.getClipSize());//Force reload
         startTime = Time.realtimeSinceStartup;
         Time.timeScale = HNTimeScale;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
@@ -45,13 +44,12 @@ public class HighNoon : MonoBehaviour
 
     private void endHighNoon()
     {
-        player.setActiveWeapon(prevWep);
+        active = false;
         audioSource.pitch = 1;
         charge = 0;
-        shotsLeft = 6;
         Time.timeScale = 1.0f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
-        active = false;
+        player.setActiveWeapon(prevWep);
     }
 
     public bool isActive()
@@ -61,7 +59,7 @@ public class HighNoon : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetButton("Ability") || active)
+        if(Input.GetButtonDown("Ability") || active)
         {
             if (!active)
             {
@@ -77,16 +75,10 @@ public class HighNoon : MonoBehaviour
                 {
                     audioSource.PlayOneShot(tickSound);
                 }
-                    charge = 100 * ((activeTime + startTime - Time.realtimeSinceStartup) / activeTime);
-                if (Input.GetButtonDown("Fire1"))
+                charge = 100 * ((activeTime + startTime - Time.realtimeSinceStartup) / activeTime);
+                if(weapon.getAmmo() == 0)
                 {
-                    gun.use_UseAbility();
-                    shotsLeft--;
-                    weapon.setAmmo(shotsLeft);
-                    if(shotsLeft == 0)
-                    {
-                        endHighNoon();
-                    }
+                    endHighNoon();
                 }
             }
         }

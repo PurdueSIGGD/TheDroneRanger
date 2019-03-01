@@ -14,13 +14,20 @@ public class PlayerAttributes : Attributes {
 
     //high noon at 100, should not be > 100
     public float highNoonPercent = 0;
+    public float highNoonPerSecond = 2;
 
     public float invTime;
     public float hurtTime;
     private bool invincible;
+    private HighNoon highNoon = null;
 
     public void Start()
     {
+        highNoon = this.GetComponent<HighNoon>();
+        if (highNoon == null)
+        {
+            highNoon = this.gameObject.AddComponent<HighNoon>();
+        }
 
         WeaponAttributes[] preWeps = this.GetComponentsInChildren<WeaponAttributes>();
         for (int i = 0; i < preWeps.Length; i++)
@@ -57,13 +64,17 @@ public class PlayerAttributes : Attributes {
         {
             activeWep.fire();
         }
-        else if (Input.GetKeyDown(reloadKey))
+        if (!isHighNoon()) //Only allow outside of high noon
         {
-            activeWep.reload();
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") != 0f || Input.GetButtonDown("Switch"))
-        {
-            iterateWeapon(Input.GetAxis("Mouse ScrollWheel") >= 0f);
+            addHighNoonPercent(Time.deltaTime * highNoonPerSecond);
+            if (Input.GetKeyDown(reloadKey))
+            {
+                activeWep.reload();
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") != 0f || Input.GetButtonDown("Switch"))
+            {
+                iterateWeapon(Input.GetAxis("Mouse ScrollWheel") >= 0f);
+            }
         }
 
     }
@@ -187,16 +198,15 @@ public class PlayerAttributes : Attributes {
     }
 
     public float getHighNoonPercent() {
-        return highNoonPercent;
+        return highNoon.charge;
     }
     
     //adds percent to the current high noon percent
     public void addHighNoonPercent(float percent) {
-        highNoonPercent += percent;
+        highNoon.charge = Mathf.Min(100.0f, highNoon.charge + percent);
     }
-
-    //returns true if highNoonPercent >= 100
+    
     public bool isHighNoon() {
-        return (highNoonPercent >= 100.0);
+        return highNoon.isActive();
     }
 }
