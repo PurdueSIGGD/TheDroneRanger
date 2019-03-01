@@ -40,10 +40,16 @@ public class SpawnEnemyJumpingIn : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        start = true;
+        if(collision.gameObject.tag == "Player")
+        {
+            start = true;
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        start = true;
+        if (collision.gameObject.tag == "Player")
+        {
+            start = true;
+        }
     }
 }
