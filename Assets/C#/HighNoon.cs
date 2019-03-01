@@ -31,7 +31,7 @@ public class HighNoon : MonoBehaviour
         prevWep = player.getActiveWeapon();
         if (weapon == null)
         {
-            weapon = player.addWeaponByName("Weapons/Revolver_Golden", false);
+            weapon = player.giveWeapon(WEAPONS.REVOLVER_GOLDEN, false);
         }
         player.setActiveWeapon(weapon);
         audioSource.pitch = .5f;

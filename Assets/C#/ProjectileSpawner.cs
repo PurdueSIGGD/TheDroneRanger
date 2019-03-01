@@ -7,6 +7,7 @@ public class ProjectileSpawner : CooldownAbility
     public float thrust = 1;
     public bool hurtPlayer = false;
     public bool mouseAim = false;
+    public bool onlyForward = false;
 
     private Rigidbody2D myRigid = null;
 
@@ -26,6 +27,12 @@ public class ProjectileSpawner : CooldownAbility
             Camera cam = Camera.main;
             Vector2 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
             Direction = (mouseWorldPos - SpawnPosition).normalized;
+
+            if (onlyForward && Vector2.Dot((Vector2)(transform.rotation * Vector2.right), Direction) < 0)
+            {
+                Direction *= -1.0f;
+            }
+
         }
         else
         {

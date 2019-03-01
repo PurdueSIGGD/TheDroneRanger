@@ -3,7 +3,31 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
+public enum WEAPONS
+{
+    REVOLVER,
+    REVOLVER_FUTURE,
+    REVOLVER_GOLDEN,
+    BLADE,
+    SHOTGUN,
+    PLASMA,
+    SNIPER,
+    MAX_WEAPONS
+};
+
 public class WeaponAttributes : MonoBehaviour {
+
+    //Order is important here
+    private static string[] WEAPON_PATHS =
+    {
+        "Weapons/Revolver",
+        "Weapons/Revolver_Future",
+        "Weapons/Revolver_Golden",
+        "Weapons/Revolver_Blade",
+        "Weapons/Shotgun",
+        "Weapons/Plasma_Cannon",
+        "Weapons/Sniper"
+    };
 
     public int clipSize = 6;
     public float fireDelay = 0.2f;
@@ -17,7 +41,7 @@ public class WeaponAttributes : MonoBehaviour {
 
     public float projectileSpeed = 3;
     public GameObject projectile = null;
-    public Sprite ammoUI = null;
+    public Texture ammoUI = null;
     public AudioClip fireSound = null;
     public AudioClip reloadSound = null;
     public AudioClip emptySound = null;
@@ -25,12 +49,30 @@ public class WeaponAttributes : MonoBehaviour {
     private int ammoCount = 0;
     private bool reloading = false;
 
+    protected WEAPONS type = 0;
     private ProjectileSpawner projectileSpawner = null;
     private CooldownAbility reloadAbility = null;
     private AudioSource audioSource = null;
     private AudioSource emptySoundSource = null;
     private AlternateCamera altCam = null;
     private FollowingCamera followCam = null;
+
+    public static WeaponAttributes create(WEAPONS wep)
+    {
+        if (wep < 0 || wep >= WEAPONS.MAX_WEAPONS)
+        {
+            return null;
+        }
+
+        WeaponAttributes prefab = (Instantiate(Resources.Load(WEAPON_PATHS[(int)wep], typeof(GameObject))) as GameObject).GetComponent<WeaponAttributes>();
+        if (!prefab)
+        {
+            return null;
+        }
+
+        prefab.type = wep;
+        return prefab;
+    }
 
     void Start () {
 
@@ -60,11 +102,13 @@ public class WeaponAttributes : MonoBehaviour {
             audioSource = this.gameObject.AddComponent<AudioSource>();
         }
         emptySoundSource = this.gameObject.AddComponent<AudioSource>();
+        emptySoundSource.playOnAwake = false;
 
         projectileSpawner.thrust = projectileSpeed;
         projectileSpawner.projectile = projectile;
         projectileSpawner.cooldown = fireDelay;
         projectileSpawner.mouseAim = true;
+        projectileSpawner.onlyForward = true;
 
         reloadAbility = this.gameObject.AddComponent<GenericAbility>();
         reloadAbility.cooldown = reloadDelay;
@@ -114,6 +158,11 @@ public class WeaponAttributes : MonoBehaviour {
         ammoCount = Mathf.Min(clipSize, ammoCount);
     }
 
+    public WEAPONS getType()
+    {
+        return type;
+    }
+
     public void Update()
     {
         if (reloading && reloadAbility.canUse())
@@ -128,7 +177,6 @@ public class WeaponAttributes : MonoBehaviour {
             }
             if (ammoCount < clipSize)
             {
-                ammoCount++;
                 reloadAbility.use();
                 audioSource.PlayOneShot(reloadSound);
             }
@@ -186,7 +234,7 @@ public class WeaponAttributes : MonoBehaviour {
 
     public void reload()
     {
-        if (reloading)
+        if (reloading || !projectileSpawner.canUse())
             return;
 
         if (ammoCount < clipSize) {

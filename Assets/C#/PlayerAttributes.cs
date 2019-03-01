@@ -34,10 +34,11 @@ public class PlayerAttributes : Attributes {
         {
             weapons.Add(preWeps[i]);
         }
-
-        addWeaponByName("Weapons/Shotgun");
-        addWeaponByName("Weapons/Plasma_Cannon");
-        addWeaponByName("Weapons/Sniper");
+        
+        giveWeapon(WEAPONS.BLADE);
+        giveWeapon(WEAPONS.SHOTGUN);
+        giveWeapon(WEAPONS.PLASMA);
+        giveWeapon(WEAPONS.SNIPER);
 
         activeWep = weapons[0];
 
@@ -67,7 +68,7 @@ public class PlayerAttributes : Attributes {
         if (!isHighNoon()) //Only allow outside of high noon
         {
             addHighNoonPercent(Time.deltaTime * highNoonPerSecond);
-            if (Input.GetKeyDown(reloadKey))
+            if (Input.GetKey(reloadKey))
             {
                 activeWep.reload();
             }
@@ -125,30 +126,21 @@ public class PlayerAttributes : Attributes {
         invincible = false;
     }
 
-    public WeaponAttributes addWeaponByName(string path, bool addToArray = true)
+    public WeaponAttributes giveWeapon(WEAPONS wep, bool addToArray = true)
     {
-        //Returns null if unable to add.
-        if (addToArray && maxWeapons > 0 && weapons.Count >= maxWeapons)
+        WeaponAttributes obj = WeaponAttributes.create(wep);
+        if (!obj)
         {
             return null;
         }
-
-        GameObject prefab = Instantiate(Resources.Load(path, typeof(GameObject))) as GameObject;
-        if (prefab == null)
-        {
-            return null;
-        }
-
-        return addWeapon(prefab, addToArray);
+        return !giveWeapon(obj, addToArray) ? null : obj;
     }
 
-    public WeaponAttributes addWeapon(GameObject obj, bool addToArray = true)
+    public bool giveWeapon(WeaponAttributes obj, bool addToArray = true)
     {
-
-        //Returns null if unable to add.
         if (addToArray && maxWeapons > 0 && weapons.Count >= maxWeapons)
         {
-            return null;
+            return false;
         }
 
         obj.transform.position = weapons[0].transform.position;
@@ -156,19 +148,13 @@ public class PlayerAttributes : Attributes {
         obj.transform.parent = weapons[0].transform.parent;
         obj.transform.eulerAngles = weapons[0].transform.eulerAngles;
         obj.transform.localScale = weapons[0].transform.localScale;
-        obj.SetActive(false);
-
-        WeaponAttributes wep = obj.GetComponent<WeaponAttributes>();
-        if (wep == null)
-        {
-            wep = obj.AddComponent<WeaponAttributes>();
-        }
+        obj.gameObject.SetActive(false);
 
         if (addToArray)
         {
-            weapons.Add(wep);
+            weapons.Add(obj);
         }
-        return wep;
+        return true;
     }
 
     public void setActiveWeapon(WeaponAttributes wep)

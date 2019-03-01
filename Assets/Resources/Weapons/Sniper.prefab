@@ -55,7 +55,7 @@ MonoBehaviour:
   projectileSpeed: 1.5
   projectile: {fileID: 7739671120292667949, guid: 5afbf06f6004d2149a0710d78325cc8f,
     type: 3}
-  ammoUI: {fileID: 21300000, guid: a1d66a260f033a94dae068dab26658d1, type: 3}
+  ammoUI: {fileID: 2800000, guid: 87e1d6dbbe3e34642b48fbe5ae761abc, type: 3}
   fireSound: {fileID: 8300000, guid: 52cd620dd1fd86f4f93bb75e28d52926, type: 3}
   reloadSound: {fileID: 8300000, guid: 17c3627c3d5de55488cfcc216ea4c212, type: 3}
   emptySound: {fileID: 8300000, guid: dadf53a7cc91cef4d820f2bf2ccbf936, type: 3}
