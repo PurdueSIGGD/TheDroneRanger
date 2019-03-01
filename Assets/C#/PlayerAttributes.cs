@@ -93,7 +93,14 @@ public class PlayerAttributes : Attributes {
 
     private void die()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single); //Load a new scene
+
+        //Restore starting conditions
+        cam = Camera.main;
+        health = 100;
+        weapons[activeWepSlot].setAmmo(weapons[activeWepSlot].clipSize);
+        //this.transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
+        //this.GetComponent<PlayerMovement>().respawn();
     }
 
     public void knockBack()

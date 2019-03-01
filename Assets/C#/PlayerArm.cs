@@ -5,8 +5,7 @@ using UnityEngine;
 public class PlayerArm : MonoBehaviour {
 
     public bool doesRotate = true;
-
-    private Camera cam;
+    
     private float weaponAngle;
     private GameObject player;
     private SpriteRenderer playerBody;
@@ -14,8 +13,7 @@ public class PlayerArm : MonoBehaviour {
     private Animator anim;
 
 	void Start () {
-
-        cam = Camera.main;
+        
         player = transform.parent.gameObject;
         anim = this.GetComponentInParent<Animator>();
         playerBody = player.GetComponent<SpriteRenderer>();
@@ -31,7 +29,7 @@ public class PlayerArm : MonoBehaviour {
         if (doesRotate)
         {
 
-            Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
             Vector2 mouseDir = new Vector2(mouseWorldPos.x - transform.position.x, mouseWorldPos.y - transform.position.y);
             float yRotation = 0.0f;
 

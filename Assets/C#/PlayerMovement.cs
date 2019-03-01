@@ -185,6 +185,18 @@ public class PlayerMovement : MonoBehaviour
         if(sinceOnSlope > 0) { sinceOnSlope--; }
     }
 
+    public void respawn()
+    {
+        grounded = false;
+        onSlope = false;
+        hitCeiling = false;
+        hitCeilLeft = false;
+        hitCeilRight = false;
+        hitWallLeft = false;
+        hitWallRight = false;
+        myRigid.gravityScale = gravity;
+    }
+
     void jump(float jumpFactor)
     {
         myRigid.velocity = new Vector2(myRigid.velocity.x, 0);
