@@ -12,7 +12,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -396,7 +396,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 1.8
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -510,16 +510,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerWeapon
       objectReference: {fileID: 0}
-    - target: {fileID: 3347999263294230753, guid: 671dcb61805f8704287cbe1314c190c3,
-        type: 3}
-      propertyPath: fireSound
-      value: 
-      objectReference: {fileID: 8300000, guid: e419c7d4d3d577e439577007ad4887c2, type: 3}
-    - target: {fileID: 3347999263294230753, guid: 671dcb61805f8704287cbe1314c190c3,
-        type: 3}
-      propertyPath: reloadSound
-      value: 
-      objectReference: {fileID: 8300000, guid: b853337031e77a24491671ffb48741ff, type: 3}
     - target: {fileID: 6638093583485376288, guid: 671dcb61805f8704287cbe1314c190c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -585,6 +575,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 3347999263294230753, guid: 671dcb61805f8704287cbe1314c190c3,
+        type: 3}
+      propertyPath: fireSound
+      value: 
+      objectReference: {fileID: 8300000, guid: e419c7d4d3d577e439577007ad4887c2, type: 3}
+    - target: {fileID: 3347999263294230753, guid: 671dcb61805f8704287cbe1314c190c3,
+        type: 3}
+      propertyPath: reloadSound
+      value: 
+      objectReference: {fileID: 8300000, guid: b853337031e77a24491671ffb48741ff, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 671dcb61805f8704287cbe1314c190c3, type: 3}
 --- !u!1 &1026146788967510 stripped
