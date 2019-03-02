@@ -91,12 +91,12 @@ TextureImporter:
       name: BanditWalkingNewFlipped_0
       rect:
         serializedVersion: 2
-        x: 18
+        x: 10
         y: 27
-        width: 44
+        width: 52
         height: 89
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -113,10 +113,10 @@ TextureImporter:
         serializedVersion: 2
         x: 90
         y: 28
-        width: 39
+        width: 44
         height: 89
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -131,12 +131,12 @@ TextureImporter:
       name: BanditWalkingNewFlipped_2
       rect:
         serializedVersion: 2
-        x: 149
+        x: 141
         y: 27
-        width: 44
+        width: 52
         height: 89
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -153,10 +153,10 @@ TextureImporter:
         serializedVersion: 2
         x: 205
         y: 29
-        width: 42
+        width: 50
         height: 89
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
