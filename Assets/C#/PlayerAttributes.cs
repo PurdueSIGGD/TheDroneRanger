@@ -99,8 +99,9 @@ public class PlayerAttributes : Attributes {
         cam = Camera.main;
         health = 100;
         weapons[activeWepSlot].setAmmo(weapons[activeWepSlot].clipSize);
-        //this.transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
-        //this.GetComponent<PlayerMovement>().respawn();
+        this.transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
+        PlayerMovement move = this.GetComponent<PlayerMovement>();
+        move.respawn();
     }
 
     public void knockBack()

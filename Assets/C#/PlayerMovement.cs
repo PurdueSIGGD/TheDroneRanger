@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public float gravity;
 
     private bool nearLadder = false;
+    private bool respawning = false;
     private bool onLadder = false;
     private bool grounded = false;
     private bool onSlope = false;
@@ -187,14 +188,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void respawn()
     {
+        respawning = true;
         grounded = false;
-        onSlope = false;
-        hitCeiling = false;
-        hitCeilLeft = false;
-        hitCeilRight = false;
-        hitWallLeft = false;
-        hitWallRight = false;
-        myRigid.gravityScale = gravity;
+        myRigid.velocity = new Vector2(0, 0);
     }
 
     void jump(float jumpFactor)
@@ -250,6 +246,7 @@ public class PlayerMovement : MonoBehaviour
                 hitCeilRight = true;
             }
         }
+        if (respawning) { grounded = false; respawning = false; }
     }
     void OnCollisionStay2D(Collision2D col)
     {
@@ -299,6 +296,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+        if (respawning) { grounded = false; respawning = false; }
     }
     void OnCollisionExit2D(Collision2D col)
     {
