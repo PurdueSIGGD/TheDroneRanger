@@ -32,10 +32,9 @@ public class DialogueBox : MonoBehaviour
     private void Start()
     {
         textbox.GetComponent<Text>().text = "";
-        DialogueMessage mes = new DialogueMessage();
+        /*DialogueMessage mes = new DialogueMessage();
 
         //Debug messages
-        /*
         mes.Character = "cowboy";
         mes.Message = "Howdy!";
         Message(mes);

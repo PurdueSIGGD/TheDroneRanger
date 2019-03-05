@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 class MessageTrigger : MonoBehaviour
 {
-    public string[] characters;
-    public string[] texts;
-    public int[] times;
+    public string[] characters = { };
+    public string[] texts = { };
+    public int[] times = { };
     private GameObject UI;
     private DialogueMessage[] messages;
 
