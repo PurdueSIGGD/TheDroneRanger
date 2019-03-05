@@ -63,16 +63,26 @@
   <ItemGroup>
     <Compile Include="Assets\C#\Attributes.cs" />
     <Compile Include="Assets\C#\CooldownAbility.cs" />
+    <Compile Include="Assets\C#\Enemy_AI_Arc.cs" />
+    <Compile Include="Assets\C#\Enemy_AI_Line.cs" />
+    <Compile Include="Assets\C#\EnemyAIMaster.cs" />
+    <Compile Include="Assets\C#\EnemyAttack.cs" />
     <Compile Include="Assets\C#\EnemyAttributes.cs" />
+    <Compile Include="Assets\C#\EnemyMoveChase.cs" />
+    <Compile Include="Assets\C#\EnemyMoveForward.cs" />
+    <Compile Include="Assets\C#\EnemyMoveJump.cs" />
+    <Compile Include="Assets\C#\EnemyMovement.cs" />
+    <Compile Include="Assets\C#\EnemyMovePace.cs" />
+    <Compile Include="Assets\C#\EnemyProjectileSpawner.cs" />
     <Compile Include="Assets\C#\Environment\ClockPickup.cs" />
     <Compile Include="Assets\C#\Environment\Door.cs" />
     <Compile Include="Assets\C#\Environment\HealthPack.cs" />
     <Compile Include="Assets\C#\Environment\Key.cs" />
     <Compile Include="Assets\C#\Environment\Ladder.cs" />
     <Compile Include="Assets\C#\Environment\LoopingBackground.cs" />
+    <Compile Include="Assets\C#\Environment\MessageTrigger.cs" />
     <Compile Include="Assets\C#\Environment\Prop.cs" />
     <Compile Include="Assets\C#\Environment\TntProp.cs" />
-    <Compile Include="Assets\C#\FollowingCamera.cs" />
     <Compile Include="Assets\C#\GenericAbility.cs" />
     <Compile Include="Assets\C#\HighNoon.cs" />
     <Compile Include="Assets\C#\MovingPlatforms.cs" />
@@ -82,7 +92,9 @@
     <Compile Include="Assets\C#\PlayerMovement.cs" />
     <Compile Include="Assets\C#\Projectile.cs" />
     <Compile Include="Assets\C#\ProjectileSpawner.cs" />
+    <Compile Include="Assets\C#\UIScripts\AlternateCamera.cs" />
     <Compile Include="Assets\C#\UIScripts\DialogueBox.cs" />
+    <Compile Include="Assets\C#\UIScripts\FollowingCamera.cs" />
     <Compile Include="Assets\C#\UIScripts\PlayerAmmoTracker.cs" />
     <Compile Include="Assets\C#\UIScripts\PlayerClockEdge.cs" />
     <Compile Include="Assets\C#\UIScripts\PlayerClockTime.cs" />

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerAttributes : Attributes {
 
@@ -19,10 +20,23 @@ public class PlayerAttributes : Attributes {
     public float kForce;
     private bool invincible;
     private Camera cam;
+    public static GameObject control;
+
+    public void Awake()
+    {
+        if(control == null)
+        {
+            DontDestroyOnLoad(this.gameObject);
+            control = this.gameObject;
+        }
+        else if(control != this.gameObject)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     public void Start()
     {
-
         WeaponAttributes[] preWeps = this.GetComponentsInChildren<WeaponAttributes>();
         for (int i = 0; i < preWeps.Length; i++)
         {
@@ -66,20 +80,34 @@ public class PlayerAttributes : Attributes {
 
     public override bool takeDamage(float damage)
     {
-        if (invincible) return true;
-
-        knockBack();
         health -= damage;
         if (health <= 0)
         {
             health = 0;
+            die();
             return false;
         }
+        knockBack();
         return true;
+    }
+
+    private void die()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single); //Load a new scene
+
+        //Restore starting conditions
+        cam = Camera.main;
+        health = 100;
+        weapons[activeWepSlot].setAmmo(weapons[activeWepSlot].clipSize);
+        this.transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
+        PlayerMovement move = this.GetComponent<PlayerMovement>();
+        move.respawn();
     }
 
     public void knockBack()
     {
+        if (invincible) return;
+
         Vector2 direction = Vector2.left;
         Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
         if (mouseWorldPos.x < this.transform.position.x)
