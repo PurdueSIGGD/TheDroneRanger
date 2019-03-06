@@ -56,10 +56,15 @@ public class Projectile : MonoBehaviour {
         //TODO: check to see if we can hit the thing that we collided with
         if (attr != null)
         {
-            attr.takeDamage(damage);
+            if(attr.health > 0)
+            {
+                attr.takeDamage(damage);
+                destroyThis();
+            }
+        }else
+        {
+            destroyThis();
         }
-
-        destroyThis();
     }
 
     private void destroyThis()

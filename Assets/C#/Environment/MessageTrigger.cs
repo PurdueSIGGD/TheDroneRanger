@@ -25,7 +25,6 @@ class MessageTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        print("Collsion");
         if (other.gameObject.CompareTag("Player") == false) return;
         foreach (DialogueMessage mes in messages)
         {

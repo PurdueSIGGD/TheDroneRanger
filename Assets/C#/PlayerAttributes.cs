@@ -80,6 +80,7 @@ public class PlayerAttributes : Attributes {
 
     public override bool takeDamage(float damage)
     {
+        if (invincible) return true;
         health -= damage;
         if (health <= 0)
         {
@@ -96,7 +97,6 @@ public class PlayerAttributes : Attributes {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single); //Load a new scene
 
         //Restore starting conditions
-        cam = Camera.main;
         health = 100;
         weapons[activeWepSlot].setAmmo(weapons[activeWepSlot].clipSize);
         this.transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
@@ -109,7 +109,7 @@ public class PlayerAttributes : Attributes {
         if (invincible) return;
 
         Vector2 direction = Vector2.left;
-        Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
         if (mouseWorldPos.x < this.transform.position.x)
         {
             direction = Vector2.right;
