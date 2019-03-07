@@ -6,12 +6,15 @@ public class Prop : MonoBehaviour {
     public float durability = 1;
     public Sprite destroyedSprite;
     protected ParticleSystem ps;
+    public AudioClip breakSound = null;
 
     private SpriteRenderer myRenderer;
+    private AudioSource audioSource = null;
     // Use this for initialization
     void Start ()
     {
         myRenderer = this.GetComponent<SpriteRenderer>();
+        audioSource = this.GetComponent<AudioSource>();
         ps = this.GetComponentInChildren<ParticleSystem>();
         var emission = ps.emission;
         emission.enabled = false;
@@ -34,6 +37,10 @@ public class Prop : MonoBehaviour {
     public virtual void destroy() {
         if (isDestroyed())
         {
+            if(audioSource != null)
+            {
+                audioSource.PlayOneShot(breakSound);
+            }
             myRenderer.sprite = destroyedSprite;
             BoxCollider2D box = this.GetComponent<BoxCollider2D>();
             this.GetComponent<Rigidbody2D>().gravityScale = 0;
