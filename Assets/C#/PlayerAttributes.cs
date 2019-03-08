@@ -49,8 +49,8 @@ public class PlayerAttributes : Attributes {
             weapons.Add(preWeps[i]);
         }
         
-        giveWeapon(WEAPONS.BLADE);
-        giveWeapon(WEAPONS.SHOTGUN);
+       // giveWeapon(WEAPONS.BLADE);
+        //giveWeapon(WEAPONS.SHOTGUN);
         giveWeapon(WEAPONS.PLASMA);
         giveWeapon(WEAPONS.SNIPER);
 
@@ -108,7 +108,9 @@ public class PlayerAttributes : Attributes {
             die();
             return false;
         }
+
         knockBack();
+
         return true;
     }
 
@@ -122,6 +124,11 @@ public class PlayerAttributes : Attributes {
         this.transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
         PlayerMovement move = this.GetComponent<PlayerMovement>();
         move.respawn();
+    }
+
+    public void knockBack()
+    {
+        knockBack(Vector2.up, 5.0f);
     }
 
     public void knockBack(Vector2 direction, float strength)
@@ -158,11 +165,12 @@ public class PlayerAttributes : Attributes {
     public WeaponAttributes giveWeapon(WEAPONS wep, bool addToArray = true)
     {
         WeaponAttributes obj = WeaponAttributes.create(wep);
-        if (!obj)
+        if (!obj || !giveWeapon(obj, addToArray))
         {
+            Destroy(obj.gameObject);
             return null;
         }
-        return !giveWeapon(obj, addToArray) ? null : obj;
+        return obj;
     }
 
     public bool giveWeapon(WeaponAttributes obj, bool addToArray = true)

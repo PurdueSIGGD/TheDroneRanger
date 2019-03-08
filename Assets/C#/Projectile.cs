@@ -113,7 +113,7 @@ public class Projectile : MonoBehaviour {
                         {
                             direction = (victims[i].gameObject.transform.position - this.transform.position).normalized;
                         }
-                        ((PlayerAttributes)mAttr).knockBack((colDist.pointA - colDist.pointB).normalized, hurt);
+                        //((PlayerAttributes)mAttr).knockBack((colDist.pointA - colDist.pointB).normalized, hurt);
                     }
                 }
             }
