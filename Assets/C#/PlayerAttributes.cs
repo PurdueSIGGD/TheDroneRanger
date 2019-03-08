@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerAttributes : Attributes {
 
@@ -20,15 +21,28 @@ public class PlayerAttributes : Attributes {
     public float hurtTime;
     private bool invincible;
     private HighNoon highNoon = null;
+    public static GameObject control;
 
-    public void Start()
+    public void Awake()
     {
         highNoon = this.GetComponent<HighNoon>();
         if (highNoon == null)
         {
             highNoon = this.gameObject.AddComponent<HighNoon>();
         }
+        if(control == null)
+        {
+            DontDestroyOnLoad(this.gameObject);
+            control = this.gameObject;
+        }
+        else if(control != this.gameObject)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
+    public void Start()
+    {
         WeaponAttributes[] preWeps = this.GetComponentsInChildren<WeaponAttributes>();
         for (int i = 0; i < preWeps.Length; i++)
         {
@@ -91,13 +105,28 @@ public class PlayerAttributes : Attributes {
         if (health <= 0)
         {
             health = 0;
+            die();
             return false;
         }
+        knockBack();
         return true;
+    }
+
+    private void die()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single); //Load a new scene
+
+        //Restore starting conditions
+        health = 100;
+        weapons[activeWepSlot].setAmmo(weapons[activeWepSlot].clipSize);
+        this.transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
+        PlayerMovement move = this.GetComponent<PlayerMovement>();
+        move.respawn();
     }
 
     public void knockBack(Vector2 direction, float strength)
     {
+        if (invincible) return;
 
         GetComponent<PlayerMovement>().enabled = false;
         GetComponent<HighNoon>().enabled = false;
