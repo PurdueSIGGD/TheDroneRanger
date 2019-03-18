@@ -11,19 +11,25 @@ public class PlayerAttributes : Attributes {
 
     private List<WeaponAttributes> weapons = new List<WeaponAttributes>();
     private int activeWepSlot = 0;
+    private WeaponAttributes activeWep = null;
 
     //high noon at 100, should not be > 100
     public float highNoonPercent = 0;
+    public float highNoonPerSecond = 2;
 
     public float invTime;
     public float hurtTime;
-    public float kForce;
     private bool invincible;
-    private Camera cam;
+    private HighNoon highNoon = null;
     public static GameObject control;
 
     public void Awake()
     {
+        highNoon = this.GetComponent<HighNoon>();
+        if (highNoon == null)
+        {
+            highNoon = this.gameObject.AddComponent<HighNoon>();
+        }
         if(control == null)
         {
             DontDestroyOnLoad(this.gameObject);
@@ -40,47 +46,61 @@ public class PlayerAttributes : Attributes {
         WeaponAttributes[] preWeps = this.GetComponentsInChildren<WeaponAttributes>();
         for (int i = 0; i < preWeps.Length; i++)
         {
-            if (preWeps[i].gameObject == null)
-            {
-                continue;
-            }
             weapons.Add(preWeps[i]);
         }
+        
+       // giveWeapon(WEAPONS.BLADE);
+        //giveWeapon(WEAPONS.SHOTGUN);
+        giveWeapon(WEAPONS.PLASMA);
+        giveWeapon(WEAPONS.SNIPER);
 
-        cam = Camera.main;
+        activeWep = weapons[0];
+
+    }
+
+    private void iterateWeapon(bool forward)
+    {
+
+        int newSlot = activeWepSlot +( forward ? 1 : weapons.Count - 1);
+        newSlot %= weapons.Count;
+
+        activeWep.gameObject.SetActive(false);
+        activeWep = weapons[newSlot];
+        activeWepSlot = newSlot;
+        activeWep.gameObject.SetActive(true);
+
     }
 
     public void Update()
     {
-
-        WeaponAttributes activeWep = weapons[activeWepSlot];
 
         if ((activeWep.rapidFire && Input.GetButton("Fire1")) ||
             (!activeWep.rapidFire && Input.GetButtonDown("Fire1")))
         {
             activeWep.fire();
         }
-        else if (Input.GetKeyDown(reloadKey))
+        if (!isHighNoon()) //Only allow outside of high noon
         {
-            activeWep.reload();
-        }else if (Input.GetAxis("Mouse ScrollWheel") != 0f)
-        {
-
-            int newSlot = activeWepSlot + ((Input.GetAxis("Mouse ScrollWheel") > 0f) ? 1 : weapons.Count - 1);
-            newSlot %= weapons.Count;
-
-            activeWep.gameObject.SetActive(false);
-            activeWep = weapons[newSlot];
-            activeWepSlot = newSlot;
-            activeWep.gameObject.SetActive(true);
-
+            addHighNoonPercent(Time.deltaTime * highNoonPerSecond);
+            if (Input.GetKey(reloadKey))
+            {
+                activeWep.reload();
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") != 0f || Input.GetButtonDown("Switch"))
+            {
+                iterateWeapon(Input.GetAxis("Mouse ScrollWheel") >= 0f);
+            }
         }
 
     }
 
+    /*
+     * Returns true if still alive. 
+     */
     public override bool takeDamage(float damage)
     {
         if (invincible) return true;
+        
         health -= damage;
         if (health <= 0)
         {
@@ -88,7 +108,9 @@ public class PlayerAttributes : Attributes {
             die();
             return false;
         }
+
         knockBack();
+
         return true;
     }
 
@@ -106,15 +128,12 @@ public class PlayerAttributes : Attributes {
 
     public void knockBack()
     {
-        if (invincible) return;
+        knockBack(Vector2.up, 5.0f);
+    }
 
-        Vector2 direction = Vector2.left;
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-        if (mouseWorldPos.x < this.transform.position.x)
-        {
-            direction = Vector2.right;
-        }
-        direction += Vector2.up;
+    public void knockBack(Vector2 direction, float strength)
+    {
+        if (invincible) return;
 
         GetComponent<PlayerMovement>().enabled = false;
         GetComponent<HighNoon>().enabled = false;
@@ -125,7 +144,7 @@ public class PlayerAttributes : Attributes {
 
         Rigidbody2D myRigid = GetComponent<Rigidbody2D>();
         myRigid.velocity = new Vector2(0, 0);
-        myRigid.AddForce(new Vector2(myRigid.mass, myRigid.mass) * kForce * direction, ForceMode2D.Impulse);
+        myRigid.AddForce(new Vector2(myRigid.mass, myRigid.mass) * strength * direction, ForceMode2D.Impulse);
         myRigid.gravityScale = GetComponent<PlayerMovement>().gravity;
     }
 
@@ -143,30 +162,22 @@ public class PlayerAttributes : Attributes {
         invincible = false;
     }
 
-    public WeaponAttributes addWeaponByName(string path)
+    public WeaponAttributes giveWeapon(WEAPONS wep, bool addToArray = true)
     {
-        //Returns null if unable to add.
-        if (maxWeapons > 0 && weapons.Count >= maxWeapons)
+        WeaponAttributes obj = WeaponAttributes.create(wep);
+        if (!obj || !giveWeapon(obj, addToArray))
         {
+            Destroy(obj.gameObject);
             return null;
         }
-
-        GameObject prefab = Instantiate(Resources.Load(path, typeof(GameObject))) as GameObject;
-        if (prefab == null)
-        {
-            return null;
-        }
-
-        return addWeapon(prefab);
+        return obj;
     }
 
-    public WeaponAttributes addWeapon(GameObject obj)
+    public bool giveWeapon(WeaponAttributes obj, bool addToArray = true)
     {
-
-        //Returns null if unable to add.
-        if (maxWeapons > 0 && weapons.Count >= maxWeapons)
+        if (addToArray && maxWeapons > 0 && weapons.Count >= maxWeapons)
         {
-            return null;
+            return false;
         }
 
         obj.transform.position = weapons[0].transform.position;
@@ -174,21 +185,34 @@ public class PlayerAttributes : Attributes {
         obj.transform.parent = weapons[0].transform.parent;
         obj.transform.eulerAngles = weapons[0].transform.eulerAngles;
         obj.transform.localScale = weapons[0].transform.localScale;
-        obj.SetActive(false);
+        obj.gameObject.SetActive(false);
 
-        WeaponAttributes wep = obj.GetComponent<WeaponAttributes>();
-        if (wep == null)
+        if (addToArray)
         {
-            wep = obj.AddComponent<WeaponAttributes>();
+            weapons.Add(obj);
         }
+        return true;
+    }
 
-        weapons.Add(wep);
-        return wep;
+    public void setActiveWeapon(WeaponAttributes wep)
+    {
+        activeWep.gameObject.SetActive(false);
+        wep.gameObject.SetActive(true);
+        activeWep = wep;
+        activeWepSlot = 0;
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            if (wep == weapons[i])
+            {
+                activeWepSlot = i;
+                break;
+            }
+        }
     }
 
     public WeaponAttributes getActiveWeapon()
     {
-        return weapons[activeWepSlot];
+        return activeWep;
     }
 
     public List<WeaponAttributes> getWeaponList()
@@ -197,16 +221,15 @@ public class PlayerAttributes : Attributes {
     }
 
     public float getHighNoonPercent() {
-        return highNoonPercent;
+        return highNoon.charge;
     }
     
     //adds percent to the current high noon percent
     public void addHighNoonPercent(float percent) {
-        highNoonPercent += percent;
+        highNoon.charge = Mathf.Min(100.0f, highNoon.charge + percent);
     }
-
-    //returns true if highNoonPercent >= 100
+    
     public bool isHighNoon() {
-        return (highNoonPercent >= 100.0);
+        return highNoon.isActive();
     }
 }

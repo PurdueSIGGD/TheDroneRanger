@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6638093583485376288}
   - component: {fileID: 3347999263294230753}
   m_Layer: 0
-  m_Name: Revolver
+  m_Name: Plasma_Cannon
   m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,20 +44,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ded84c3c1d3a61246a023934eaff268a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clipSize: 6
-  fireDelay: 0.2
-  reloadDelay: 0.5
-  rapidFire: 0
+  clipSize: 4
+  fireDelay: 0.5
+  reloadDelay: 0.8
+  rapidFire: 1
   oneReload: 1
   autoReload: 0
   fireCancelReload: 0
   canZoom: 0
   projectileSpeed: 1
-  projectile: {fileID: 7739671120292667949, guid: 2ac66e9f39ef1f24ab6a4c90b04065e9,
+  projectile: {fileID: 7739671120292667949, guid: bd5d45f19748a6e41a35561f0fc1e1ec,
     type: 3}
-  ammoUI: {fileID: 2800000, guid: a1d66a260f033a94dae068dab26658d1, type: 3}
-  fireSound: {fileID: 8300000, guid: e419c7d4d3d577e439577007ad4887c2, type: 3}
-  reloadSound: {fileID: 8300000, guid: b853337031e77a24491671ffb48741ff, type: 3}
+  ammoUI: {fileID: 2800000, guid: 6486542312ee7ba4b96de7c477a6b832, type: 3}
+  fireSound: {fileID: 8300000, guid: fe05c532c55d4b84d9168c8c14433793, type: 3}
+  reloadSound: {fileID: 8300000, guid: ab7c01ff433f7ce439e923c3c5a2398e, type: 3}
   emptySound: {fileID: 8300000, guid: dadf53a7cc91cef4d820f2bf2ccbf936, type: 3}
 --- !u!1 &6635147270537192464
 GameObject:
@@ -84,8 +84,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6635147270537192464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.164, y: 0.003, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.159, y: -0.143, z: 0}
+  m_LocalScale: {x: 1.6480775, y: 1.4134173, z: 1.81907}
   m_Children: []
   m_Father: {fileID: 6638093583485376288}
   m_RootOrder: 0
@@ -127,7 +127,7 @@ SpriteRenderer:
   m_SortingLayerID: -799989607
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: bbb8b8240eb7eb249acb8a7a7135a920, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8ca6fe378cb9ecb49bd9658d1e568b6b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
