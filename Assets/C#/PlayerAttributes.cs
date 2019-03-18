@@ -51,8 +51,8 @@ public class PlayerAttributes : Attributes {
         
        // giveWeapon(WEAPONS.BLADE);
         //giveWeapon(WEAPONS.SHOTGUN);
-        giveWeapon(WEAPONS.PLASMA);
-        giveWeapon(WEAPONS.SNIPER);
+        //giveWeapon(WEAPONS.PLASMA);
+        //giveWeapon(WEAPONS.SNIPER);
 
         activeWep = weapons[0];
 
