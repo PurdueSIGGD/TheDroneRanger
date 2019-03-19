@@ -84,7 +84,16 @@ public class EnemyAttributes : Attributes {
 
 	public void death()
 	{
-		Destroy (this.gameObject);
-
+        EnemyDropItemOnDeath di; // This is used for when an enemy spawns an item when they die.
+        if ((di = this.GetComponent<EnemyDropItemOnDeath>()) != null)
+        {
+            di.spawnItem();
+        }
+        EnemyTeleportItemOnDeath ti; // This is used for when an enemy moves an item that already exists the scene when they die.
+        if ((ti = this.GetComponent<EnemyTeleportItemOnDeath>()) != null)
+        {
+            ti.moveItem();
+        }
+        Destroy (this.gameObject);
 	}
 }

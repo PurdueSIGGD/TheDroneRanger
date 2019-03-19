@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 class MessageTrigger : MonoBehaviour
 {
-    public string[] characters;
-    public string[] texts;
-    public int[] times;
+    public string[] characters = { };
+    public string[] texts = { };
+    public int[] times = { };
     private GameObject UI;
     private DialogueMessage[] messages;
 
@@ -25,7 +25,6 @@ class MessageTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        print("Collsion");
         if (other.gameObject.CompareTag("Player") == false) return;
         foreach (DialogueMessage mes in messages)
         {
