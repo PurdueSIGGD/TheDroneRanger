@@ -345,6 +345,7 @@ MonoBehaviour:
   walkLeftSound: {fileID: 8300000, guid: 1fd5aaacc501d47428b07566cbb34dae, type: 3}
   walkRightSound: {fileID: 8300000, guid: fa48740251235ae4f9b1507aaf4487ce, type: 3}
   jumpSound: {fileID: 8300000, guid: 6f3fa245a0c0b0f46ab384754752650c, type: 3}
+  isDead: 0
   gravity: 0
 --- !u!114 &114297417838248002
 MonoBehaviour:
@@ -366,6 +367,7 @@ MonoBehaviour:
   highNoonPerSecond: 2
   invTime: 0.5
   hurtTime: 1
+  arm: {fileID: 1038155502953712}
 --- !u!114 &230575831780405485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,6 +506,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4103082889992742}
     m_Modifications:
+    - target: {fileID: 6634858366013539138, guid: 671dcb61805f8704287cbe1314c190c3,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerWeapon
+      objectReference: {fileID: 0}
     - target: {fileID: 6638093583485376288, guid: 671dcb61805f8704287cbe1314c190c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -568,11 +575,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6634858366013539138, guid: 671dcb61805f8704287cbe1314c190c3,
-        type: 3}
-      propertyPath: m_Name
-      value: PlayerWeapon
       objectReference: {fileID: 0}
     - target: {fileID: 3347999263294230753, guid: 671dcb61805f8704287cbe1314c190c3,
         type: 3}
