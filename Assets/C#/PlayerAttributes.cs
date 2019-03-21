@@ -127,11 +127,13 @@ public class PlayerAttributes : Attributes {
     private IEnumerator Die()
     {
         SpriteRenderer sprite = this.GetComponent<SpriteRenderer>();
-        anim.SetTrigger("IsDead");
+        anim.SetBool("IsDead", true);
+        anim.SetTrigger("Died");
         if (!anim.GetBool("LookingRight")) { sprite.flipX = false; }
         arm.SetActive(false);
         move.isDead = true;
-        yield return new WaitForSeconds(1.49f);
+        yield return new WaitForSeconds(1.3f);
+        anim.SetBool("IsDead", false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single); //Load a new scene
         //Restore starting conditions
         health = maxHealth;
