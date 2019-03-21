@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 114643373654015152}
   - component: {fileID: 114701677160397766}
   - component: {fileID: 114093049456113770}
+  - component: {fileID: 1538312953853488964}
   m_Layer: 0
   m_Name: Base Enemy
   m_TagString: Untagged
@@ -211,7 +212,7 @@ MonoBehaviour:
   - for
   - for
   - jum
-  aggromove: chase
+  aggromove: stat
   moveDur:
   - 3
   - 2.5
@@ -318,3 +319,21 @@ MonoBehaviour:
   jumpHeight: 3
   enemyRigid: {fileID: 0}
   xLocked: 1
+--- !u!114 &1538312953853488964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786939519797682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d223006125fe2ff449f4c698111f5379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  label: track
+  xdir: 1
+  ydir: 1
+  flipSprite: 1
+  jumpHeight: 3
+  enemyRigid: {fileID: 0}

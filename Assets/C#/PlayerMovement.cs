@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D myRigid;
     private AudioSource audioSource = null;
+    private Animator anim;
 
     private bool canJump;
     private bool jumping; // The player has hit the jump button and not yet returned to the ground
@@ -24,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public float gravity;
 
     private bool nearLadder = false;
+    private bool respawning = false;
     private bool onLadder = false;
     private bool grounded = false;
     private bool onSlope = false;
@@ -41,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     {
         myRigid = this.GetComponent<Rigidbody2D>();
         audioSource = this.GetComponent<AudioSource>();
+        anim = this.GetComponent<Animator>();
 
         gravity = myRigid.gravityScale;
         platformSpeed = new Vector2(0, 0);
@@ -86,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
 
         bool goingLeft = Input.GetAxisRaw("Horizontal") < 0;
         bool goingRight = Input.GetAxisRaw("Horizontal") > 0;
+        anim.SetBool("Walking", goingLeft || goingRight);
         bool goingUp = myRigid.velocity.y > 0.1f;
         bool goingDown = myRigid.velocity.y < -0.1f;
         if(!audioSource.isPlaying)
@@ -145,7 +149,7 @@ public class PlayerMovement : MonoBehaviour
                     { myRigid.velocity = new Vector2(-slope.y * diagVelocity, slope.x * diagVelocity); }
                 }
                 else if (!jumping)
-                { myRigid.velocity = new Vector2(-maxHorizontalVelocity, 0); }
+                { myRigid.velocity = new Vector2(-maxHorizontalVelocity, 0) + platformSpeed; }
                 else
                 { myRigid.velocity = new Vector2(-maxHorizontalVelocity, myRigid.velocity.y); }
             }
@@ -161,12 +165,12 @@ public class PlayerMovement : MonoBehaviour
                     { myRigid.velocity = new Vector2(slope.y * diagVelocity, -slope.x * diagVelocity); }
                 }
                 else if (!jumping)
-                { myRigid.velocity = new Vector2(maxHorizontalVelocity, 0); }
+                { myRigid.velocity = new Vector2(maxHorizontalVelocity, 0) + platformSpeed; }
                 else
                 { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
             }
             else if (jumping || hitCeiling) { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
-            else { myRigid.velocity = new Vector2(0, 0); }
+            else { myRigid.velocity = new Vector2(0, 0) + platformSpeed; }
         }
 
         // Trying to jump
@@ -180,6 +184,13 @@ public class PlayerMovement : MonoBehaviour
         }
         canJump = verticalMovement <= 0;
         if(sinceOnSlope > 0) { sinceOnSlope--; }
+    }
+
+    public void respawn()
+    {
+        respawning = true;
+        grounded = false;
+        myRigid.velocity = new Vector2(0, 0);
     }
 
     void jump(float jumpFactor)
@@ -235,6 +246,7 @@ public class PlayerMovement : MonoBehaviour
                 hitCeilRight = true;
             }
         }
+        if (respawning) { grounded = false; respawning = false; }
     }
     void OnCollisionStay2D(Collision2D col)
     {
@@ -284,6 +296,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+        if (respawning) { grounded = false; respawning = false; }
     }
     void OnCollisionExit2D(Collision2D col)
     {
