@@ -12,6 +12,8 @@ public class PlayerAttributes : Attributes {
     private List<WeaponAttributes> weapons = new List<WeaponAttributes>();
     private int activeWepSlot = 0;
     private WeaponAttributes activeWep = null;
+    private PlayerMovement move = null;
+    private Animator anim = null;
 
     //high noon at 100, should not be > 100
     public float highNoonPercent = 0;
@@ -22,6 +24,8 @@ public class PlayerAttributes : Attributes {
     private bool invincible;
     private HighNoon highNoon = null;
     public static GameObject control;
+    [SerializeField]
+    private GameObject arm;
 
     public void Awake()
     {
@@ -56,6 +60,8 @@ public class PlayerAttributes : Attributes {
 
         activeWep = weapons[0];
 
+        anim = this.GetComponent<Animator>();
+        move = this.GetComponent<PlayerMovement>();
     }
 
     private void iterateWeapon(bool forward)
@@ -91,7 +97,6 @@ public class PlayerAttributes : Attributes {
                 iterateWeapon(Input.GetAxis("Mouse ScrollWheel") >= 0f);
             }
         }
-
     }
 
     /*
@@ -105,7 +110,7 @@ public class PlayerAttributes : Attributes {
         if (health <= 0)
         {
             health = 0;
-            die();
+            StartCoroutine("Die");
             return false;
         }
 
@@ -116,13 +121,26 @@ public class PlayerAttributes : Attributes {
 
     private void die()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single); //Load a new scene
+        StartCoroutine("Die");
+    }
 
+    private IEnumerator Die()
+    {
+        SpriteRenderer sprite = this.GetComponent<SpriteRenderer>();
+        anim.SetBool("IsDead", true);
+        anim.SetTrigger("Died");
+        if (!anim.GetBool("LookingRight")) { sprite.flipX = false; }
+        arm.SetActive(false);
+        move.isDead = true;
+        yield return new WaitForSeconds(1.3f);
+        anim.SetBool("IsDead", false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single); //Load a new scene
         //Restore starting conditions
-        health = 100;
+        health = maxHealth;
         weapons[activeWepSlot].setAmmo(weapons[activeWepSlot].clipSize);
         this.transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
-        PlayerMovement move = this.GetComponent<PlayerMovement>();
+        arm.SetActive(true);
+        move.isDead = false;
         move.respawn();
     }
 
