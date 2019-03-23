@@ -5,33 +5,29 @@ using UnityEngine.UI;
 
 public class PlayerAmmoTracker : MonoBehaviour
 {
-    private const float fill = 1; // the ammo count's image can take any value from 0 to 1
-
-    private float fillAmount = 1;
     private PlayerAttributes Player;
-
-    [SerializeField]
-    private Image ammo;
+    private RawImage img;
 
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttributes>();
+        img = this.GetComponent<RawImage>();
     }
 
     void Update()
     {
         WeaponAttributes wep = Player.getActiveWeapon();
-        if (wep == null)
+        if (!wep)
         {
             return;
         }
-        updateHealth(wep.getAmmo(), 0, wep.getClipSize());
-        ammo.fillAmount = fillAmount;
+
+        Rect uvrec = img.uvRect;
+        uvrec.width = wep.getAmmo();
+        img.uvRect = uvrec;
+        img.transform.localScale = new Vector3(wep.getAmmo(), 1.0f, 1.0f);
+        img.texture = wep.ammoUI;
+
     }
 
-    public void updateHealth(float newValue, float minValue, float maxValue)
-    {
-        float amount = (newValue - minValue) / (maxValue - minValue);
-        this.fillAmount = amount * fill;
-    }
 }

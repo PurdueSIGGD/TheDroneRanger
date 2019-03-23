@@ -32,10 +32,9 @@ public class DialogueBox : MonoBehaviour
     private void Start()
     {
         textbox.GetComponent<Text>().text = "";
-        DialogueMessage mes = new DialogueMessage();
+        /*DialogueMessage mes = new DialogueMessage();
 
         //Debug messages
-        /*
         mes.Character = "cowboy";
         mes.Message = "Howdy!";
         Message(mes);
@@ -57,6 +56,7 @@ public class DialogueBox : MonoBehaviour
         if(firstEmpty == currentMessage)
         {
             messageBox.SetActive(true);
+            messageTime = -1;
             characterProfile.GetComponent<RawImage>().uvRect = getCrop(messages[currentMessage].Character); //Updates character crop
             characterProfile.GetComponent<RawImage>().texture = getTexture(messages[currentMessage].Character); //Updates character image
         }
