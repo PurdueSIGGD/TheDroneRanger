@@ -100,42 +100,51 @@ public class EnemyAIMaster : MonoBehaviour {
 			}
 
 		}
-		if (!aggroed || aMove == null) {
-			moveTimer += Time.deltaTime;
-			if (moveTimer >= Mathf.Abs (moveDur [currMove])) {
-				moveTimer -= Mathf.Abs (moveDur [currMove]);
-				changeMovement ();
+		if (EnemyStats.helpless <= 0) {
+			if (!aggroed || aMove == null) {
+				moveTimer += Time.deltaTime;
+				if (moveTimer >= Mathf.Abs (moveDur [currMove])) {
+					moveTimer -= Mathf.Abs (moveDur [currMove]);
+					changeMovement ();
+				}
 			}
-		}
-		jumpTimer = Mathf.Max (0, jumpTimer - Time.deltaTime);
+			jumpTimer = Mathf.Max (0, jumpTimer - Time.deltaTime);
 
 
-		if (EnemyStats.getAggro () != null) {
-			if (!aggroDelay || currMove >= moveLoopStart) {
-				if (!aggroed) {
-					aggroed = true;
-					if (aMove != null) {
-						getCycleMove ().enabled = false;
-						if (aMove.xdir != getCycleMove ().xdir) {
-							aMove.xdir = getCycleMove ().xdir;
+			if (EnemyStats.getAggro () != null) {
+				if (!aggroDelay || currMove >= moveLoopStart) {
+					if (!aggroed) {
+						aggroed = true;
+						if (aMove != null) {
+							getCycleMove ().enabled = false;
+							if (aMove.xdir != getCycleMove ().xdir) {
+								aMove.xdir = getCycleMove ().xdir;
+							}
+							aMove.enabled = true;
 						}
-						aMove.enabled = true;
 					}
 				}
-			}
 
+			} else {
+				if (aggroed) {
+					aggroed = false;
+					if (aMove != null) {
+						aMove.enabled = false;
+						if (aMove.xdir != getCycleMove ().xdir) {
+							getCycleMove ().xdir = aMove.xdir;
+						}
+						getCycleMove ().enabled = true;
+					}
+				}
+
+
+			}
 		} else {
-			if (aggroed) {
-				aggroed = false;
-				if (aMove != null) {
-					aMove.enabled = false;
-					if (aMove.xdir != getCycleMove ().xdir) {
-						getCycleMove ().xdir = aMove.xdir;
-					}
-					getCycleMove ().enabled = true;
-				}
+			getCurrMove ().enabled = false;
+			EnemyStats.helpless -= Time.deltaTime;
+			if (EnemyStats.helpless <= 0) {
+				getCurrMove ().enabled = true;
 			}
-
 
 		}
 
