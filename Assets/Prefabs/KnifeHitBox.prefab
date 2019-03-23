@@ -120,6 +120,11 @@ MonoBehaviour:
   lifetime: 0.2
   dieOnHit: 1
   hurtPlayer: 0
+  gracePeriod: 0
+  copyAmount: 0
+  spreadAngle: 45
+  explosive: 0
+  explosiveRadius: 1.8
 --- !u!61 &8251726313701094991
 BoxCollider2D:
   m_ObjectHideFlags: 0
