@@ -44,6 +44,14 @@ public class EnemyMovement : MonoBehaviour {
 		enemyRigid.velocity = new Vector2 (0, gameObject.GetComponent<Rigidbody2D> ().velocity.y);
 	}
 
+	public virtual void switchTo() {
+
+	}
+
+	public virtual void switchFrom() {
+
+	}
+
 	public void jump()
 	{
 		

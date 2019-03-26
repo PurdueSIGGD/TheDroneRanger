@@ -76,6 +76,7 @@ public class EnemyAIMaster : MonoBehaviour {
 		if (GetComponent<SpriteRenderer> ().flipX) {
 			moveList [0].xdir = -1;
 		}
+		moveList [0].switchTo ();
 		moveList [0].enabled = true;
 		for (int x = 0; x < allMoves.Length; x++) {
 			if (aggromove.Equals(allMoves[x].label))
@@ -116,10 +117,12 @@ public class EnemyAIMaster : MonoBehaviour {
 					if (!aggroed) {
 						aggroed = true;
 						if (aMove != null) {
+							getCycleMove ().switchFrom ();
 							getCycleMove ().enabled = false;
 							if (aMove.xdir != getCycleMove ().xdir) {
 								aMove.xdir = getCycleMove ().xdir;
 							}
+							aMove.switchTo ();
 							aMove.enabled = true;
 						}
 					}
@@ -129,10 +132,12 @@ public class EnemyAIMaster : MonoBehaviour {
 				if (aggroed) {
 					aggroed = false;
 					if (aMove != null) {
+						aMove.switchFrom ();
 						aMove.enabled = false;
 						if (aMove.xdir != getCycleMove ().xdir) {
 							getCycleMove ().xdir = aMove.xdir;
 						}
+						getCycleMove().switchTo ();
 						getCycleMove ().enabled = true;
 					}
 				}
@@ -140,9 +145,11 @@ public class EnemyAIMaster : MonoBehaviour {
 
 			}
 		} else {
+			getCurrMove().switchFrom ();
 			getCurrMove ().enabled = false;
 			EnemyStats.helpless -= Time.deltaTime;
 			if (EnemyStats.helpless <= 0) {
+				getCurrMove ().switchTo ();
 				getCurrMove ().enabled = true;
 			}
 
@@ -198,6 +205,7 @@ public class EnemyAIMaster : MonoBehaviour {
 	public virtual void changeMovement()
 	{
 		int tempxdir = moveList [currMove].xdir;
+		moveList [currMove].switchFrom ();
 		moveList [currMove].enabled = false;
 		currMove++;
 
@@ -217,6 +225,7 @@ public class EnemyAIMaster : MonoBehaviour {
 		} else {
 			moveList [currMove].xdir = tempxdir;
 		} 
+		moveList [currMove].switchTo ();
 		moveList [currMove].enabled = true;
 		//Debug.Log (moveList [currMove].label);
 	}
