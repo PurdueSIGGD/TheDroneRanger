@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 212554628265082308}
   - component: {fileID: 50670515671038506}
   - component: {fileID: 114020721059168666}
-  - component: {fileID: 58391632265217976}
+  - component: {fileID: 3684852700179791960}
+  - component: {fileID: 1325784241188015075}
   m_Layer: 0
   m_Name: TNT
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979001164161008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.011, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -120,8 +121,27 @@ MonoBehaviour:
   lifetime: 10
   dieOnHit: 1
   hurtPlayer: 0
---- !u!58 &58391632265217976
-CircleCollider2D:
+  gracePeriod: 0.2
+  copyAmount: 0
+  spreadAngle: 45
+  explosive: 0
+  explosiveRadius: 1.8
+--- !u!114 &3684852700179791960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979001164161008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d205c39afd26abe45baec2183262da45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
+  maxHealth: 1
+--- !u!61 &1325784241188015075
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -133,6 +153,16 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.039237358, y: 0.015414596}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.64}
+    newSize: {x: 0.2, y: 0.2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.09
+  m_Size: {x: 0.37094384, y: 0.13832247}
+  m_EdgeRadius: 0
