@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip walkLeftSound = null;
     public AudioClip walkRightSound = null;
     public AudioClip jumpSound = null;
+    public bool isDead = false;
 
     private Vector2 platformSpeed;
 
@@ -53,6 +54,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDead)
+        {
+            myRigid.velocity = new Vector2(0, 0);
+            return;
+        }
         float verticalMovement = Input.GetAxis("Vertical");
         if (nearLadder && !onLadder && verticalMovement != 0) // Handle getting on ladders
         {
