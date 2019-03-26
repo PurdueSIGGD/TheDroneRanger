@@ -258,6 +258,6 @@ MonoBehaviour:
   arc: 0.5
   enemyStats: {fileID: 0}
   master: {fileID: 0}
-  offsetDist: 0
+  offsetDist: 3
   offsetAngle: 0
-  atkRange: 0
+  atkRange: 3
