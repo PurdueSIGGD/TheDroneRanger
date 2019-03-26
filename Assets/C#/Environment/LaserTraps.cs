@@ -5,6 +5,7 @@ using UnityEngine;
 public class LaserTraps : MonoBehaviour
 {
 	[Tooltip("All times are in seconds\nDefault times are 1 second")]
+	public float startOffset;
 	public float laserLength;
 	public float onTime;
 	public float offTime;
@@ -12,12 +13,15 @@ public class LaserTraps : MonoBehaviour
 	public bool randomMaxTime;
 	public bool randomMinTime;
 	private GameObject laser;
+	public float damage;
+	public bool hurtEnemies;
 
 	void Start()
     {
 		laser = transform.GetChild(0).gameObject;
 		laser.transform.localScale = new Vector3(1f, laserLength, 0f);
 		laser.transform.localPosition = new Vector3(0f, 0.32f * laserLength - 0.05f, 0f);
+		laser.GetComponent<LaserDamage>().setValues(damage, hurtEnemies);
 		if (onTime <= 0)
 		{
 			onTime = 1;
@@ -31,6 +35,8 @@ public class LaserTraps : MonoBehaviour
 
     IEnumerator LaserTrapOn()
 	{
+		laser.SetActive(false);
+		yield return new WaitForSeconds(startOffset);
 		while (true)
 		{
 			laser.SetActive(true);
