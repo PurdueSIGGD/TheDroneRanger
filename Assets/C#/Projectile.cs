@@ -87,11 +87,11 @@ public class Projectile : MonoBehaviour {
             if (!p.isDestroyed())
             {
                 p.decreaseDurability(damage);
+                hasHit = true;
             }
             else { return; }
         }
         /* ACTIONS TO TAKE POST-HIT */
-        hasHit = true;
 
         if (explosive)
         {
@@ -106,15 +106,7 @@ public class Projectile : MonoBehaviour {
                     if (hurt < 1.0f)
                         continue;
                     mAttr.takeDamage(hurt);
-                    if (mAttr is PlayerAttributes)
-                    {
-                        Vector2 direction = (colDist.pointA - colDist.pointB).normalized;
-                        if (direction.magnitude == 0)
-                        {
-                            direction = (victims[i].gameObject.transform.position - this.transform.position).normalized;
-                        }
-                        //((PlayerAttributes)mAttr).knockBack((colDist.pointA - colDist.pointB).normalized, hurt);
-                    }
+                    hasHit = true;
                 }
             }
         } else if (attr != null)
@@ -122,10 +114,12 @@ public class Projectile : MonoBehaviour {
             if(attr.health > 0)
             {
                 attr.takeDamage(damage);
+                hasHit = true;
                 destroyThis();
             }
         }else
         {
+            hasHit = true;
             destroyThis();
         }
     }
