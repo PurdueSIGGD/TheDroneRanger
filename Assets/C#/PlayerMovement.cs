@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if ((grounded && !hitCeiling && !hitWallLeft && !hitWallRight) || onLadder) // Prevent slipping off of slopes
+        if ((grounded && !hitCeiling) || onLadder) // Prevent slipping off of slopes
         {
             myRigid.gravityScale = 0;
         }
@@ -182,9 +182,12 @@ public class PlayerMovement : MonoBehaviour
         // Trying to jump
         if (verticalMovement > 0)
         {
-            if (verticalMovement > 0 && canJump && jumpCounter < maxJumps)
+            if (grounded || onLadder)
             {
-                jump(1.0f);
+                if (verticalMovement > 0 && canJump && jumpCounter < maxJumps)
+                {
+                    jump(1.0f);
+                }
             }
 
         }
@@ -307,6 +310,8 @@ public class PlayerMovement : MonoBehaviour
     void OnCollisionExit2D(Collision2D col)
     {
         grounded = false;
+        hitWallLeft = false;
+        hitWallRight = false;
     }
     public void setNearLadder(bool near)
     {
