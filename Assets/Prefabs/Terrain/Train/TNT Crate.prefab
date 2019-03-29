@@ -30,8 +30,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   durability: 1
   destroyedSprite: {fileID: 0}
+  breakSound: {fileID: 0}
   damage: 30
   explosionCol: {fileID: 1879614468889718034}
+  explosionEffect: {fileID: 9207108904460762629}
 --- !u!1001 &1262946506523516483
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89,30 +91,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 212012688780398828, guid: 6d31063a882c4c147806db2073b47193,
         type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212012688780398828, guid: 6d31063a882c4c147806db2073b47193,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212012688780398828, guid: 6d31063a882c4c147806db2073b47193,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212012688780398828, guid: 6d31063a882c4c147806db2073b47193,
-        type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: d5da3d836ce446e44a132b626d2b0971,
         type: 3}
-    - target: {fileID: 2213695425692259101, guid: 6d31063a882c4c147806db2073b47193,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2213695425692259101, guid: 6d31063a882c4c147806db2073b47193,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
@@ -133,6 +115,11 @@ PrefabInstance:
       propertyPath: VelocityModule.radial.scalar
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 2213695425692259101, guid: 6d31063a882c4c147806db2073b47193,
+        type: 3}
+      propertyPath: VelocityModule.speedModifier.scalar
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114618538843346788, guid: 6d31063a882c4c147806db2073b47193, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6d31063a882c4c147806db2073b47193, type: 3}
@@ -141,4 +128,95 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1136381820594970, guid: 6d31063a882c4c147806db2073b47193,
     type: 3}
   m_PrefabInstance: {fileID: 1262946506523516483}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1263279198271768335 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4207370809284940, guid: 6d31063a882c4c147806db2073b47193,
+    type: 3}
+  m_PrefabInstance: {fileID: 1262946506523516483}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1413770717260480565
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1263279198271768335}
+    m_Modifications:
+    - target: {fileID: 8587827012672684269, guid: adc40663456a38e44af7e1a8f17dcc62,
+        type: 3}
+      propertyPath: m_Name
+      value: Explosion Particles
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033556779190213930, guid: adc40663456a38e44af7e1a8f17dcc62,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033556779190213930, guid: adc40663456a38e44af7e1a8f17dcc62,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033556779190213930, guid: adc40663456a38e44af7e1a8f17dcc62,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033556779190213930, guid: adc40663456a38e44af7e1a8f17dcc62,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033556779190213930, guid: adc40663456a38e44af7e1a8f17dcc62,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033556779190213930, guid: adc40663456a38e44af7e1a8f17dcc62,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033556779190213930, guid: adc40663456a38e44af7e1a8f17dcc62,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033556779190213930, guid: adc40663456a38e44af7e1a8f17dcc62,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033556779190213930, guid: adc40663456a38e44af7e1a8f17dcc62,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033556779190213930, guid: adc40663456a38e44af7e1a8f17dcc62,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033556779190213930, guid: adc40663456a38e44af7e1a8f17dcc62,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7807130959946530352, guid: adc40663456a38e44af7e1a8f17dcc62,
+        type: 3}
+      propertyPath: VelocityModule.radial.scalar
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7807130959946530352, guid: adc40663456a38e44af7e1a8f17dcc62,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 2.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: adc40663456a38e44af7e1a8f17dcc62, type: 3}
+--- !u!198 &9207108904460762629 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7807130959946530352, guid: adc40663456a38e44af7e1a8f17dcc62,
+    type: 3}
+  m_PrefabInstance: {fileID: 1413770717260480565}
   m_PrefabAsset: {fileID: 0}
