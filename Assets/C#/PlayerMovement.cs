@@ -54,6 +54,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(onSlope && sinceOnSlope <= 0)
+        {
+            onSlope = false;
+        }
         if (isDead)
         {
             myRigid.velocity = new Vector2(0, 0);
@@ -84,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if ((grounded && !hitCeiling) || onLadder) // Prevent slipping off of slopes
+        if ((onSlope && !jumping && !hitCeiling) || onLadder) // Prevent slipping off of slopes
         {
             myRigid.gravityScale = 0;
         }
@@ -176,13 +180,13 @@ public class PlayerMovement : MonoBehaviour
                 { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
             }
             else if (jumping || hitCeiling) { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
-            else { myRigid.velocity = new Vector2(0, 0) + platformSpeed; }
+            else { myRigid.velocity = new Vector2(0, myRigid.velocity.y) + platformSpeed; }
         }
 
         // Trying to jump
         if (verticalMovement > 0)
         {
-            if (grounded || onLadder)
+            if (contactAmount > 0 || onLadder)
             {
                 if (verticalMovement > 0 && canJump && jumpCounter < maxJumps)
                 {
@@ -213,13 +217,14 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        contactAmount = col.contactCount;
         hitCeiling = false;
         hitCeilLeft = false;
         hitCeilRight = false;
         hitWallLeft = false;
         hitWallRight = false;
         ContactPoint2D point = col.GetContact(0);
-        if (point.normal.x == 0 && point.normal.y == 1) // on flat ground
+        if (point.normal.x == 0.0f && point.normal.y == 1.0f) // on flat ground
         {
             grounded = true;
             jumpCounter = 0;
@@ -239,7 +244,7 @@ public class PlayerMovement : MonoBehaviour
             jumpCounter = 0;
             grounded = true;
             onSlope = true;
-            sinceOnSlope = 5;
+            sinceOnSlope = 1;
             slope = point.normal;
         }
         else if (point.normal.y < 0) // hit a ceiling
@@ -271,7 +276,7 @@ public class PlayerMovement : MonoBehaviour
         for (int i = 0; i < contactAmount; i++)
         {
             point = col.GetContact(i);
-            if (point.normal.x == 0 && point.normal.y == 1) // on flat ground
+            if (point.normal.x == 0.0f && point.normal.y == 1.0f) // on flat ground
             {
                 grounded = true;
             }
@@ -287,7 +292,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 grounded = true;
                 onSlope = true;
-                sinceOnSlope = 5;
+                sinceOnSlope = 1;
                 slope = point.normal;
                 jumpCounter = 0;
             }
@@ -309,6 +314,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnCollisionExit2D(Collision2D col)
     {
+        contactAmount = 0;
         grounded = false;
         hitWallLeft = false;
         hitWallRight = false;
