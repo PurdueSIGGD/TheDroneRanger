@@ -98,4 +98,19 @@ public class CameraControl : MonoBehaviour
         this.transform.position = new Vector3(vec.x, vec.y, this.transform.position.z);
     }
 
+    public void setSize(float zoom)
+    {
+        cam.orthographicSize = zoom;
+    }
+
+    public float getSize()
+    {
+        return cam.orthographicSize;
+    }
+
+    public void zoom(float scale)
+    {
+        setSize(getSize() / scale);
+    }
+
 }
