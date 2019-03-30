@@ -54,8 +54,8 @@ public class WeaponAttributes : MonoBehaviour {
     private CooldownAbility reloadAbility = null;
     private AudioSource audioSource = null;
     private AudioSource emptySoundSource = null;
-    private AlternateCamera altCam = null;
-    private FollowingCamera followCam = null;
+    private CameraControl cam = null;
+    private CameraMode lastCamMode = CameraMode.Target;
 
     public static WeaponAttributes create(WEAPONS wep)
     {
@@ -76,19 +76,7 @@ public class WeaponAttributes : MonoBehaviour {
 
     void Start () {
 
-        GameObject cam = Camera.main.gameObject;
-        followCam = cam.GetComponentInChildren<FollowingCamera>();
-        if (!followCam)
-        {
-            followCam = cam.AddComponent<FollowingCamera>();
-            followCam.enabled = false;
-        }
-        altCam = cam.GetComponentInChildren<AlternateCamera>();
-        if (!altCam)
-        {
-            altCam = cam.AddComponent<AlternateCamera>();
-            altCam.enabled = false;
-        }
+        cam = Camera.main.gameObject.GetComponent<CameraControl>();
 
         projectileSpawner = this.gameObject.GetComponentInParent<ProjectileSpawner>();
         if (projectileSpawner == null)
@@ -121,8 +109,7 @@ public class WeaponAttributes : MonoBehaviour {
     {
         try
         {
-            altCam.enabled = false;
-            followCam.enabled = true;
+            cam.setMode(lastCamMode);
         }
         catch (Exception){
             //Prevent errors if destroyed together
@@ -163,6 +150,14 @@ public class WeaponAttributes : MonoBehaviour {
         return type;
     }
 
+    void OnDisable()
+    {
+        if (canZoom && cam && cam.getMode() == CameraMode.Mouse)
+        {
+            cam.setMode(lastCamMode);
+        }
+    }
+
     public void Update()
     {
         if (reloading && reloadAbility.canUse())
@@ -194,8 +189,15 @@ public class WeaponAttributes : MonoBehaviour {
         if (canZoom && (Input.GetButtonDown("Fire2") || Input.GetButtonUp("Fire2")))//On press or release
         {
             bool pressed = Input.GetButton("Fire2");
-            altCam.enabled = pressed;
-            followCam.enabled = !pressed;
+            if (pressed && cam.getMode() != CameraMode.Mouse && cam.getMode() != CameraMode.Pan) // Don't interrupt a camera pan
+            {
+                lastCamMode = cam.getMode();
+                cam.setMode(CameraMode.Mouse);
+            }
+            else if(!pressed && cam.getMode() == CameraMode.Mouse)
+            {
+                cam.setMode(lastCamMode);
+            }
         }
 
     }

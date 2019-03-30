@@ -53,7 +53,7 @@ public class PlayerAttributes : Attributes {
             weapons.Add(preWeps[i]);
         }
         
-       // giveWeapon(WEAPONS.BLADE);
+        //giveWeapon(WEAPONS.BLADE);
         //giveWeapon(WEAPONS.SHOTGUN);
         //giveWeapon(WEAPONS.PLASMA);
         //giveWeapon(WEAPONS.SNIPER);

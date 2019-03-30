@@ -2,54 +2,100 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-enum CameraMode
+public enum CameraMode
 {
     None,
-    Default,
-    Mouse
+    Target,
+    Mouse,
+    Position,
+    Pan
 }
 
 public class CameraControl : MonoBehaviour
 {
-    private CameraMode mode = CameraMode.Mouse;
+
+    public Vector2 offset = new Vector2(0, 3);
+
+    private CameraMode mode = CameraMode.None;
+    private GameObject player = null;
     private GameObject target = null;
+    private Vector2 position;
+    private float panEndTime = 0;
     private Camera cam = null;
 
 
     void Start()
     {
         cam = this.GetComponent<Camera>();
-        target = GameObject.FindGameObjectWithTag("Player");
-        //PlayerAttributes player = target.GetComponent<PlayerAttributes>();
-        //player.giveWeapon(WEAPONS.SNIPER);
+        player = GameObject.FindGameObjectWithTag("Player");
+        Target(player);
     }
     
     void Update()
     {
-        if (mode == CameraMode.Default)
+        if (mode == CameraMode.Target)
         {
             Vector3 targPos = target.transform.position;
-            this.transform.position = new Vector3(targPos.x, this.transform.position.y, this.transform.position.z);
+            this.transform.position = new Vector3(targPos.x + offset.x, targPos.y + offset.y, this.transform.position.z);
         }
         else if (mode == CameraMode.Mouse)
         {
             Vector3 mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
-            transform.position = new Vector3((mousePos.x + 1.2f * target.transform.position.x) / 2.2f, (mousePos.y + 1.2f * target.transform.position.y) / 2.2f, transform.position.z);
+            transform.position = new Vector3((mousePos.x + 1.2f * player.transform.position.x) / 2.2f, (mousePos.y + 1.2f * player.transform.position.y) / 2.2f, transform.position.z);
+        }else if (mode == CameraMode.Position)
+        {
+            this.transform.position = new Vector3(position.x, position.y, this.transform.position.z);
+        }else if (mode == CameraMode.Pan)
+        {
+            if (Time.time >= panEndTime) //End pan and set position mode
+            {
+                Position(position);
+            }
+            else
+            {
+                float delta = Time.deltaTime;
+                float remain = panEndTime - Time.time + delta;
+                Vector2 dist = position - (Vector2)this.transform.position;
+                dist /= remain;
+                Vector3 result = new Vector3(transform.position.x + dist.x * delta, transform.position.y + dist.y * delta, transform.position.z);
+                this.transform.position = result;
+            }
         }
     }
 
-    CameraMode getMode()
+    public CameraMode getMode()
     {
         return mode;
     }
 
-    void setMode(CameraMode mode)
+    public void setMode(CameraMode mode)
     {
         this.mode = mode;
     }
-
-    void setTarget(GameObject target)
+    
+    public void Pan(Vector2 dest, float duration)
     {
+        setMode(CameraMode.Pan);
+        position = dest;
+        panEndTime = Time.time + duration;
+    }
+
+    public void Target(GameObject target)
+    {
+        setMode(CameraMode.Target);
         this.target = target;
     }
+
+    public void Position(float x, float y)
+    {
+        Position(new Vector2(x, y));
+    }
+
+    public void Position(Vector2 vec)
+    {
+        setMode(CameraMode.Position);
+        position = vec;
+        this.transform.position = new Vector3(vec.x, vec.y, this.transform.position.z);
+    }
+
 }
