@@ -8,7 +8,7 @@ public class BossHealthBar : MonoBehaviour
     private const float fill = 1; // the health bar's image can take any value from 0 to 1
 
     private float fillAmount = 1;
-    private Attributes boss;
+    private Attributes boss = null;
 
     private Image healthBar = null;
 
@@ -16,6 +16,7 @@ public class BossHealthBar : MonoBehaviour
     {
         healthBar = this.GetComponent<Image>();
         setBoss(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttributes>());
+        this.transform.parent.gameObject.SetActive(false);
     }
 
     public void setBoss(Attributes boss)
@@ -25,6 +26,11 @@ public class BossHealthBar : MonoBehaviour
 
     void Update()
     {
+        if (!boss)
+        {
+            this.transform.parent.gameObject.SetActive(false);
+            return;
+        }
         updateHealth(boss.health, 0, boss.maxHealth);
         healthBar.fillAmount = fillAmount;
     }
