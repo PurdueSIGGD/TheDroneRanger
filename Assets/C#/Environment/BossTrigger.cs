@@ -10,19 +10,39 @@ class BossTrigger : MonoBehaviour
     public List<Collider2D> bounds = new List<Collider2D>();
     public float panDuration = 1.0f;
     private BossHealthBar healthBar = null;
+    private PlayerAttributes player = null;
+    private bool triggered = false;
 
-    void Start()
+    protected void Start()
     {
         healthBar = GameObject.FindGameObjectWithTag("UI").GetComponentInChildren<BossHealthBar>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttributes>();
         for (int i = 0; i < bounds.Count; i++)
         {
             bounds[i].isTrigger = true;
         }
     }
 
+    protected virtual void OnBossFightEnd() { }
+
+    void Update()
+    {
+        if (player.getHealth() == 0 || boss.getHealth() == 0)
+        {
+            healthBar.setBoss(null);
+            healthBar.transform.parent.gameObject.SetActive(false);
+            for (int i = 0; i < bounds.Count; i++)
+            {
+                bounds[i].isTrigger = true;
+            }
+            OnBossFightEnd();
+            Destroy(this.gameObject);
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!boss || !healthBar)
+        if (triggered || !boss || !healthBar)
         {
             return;
         }
@@ -38,6 +58,6 @@ class BossTrigger : MonoBehaviour
 
         healthBar.setBoss(boss);
         healthBar.transform.parent.gameObject.SetActive(true);
-        Destroy(this.gameObject);
+        triggered = true;
     }
 }
