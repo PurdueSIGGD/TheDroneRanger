@@ -53,7 +53,7 @@ public class EnemyMovement : MonoBehaviour {
 
 	public void switchTo() {
 		master.setAnimState ("LookingLeft", (xdir == -1));
-		Debug.Log ("switch");
+		//Debug.Log ("switch");
 		if (hasCustom && 
 			master.attackScript.range != customRange
 			&& master.attackScript.visionStart != customVStart
@@ -104,7 +104,7 @@ public class EnemyMovement : MonoBehaviour {
 
 	public void xFlip()
 	{
-		Debug.Log ("flip");
+		//Debug.Log ("flip");
 		if (xdir > 0) {
 			xdir = -1;
 			if (flipSprite) {
