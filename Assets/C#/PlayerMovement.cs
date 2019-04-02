@@ -57,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
         if(onSlope && sinceOnSlope <= 0)
         {
             onSlope = false;
+            grounded = false;
         }
         if (isDead)
         {
@@ -180,6 +181,7 @@ public class PlayerMovement : MonoBehaviour
                 { myRigid.velocity = new Vector2(maxHorizontalVelocity, myRigid.velocity.y); }
             }
             else if (jumping || hitCeiling) { myRigid.velocity = new Vector2(0, myRigid.velocity.y); }
+            else if (onSlope) { myRigid.velocity = new Vector2(0, 0) + platformSpeed; }
             else { myRigid.velocity = new Vector2(0, myRigid.velocity.y) + platformSpeed; }
         }
 
