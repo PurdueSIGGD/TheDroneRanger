@@ -15,14 +15,17 @@ public class Teleporter : MonoBehaviour
     void Start()
     {
 		canTeleport = true;
-		if (correspondingTeleporter.GetComponent<Teleporter>().correspondingTeleporter != null && correspondingTeleporter.GetComponent<Teleporter>().correspondingTeleporter != gameObject)
-		{
-			Debug.LogError(this.name + "'s corresponding teleporter doesn't match");
-		}
-		else
-		{
-			teleportTo = correspondingTeleporter.transform.position;
-		}
+        if (correspondingTeleporter != null)
+        {
+            if (correspondingTeleporter.GetComponent<Teleporter>().correspondingTeleporter != null && correspondingTeleporter.GetComponent<Teleporter>().correspondingTeleporter != gameObject)
+            {
+                Debug.LogError(this.name + "'s corresponding teleporter doesn't match");
+            }
+            else
+            {
+                teleportTo = correspondingTeleporter.transform.position;
+            }
+        }
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
