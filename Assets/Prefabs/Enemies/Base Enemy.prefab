@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114701677160397766}
   - component: {fileID: 114093049456113770}
   - component: {fileID: 1538312953853488964}
+  - component: {fileID: 7501370100802085625}
   m_Layer: 0
   m_Name: Base Enemy
   m_TagString: Untagged
@@ -167,10 +168,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   maxHealth: 100
-  attackRate: 1
   moveSpeed: 1
   jumpCool: 1
   aggroRigid: {fileID: 0}
+  knockBack: 0
+  knockBackAngle: 0
+  helplessDur: 0
+  helpless: 0
 --- !u!114 &114148180450923504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,8 +194,12 @@ MonoBehaviour:
   projectile: {fileID: 1979001164161008, guid: a53586319ca6da24690aa9328f7cf0a5, type: 3}
   thrust: 20
   hurtPlayer: 0
+  mouseAim: 0
+  onlyForward: 0
   label: TNTToss
   arc: 0.2
+  enemyStats: {fileID: 0}
+  master: {fileID: 0}
 --- !u!114 &114939775262628064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,8 +250,12 @@ MonoBehaviour:
   projectile: {fileID: 1979001164161008, guid: a3c88811ab50ca0488c11f7f8449c170, type: 3}
   thrust: 15
   hurtPlayer: 0
+  mouseAim: 0
+  onlyForward: 0
   label: BulletShoot
   arc: 0
+  enemyStats: {fileID: 0}
+  master: {fileID: 0}
 --- !u!114 &114593686399277752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,6 +273,14 @@ MonoBehaviour:
   ydir: 1
   flipSprite: 1
   jumpHeight: 3
+  hasCustom: 0
+  customRange: 0
+  customVStart: 0
+  customVEnd: 0
+  oldRange: 0
+  oldVStart: 0
+  oldVEnd: 0
+  master: {fileID: 0}
   enemyRigid: {fileID: 0}
 --- !u!114 &114643373654015152
 MonoBehaviour:
@@ -279,6 +299,14 @@ MonoBehaviour:
   ydir: 1
   flipSprite: 1
   jumpHeight: 3
+  hasCustom: 0
+  customRange: 0
+  customVStart: 0
+  customVEnd: 0
+  oldRange: 0
+  oldVStart: 0
+  oldVEnd: 0
+  master: {fileID: 0}
   enemyRigid: {fileID: 0}
   speed: 2.5
 --- !u!114 &114701677160397766
@@ -298,6 +326,14 @@ MonoBehaviour:
   ydir: 1
   flipSprite: 1
   jumpHeight: 3
+  hasCustom: 0
+  customRange: 0
+  customVStart: 0
+  customVEnd: 0
+  oldRange: 0
+  oldVStart: 0
+  oldVEnd: 0
+  master: {fileID: 0}
   enemyRigid: {fileID: 0}
   speed: 1.5
 --- !u!114 &114093049456113770
@@ -317,6 +353,14 @@ MonoBehaviour:
   ydir: 1
   flipSprite: 1
   jumpHeight: 3
+  hasCustom: 0
+  customRange: 0
+  customVStart: 0
+  customVEnd: 0
+  oldRange: 0
+  oldVStart: 0
+  oldVEnd: 0
+  master: {fileID: 0}
   enemyRigid: {fileID: 0}
   xLocked: 1
 --- !u!114 &1538312953853488964
@@ -336,4 +380,31 @@ MonoBehaviour:
   ydir: 1
   flipSprite: 1
   jumpHeight: 3
+  hasCustom: 0
+  customRange: 0
+  customVStart: 0
+  customVEnd: 0
+  oldRange: 0
+  oldVStart: 0
+  oldVEnd: 0
+  master: {fileID: 0}
   enemyRigid: {fileID: 0}
+--- !u!95 &7501370100802085625
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786939519797682}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6063a8978d5b7fb488e2757491cf16fd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

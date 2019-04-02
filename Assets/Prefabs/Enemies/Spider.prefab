@@ -146,9 +146,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 239e5ef79c1f66b48ae34912dbb474c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 5
-  visionStart: -90
-  visionEnd: 90
+  range: 10
+  visionStart: -110
+  visionEnd: -70
 --- !u!114 &114983513367892862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,8 +213,16 @@ MonoBehaviour:
   ydir: 1
   flipSprite: 1
   jumpHeight: 3
+  hasCustom: 1
+  customRange: 20
+  customVStart: -180
+  customVEnd: 180
+  oldRange: 0
+  oldVStart: 0
+  oldVEnd: 0
+  master: {fileID: 0}
   enemyRigid: {fileID: 0}
-  speed: 1.5
+  speed: 3
 --- !u!114 &5422698316980123539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,6 +240,14 @@ MonoBehaviour:
   ydir: 1
   flipSprite: 1
   jumpHeight: 3
+  hasCustom: 0
+  customRange: 0
+  customVStart: 0
+  customVEnd: 0
+  oldRange: 0
+  oldVStart: 0
+  oldVEnd: 0
+  master: {fileID: 0}
   enemyRigid: {fileID: 0}
 --- !u!114 &3895517660109849454
 MonoBehaviour:
@@ -258,6 +274,6 @@ MonoBehaviour:
   arc: 0.5
   enemyStats: {fileID: 0}
   master: {fileID: 0}
-  offsetDist: 3
+  offsetDist: 1.5
   offsetAngle: 0
   atkRange: 3

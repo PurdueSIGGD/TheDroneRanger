@@ -8,7 +8,14 @@ public class EnemyMovement : MonoBehaviour {
 	public int ydir = 1;
 	public bool flipSprite = true;
 	public float jumpHeight = 3;
-	private EnemyAIMaster master;
+	public bool hasCustom = false;
+	public float customRange;
+	public float customVStart;
+	public float customVEnd;
+	[HideInInspector]
+	public float oldRange, oldVStart, oldVEnd;
+	[HideInInspector]
+	public EnemyAIMaster master;
 	[HideInInspector]
 	public Rigidbody2D enemyRigid;
 	//public bool flipOnSwitch = false;
@@ -44,12 +51,41 @@ public class EnemyMovement : MonoBehaviour {
 		enemyRigid.velocity = new Vector2 (0, gameObject.GetComponent<Rigidbody2D> ().velocity.y);
 	}
 
-	public virtual void switchTo() {
+	public void switchTo() {
+		master.setAnimState ("LookingLeft", (xdir == -1));
+		Debug.Log ("switch");
+		if (hasCustom && 
+			master.attackScript.range != customRange
+			&& master.attackScript.visionStart != customVStart
+			&& master.attackScript.visionEnd != customVEnd) {
+			oldRange = master.attackScript.range;
+			oldVStart = master.attackScript.visionStart;
+			oldVEnd = master.attackScript.visionEnd;
+			master.attackScript.range = customRange;
+			master.attackScript.visionStart = customVStart;
+			master.attackScript.visionEnd = customVEnd;
 
+
+		}
+
+		sSwitchTo ();
 	}
 
-	public virtual void switchFrom() {
+	public virtual void sSwitchTo() {
+		master.setAnimState ("Walking", false);
+	}
 
+	public void switchFrom() {
+		if (hasCustom) {
+			master.attackScript.range = oldRange;
+			master.attackScript.visionStart = oldVStart;
+			master.attackScript.visionEnd = oldVEnd;
+		}
+		sSwitchFrom ();
+	}
+
+	public virtual void sSwitchFrom() {
+		
 	}
 
 	public void jump()
@@ -68,15 +104,18 @@ public class EnemyMovement : MonoBehaviour {
 
 	public void xFlip()
 	{
+		Debug.Log ("flip");
 		if (xdir > 0) {
 			xdir = -1;
 			if (flipSprite) {
-				gameObject.GetComponent<SpriteRenderer>().flipX = true;
+				//gameObject.GetComponent<SpriteRenderer>().flipX = true;
+				master.setAnimState ("LookingLeft", true);
 			}
 		} else {
 			xdir = 1;
 			if (flipSprite) {
-				gameObject.GetComponent<SpriteRenderer>().flipX = false;
+				//gameObject.GetComponent<SpriteRenderer>().flipX = false;
+				master.setAnimState ("LookingLeft", false);
 			}
 		}
 	}

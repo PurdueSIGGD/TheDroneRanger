@@ -10,6 +10,10 @@ public class EnemyMoveTrack : EnemyMovement
 	{
 		enemyStats = GetComponent<EnemyAttributes> ();
 	}
+
+	public override void sSwitchTo() {
+		master.setAnimState ("Walking", false);
+	}
 		
 	public override void sUpdate()
     {

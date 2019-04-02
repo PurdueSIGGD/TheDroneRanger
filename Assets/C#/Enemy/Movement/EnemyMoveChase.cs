@@ -10,6 +10,11 @@ public class EnemyMoveChase : EnemyMovement {
 	public override void sStart()
 	{
 		enemyStats = GetComponent<EnemyAttributes> ();
+
+	}
+
+	public override void sSwitchTo() {
+		master.setAnimState ("Walking", true);
 	}
 
 	// Update is called once per frame

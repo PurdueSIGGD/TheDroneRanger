@@ -22,6 +22,7 @@ public class EnemyAIMaster : MonoBehaviour {
 	//public GameObject PrimaryWeap;
 	//public GameObject SecondWeap;
 	public float cycleTime = -1;
+	private Animator anim;
 	private float timeCounter = 0;
 	private float moveTimer = 0;
 	private float jumpTimer = 0;
@@ -34,6 +35,7 @@ public class EnemyAIMaster : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		EnemyStats = GetComponent<EnemyAttributes> ();
+		anim = GetComponent<Animator> ();
 		//projSpawner.setProjectile (weaponList[currWeap]);
 
 		spawnList = new EnemyProjectileSpawner[spawnSeq.Length];
@@ -57,6 +59,9 @@ public class EnemyAIMaster : MonoBehaviour {
 
 		moveList = new EnemyMovement[moveSeq.Length];
 		EnemyMovement[] allMoves = GetComponents<EnemyMovement> ();
+		for (int i = 0; i < allMoves.Length; i++) {
+			allMoves [i].master = this;
+		}
 
 		for (int i = 0; i < allMoves.Length; i++) {
 			allMoves [i].enabled = false;
@@ -74,6 +79,7 @@ public class EnemyAIMaster : MonoBehaviour {
 			}
 		}
 		if (GetComponent<SpriteRenderer> ().flipX) {
+			GetComponent<SpriteRenderer> ().flipX = false;
 			moveList [0].xdir = -1;
 		}
 		moveList [0].switchTo ();
@@ -183,6 +189,10 @@ public class EnemyAIMaster : MonoBehaviour {
 	public EnemyMovement getCycleMove()
 	{
 		return moveList [currMove];
+	}
+
+	public void setAnimState(string prop, bool dir) {
+		anim.SetBool (prop, dir);
 	}
 
 	public virtual void changePattern()
