@@ -19,8 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D myRigid;
     private AudioSource audioSource = null;
     private Animator anim;
-
-    private bool canJump;
+    
     private bool jumping; // The player has hit the jump button and not yet returned to the ground
     private int jumpCounter;
     public float gravity;
@@ -190,14 +189,13 @@ public class PlayerMovement : MonoBehaviour
         {
             if (contactAmount > 0 || onLadder)
             {
-                if (verticalMovement > 0 && canJump && jumpCounter < maxJumps)
+                if (verticalMovement > 0 && jumpCounter < maxJumps)
                 {
                     jump(1.0f);
                 }
             }
 
         }
-        canJump = verticalMovement <= 0;
         if(sinceOnSlope > 0) { sinceOnSlope--; }
     }
 
