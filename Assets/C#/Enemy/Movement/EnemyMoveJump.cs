@@ -5,6 +5,10 @@ using UnityEngine;
 public class EnemyMoveJump : EnemyMovement {
 	public bool xLocked = false;
 
+	public override void sSwitchTo() {
+		master.setAnimState ("Walking", false);
+	}
+
 	// Update is called once per frame
 	public override void sUpdate () {
 		//Debug.Log ("jump");
