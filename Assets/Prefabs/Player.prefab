@@ -293,7 +293,7 @@ Rigidbody2D:
   m_Mass: 10
   m_LinearDrag: 1
   m_AngularDrag: 40
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -340,7 +340,7 @@ MonoBehaviour:
   maxHorizontalVelocity: 10
   diagVelocity: 10
   diagVelocityOffset: 0.1
-  jumpImpulse: 7
+  jumpImpulse: 12
   maxJumps: 1
   walkLeftSound: {fileID: 8300000, guid: 1fd5aaacc501d47428b07566cbb34dae, type: 3}
   walkRightSound: {fileID: 8300000, guid: fa48740251235ae4f9b1507aaf4487ce, type: 3}
