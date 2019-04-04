@@ -57,7 +57,7 @@ public class EnemyAttack : MonoBehaviour {
 					if (theta > 180) {
 						theta = theta-360;
 					}
-				}Debug.Log (theta);
+				}//Debug.Log (theta);
 
 
 				if (visionStart > visionEnd) {
@@ -75,7 +75,7 @@ public class EnemyAttack : MonoBehaviour {
 				if (EnemyStats.getAggro () == null) {
 					EnemyStats.setAggro (playerRigid);
 				}
-				Debug.Log ("I see you");
+				//Debug.Log ("I see you");
 				break;
 			}
 

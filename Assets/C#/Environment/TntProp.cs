@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ class TntProp : Prop
 {
     public float damage = 10;
     public CircleCollider2D explosionCol;
+    [SerializeField]
+    protected ParticleSystem explosionEffect;
 
     public override void destroy(){
         if (isDestroyed())
@@ -18,6 +21,8 @@ class TntProp : Prop
             Destroy(box, 0);
             StartCoroutine(stopAnimation());
             explode();
+            explosionEffect.Play();
+            StartCoroutine("StopExplosion");
         }
     }
 
@@ -36,6 +41,12 @@ class TntProp : Prop
             if (col.GetComponent<Attributes>() != null) col.GetComponent<Attributes>().takeDamage(damage);
             if (col.GetComponent<Prop>() != null) col.GetComponent<Prop>().decreaseDurability(damage);
         }
+    }
+
+    protected IEnumerator StopExplosion()
+    {
+        yield return new WaitForSeconds(.25f);
+        explosionEffect.Clear();
     }
 }
 
