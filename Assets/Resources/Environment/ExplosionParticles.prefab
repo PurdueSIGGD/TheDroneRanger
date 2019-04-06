@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7807130959946530352}
   - component: {fileID: 8529089894303488253}
   m_Layer: 0
-  m_Name: Explosion Particles
+  m_Name: ExplosionParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -284,7 +284,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 2.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -2080,7 +2080,7 @@ ParticleSystem:
     radial:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 1.5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4755,7 +4755,7 @@ ParticleSystem:
 --- !u!199 &8529089894303488253
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

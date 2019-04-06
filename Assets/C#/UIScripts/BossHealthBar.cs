@@ -16,6 +16,7 @@ public class BossHealthBar : MonoBehaviour
     {
         healthBar = this.GetComponent<Image>();
         setBoss(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttributes>());
+        GameObject.FindObjectOfType<BossTrigger>().setHealthBar(this); //Must set because issue with finding inactive objects
         this.transform.parent.gameObject.SetActive(false);
     }
 

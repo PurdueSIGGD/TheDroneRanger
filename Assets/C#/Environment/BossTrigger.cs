@@ -10,12 +10,12 @@ class BossTrigger : MonoBehaviour
     public List<Collider2D> bounds = new List<Collider2D>();
     public float panDuration = 1.0f;
     private BossHealthBar healthBar = null;
-    private PlayerAttributes player = null;
+    protected PlayerAttributes player = null;
     private bool triggered = false;
+    private bool ended = false;
 
-    protected void Start()
+    protected virtual void Start()
     {
-        healthBar = GameObject.FindGameObjectWithTag("UI").GetComponentInChildren<BossHealthBar>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttributes>();
         for (int i = 0; i < bounds.Count; i++)
         {
@@ -23,11 +23,16 @@ class BossTrigger : MonoBehaviour
         }
     }
 
-    protected virtual void OnBossFightEnd() { }
-
-    void Update()
+    public void setHealthBar(BossHealthBar bar)
     {
-        if (player.getHealth() == 0 || boss.getHealth() == 0)
+        healthBar = bar;
+    }
+
+    protected virtual void OnBossFightEnd() { Destroy(this); }
+
+    protected virtual void Update()
+    {
+        if (triggered && !ended && (player.getHealth() == 0 || !boss || boss.getHealth() == 0))
         {
             healthBar.setBoss(null);
             healthBar.transform.parent.gameObject.SetActive(false);
@@ -36,7 +41,7 @@ class BossTrigger : MonoBehaviour
                 bounds[i].isTrigger = true;
             }
             OnBossFightEnd();
-            Destroy(this.gameObject);
+            ended = true;
         }
     }
 
@@ -49,7 +54,7 @@ class BossTrigger : MonoBehaviour
         if (camCenter)
         {
             CameraControl cam = Camera.main.GetComponent<CameraControl>();
-            cam.Pan(camCenter.transform.position, panDuration);//Pan to center in 2 seconds
+            cam.Pan(camCenter.transform.position, panDuration);
         }
         for (int i = 0; i < bounds.Count; i++)
         {
