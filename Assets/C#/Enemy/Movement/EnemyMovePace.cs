@@ -24,7 +24,9 @@ public class EnemyMovePace : EnemyMovement {
 		Debug.Log ("forward");
 	}
 
-
+	public override void sSwitchTo() {
+		master.setAnimState ("Walking", true);
+	}
 	/*
 	IEnumerator Move() {
 		while (true) {
