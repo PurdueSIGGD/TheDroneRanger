@@ -18,6 +18,7 @@ class TutorialBoss : BossTrigger
     private CameraControl cam = null;
     private AudioSource music = null;
     private Image canvasImage = null;
+    private List<GameObject> particles = new List<GameObject>();
 
     protected override void Start()
     {
@@ -26,6 +27,11 @@ class TutorialBoss : BossTrigger
         music = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
         canvasImage = GameObject.FindGameObjectWithTag("UIScreen").GetComponent<Image>();
         
+    }
+
+    private void OnExplosionsEnd()
+    {
+        //Change scene
     }
 
     protected override void OnBossFightEnd()
@@ -49,6 +55,12 @@ class TutorialBoss : BossTrigger
                 first_expl = Time.time;
                 last_expl = first_expl;
             }else if (Time.time >= first_expl + explode_duration){
+                for (int i = 0; i < particles.Count; i++)
+                {
+                    Destroy(particles[i]);
+                }
+                particles.Clear();
+                OnExplosionsEnd();
                 Destroy(this);
             }else if (Time.time >= last_expl + explode_interval)
             {
@@ -63,6 +75,7 @@ class TutorialBoss : BossTrigger
         last_area_index = (last_area_index + 1) % explosionAreas.Count;
         Vector3 position = explosionAreas[last_area_index].transform.position;
         GameObject obj = (Instantiate(Resources.Load(EXPLOSION_PATH, typeof(GameObject))) as GameObject);
+        particles.Add(obj);
         obj.transform.position = position;
         ParticleSystem ps = obj.GetComponent<ParticleSystem>();
         var psmain = ps.main;
