@@ -11,10 +11,15 @@ public class EnemyAttack : MonoBehaviour {
 	public float range;
 	public float visionStart; //visionStart and visionEnd define between what angles the enemy can see
 	public float visionEnd;
+	private float defRange;
+	private float defStart;
+	private float defEnd;
 
 
 	// Use this for initialization
 	void Start () {
+		//Debug.Log ("start attack");
+
 		EnemyStats = GetComponent<EnemyAttributes> ();
 		//EnemyMove = GetComponent<EnemyMovement> ();
 		EnemyRigid = GetComponent<Rigidbody2D> ();
@@ -37,6 +42,18 @@ public class EnemyAttack : MonoBehaviour {
 		//Debug.Log ("I see you at " + EnemyStats.getAggro().position);
 		//projSpawner.use();
 		master.getCurrSpawner().use ();
+	}
+
+	public void setDefaultBounds() {
+		range = defRange;
+		visionEnd = defEnd;
+		visionStart = defStart;
+	}
+
+	public void initDefaults() {
+		defRange = range;
+		defEnd = visionEnd;
+		defStart = visionStart;
 	}
 
 	public void seekTarget() 

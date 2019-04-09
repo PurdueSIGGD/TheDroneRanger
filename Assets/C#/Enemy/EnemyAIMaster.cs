@@ -36,6 +36,7 @@ public class EnemyAIMaster : MonoBehaviour {
 	void Start () {
 		EnemyStats = GetComponent<EnemyAttributes> ();
 		anim = GetComponent<Animator> ();
+		attackScript.initDefaults ();
 		//projSpawner.setProjectile (weaponList[currWeap]);
 
 		spawnList = new EnemyProjectileSpawner[spawnSeq.Length];

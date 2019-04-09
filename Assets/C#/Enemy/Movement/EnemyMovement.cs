@@ -13,8 +13,6 @@ public class EnemyMovement : MonoBehaviour {
 	public float customVStart;
 	public float customVEnd;
 	[HideInInspector]
-	public float oldRange, oldVStart, oldVEnd;
-	[HideInInspector]
 	public EnemyAIMaster master;
 	[HideInInspector]
 	public Rigidbody2D enemyRigid;
@@ -54,18 +52,16 @@ public class EnemyMovement : MonoBehaviour {
 	public void switchTo() {
 		master.setAnimState ("LookingLeft", (xdir == -1));
 		//Debug.Log ("switch");
-		if (hasCustom && 
-			master.attackScript.range != customRange
-			&& master.attackScript.visionStart != customVStart
-			&& master.attackScript.visionEnd != customVEnd) {
-			oldRange = master.attackScript.range;
-			oldVStart = master.attackScript.visionStart;
-			oldVEnd = master.attackScript.visionEnd;
+		if (hasCustom) {
+			//Debug.Log("hasCustom" + customRange + ", " + customVStart + ", " + customVEnd);
 			master.attackScript.range = customRange;
 			master.attackScript.visionStart = customVStart;
 			master.attackScript.visionEnd = customVEnd;
 
 
+		} else {
+			//Debug.Log ("default");
+			master.attackScript.setDefaultBounds ();
 		}
 
 		sSwitchTo ();
@@ -77,9 +73,7 @@ public class EnemyMovement : MonoBehaviour {
 
 	public void switchFrom() {
 		if (hasCustom) {
-			master.attackScript.range = oldRange;
-			master.attackScript.visionStart = oldVStart;
-			master.attackScript.visionEnd = oldVEnd;
+			
 		}
 		sSwitchFrom ();
 	}
