@@ -56,6 +56,8 @@ public class WeaponAttributes : MonoBehaviour {
     private AudioSource emptySoundSource = null;
     private AlternateCamera altCam = null;
     private FollowingCamera followCam = null;
+    private BoxCollider2D myCollider = null;
+    private Attributes owner = null;
 
     public static WeaponAttributes create(WEAPONS wep)
     {
@@ -90,11 +92,7 @@ public class WeaponAttributes : MonoBehaviour {
             altCam.enabled = false;
         }
 
-        projectileSpawner = this.gameObject.GetComponentInParent<ProjectileSpawner>();
-        if (projectileSpawner == null)
-        {
-            projectileSpawner = this.gameObject.AddComponent<ProjectileSpawner>();
-        }
+        projectileSpawner = this.gameObject.AddComponent<ProjectileSpawner>();
 
         audioSource = this.GetComponentInParent<AudioSource>();
         if (audioSource == null)
@@ -115,7 +113,10 @@ public class WeaponAttributes : MonoBehaviour {
 
         ammoCount = clipSize;//Start full
 
-	}
+        myCollider = this.gameObject.GetComponent<BoxCollider2D>();
+        owner = this.gameObject.GetComponentInParent<Attributes>();
+
+    }
 
     void OnDestroy()
     {
@@ -127,6 +128,26 @@ public class WeaponAttributes : MonoBehaviour {
         catch (Exception){
             //Prevent errors if destroyed together
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (owner)//Is already owned
+        {
+            return;
+        }
+        PlayerAttributes player = other.GetComponent<PlayerAttributes>();
+        if (!player) //Only allow player pickup
+        {
+            return;
+        }
+        player.giveWeapon(this);
+    }
+
+    public void setOwner(Attributes attrib)
+    {
+        owner = attrib;
+        projectileSpawner.setRigidBody(owner.GetComponent<Rigidbody2D>());
     }
 
     public void setCooldown(float delay)
@@ -165,6 +186,10 @@ public class WeaponAttributes : MonoBehaviour {
 
     public void Update()
     {
+        if (!owner) //Acting as a pickup
+        {
+            return;
+        }
         if (reloading && reloadAbility.canUse())
         {
             if (oneReload)

@@ -204,6 +204,7 @@ public class PlayerAttributes : Attributes {
         obj.transform.eulerAngles = weapons[0].transform.eulerAngles;
         obj.transform.localScale = weapons[0].transform.localScale;
         obj.gameObject.SetActive(false);
+        obj.setOwner(this);
 
         if (addToArray)
         {
