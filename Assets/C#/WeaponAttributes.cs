@@ -56,8 +56,10 @@ public class WeaponAttributes : MonoBehaviour {
     private AudioSource emptySoundSource = null;
     private AlternateCamera altCam = null;
     private FollowingCamera followCam = null;
-    private BoxCollider2D myCollider = null;
+    private Collider2D myCollider = null;
+    private Rigidbody2D myRigid = null;
     private Attributes owner = null;
+    private bool dropped = false;
 
     public static WeaponAttributes create(WEAPONS wep)
     {
@@ -113,7 +115,8 @@ public class WeaponAttributes : MonoBehaviour {
 
         ammoCount = clipSize;//Start full
 
-        myCollider = this.gameObject.GetComponent<BoxCollider2D>();
+        myCollider = this.gameObject.GetComponent<Collider2D>();
+        myRigid = this.gameObject.GetComponent<Rigidbody2D>();
         owner = this.gameObject.GetComponentInParent<Attributes>();
 
     }
@@ -130,24 +133,52 @@ public class WeaponAttributes : MonoBehaviour {
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
         if (owner)//Is already owned
         {
             return;
         }
-        PlayerAttributes player = other.GetComponent<PlayerAttributes>();
+        PlayerAttributes player = other.collider.GetComponent<PlayerAttributes>();
         if (!player) //Only allow player pickup
         {
+            dropped = false;
             return;
         }
-        player.giveWeapon(this);
+        if (!dropped)
+        {
+            player.giveWeapon(this);
+        }
+        
     }
 
     public void setOwner(Attributes attrib)
     {
         owner = attrib;
         projectileSpawner.setRigidBody(owner.GetComponent<Rigidbody2D>());
+        if (myCollider)
+        {
+            myCollider.enabled = false;
+        }
+        if (myRigid)
+        {
+            Destroy(myRigid);
+        }
+    }
+
+    public void drop()
+    {
+        if (owner)
+        {
+            owner = null;
+            this.transform.parent = null;
+            if (myCollider)
+            {
+                myCollider.enabled = true;
+            }
+            myRigid = this.gameObject.AddComponent<Rigidbody2D>();
+            dropped = true;
+        }
     }
 
     public void setCooldown(float delay)

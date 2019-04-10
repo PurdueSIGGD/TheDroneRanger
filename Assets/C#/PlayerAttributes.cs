@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerAttributes : Attributes {
 
     public KeyCode reloadKey = KeyCode.R;
+    public GameObject weaponPosition = null;
 
     public int maxWeapons = 3; //Values <= 0 allow infinite amount
 
@@ -66,6 +67,10 @@ public class PlayerAttributes : Attributes {
 
     private void iterateWeapon(bool forward)
     {
+        if(weapons.Count == 0)
+        {
+            return;
+        }
 
         int newSlot = activeWepSlot +( forward ? 1 : weapons.Count - 1);
         newSlot %= weapons.Count;
@@ -77,9 +82,33 @@ public class PlayerAttributes : Attributes {
 
     }
 
+    public void dropActiveWeapon()
+    {
+        if (weapons.Count == 0)
+        {
+            return;
+        }
+        activeWep.drop();
+        weapons.RemoveAt(activeWepSlot);
+        if (weapons.Count > 0)
+        {
+            int newSlot = activeWepSlot % weapons.Count;
+            activeWep = weapons[newSlot];
+            activeWepSlot = newSlot;
+            activeWep.gameObject.SetActive(true);
+        }
+        else
+        {
+            activeWep = null;
+        }
+    }
+
     public void Update()
     {
-
+        if (!activeWep)
+        {
+            return;
+        }
         if ((activeWep.rapidFire && Input.GetButton("Fire1")) ||
             (!activeWep.rapidFire && Input.GetButtonDown("Fire1")))
         {
@@ -95,6 +124,10 @@ public class PlayerAttributes : Attributes {
             else if (Input.GetAxis("Mouse ScrollWheel") != 0f || Input.GetButtonDown("Switch"))
             {
                 iterateWeapon(Input.GetAxis("Mouse ScrollWheel") >= 0f);
+            }
+            else if (Input.GetKeyDown(KeyCode.G))
+            {
+                dropActiveWeapon();
             }
         }
     }
@@ -198,13 +231,28 @@ public class PlayerAttributes : Attributes {
             return false;
         }
 
-        obj.transform.position = weapons[0].transform.position;
-        obj.transform.rotation = weapons[0].transform.rotation;
-        obj.transform.parent = weapons[0].transform.parent;
-        obj.transform.eulerAngles = weapons[0].transform.eulerAngles;
-        obj.transform.localScale = weapons[0].transform.localScale;
-        obj.gameObject.SetActive(false);
+        Transform trans = this.transform;
+        if (weaponPosition)
+        {
+            trans = weaponPosition.transform;
+        }
+
+        obj.transform.position = trans.position;
+        obj.transform.rotation = trans.rotation;
+        obj.transform.parent = trans.parent;
+        obj.transform.eulerAngles = trans.eulerAngles;
+        obj.transform.localScale = trans.localScale;
         obj.setOwner(this);
+
+        if (weapons.Count > 0)
+        {
+            obj.gameObject.SetActive(false);
+        }
+        else
+        {
+            activeWep = obj;
+            activeWepSlot = 0;
+        }
 
         if (addToArray)
         {
