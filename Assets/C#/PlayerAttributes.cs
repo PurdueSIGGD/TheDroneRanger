@@ -15,9 +15,7 @@ public class PlayerAttributes : Attributes {
     private WeaponAttributes activeWep = null;
     private PlayerMovement move = null;
     private Animator anim = null;
-
-    //high noon at 100, should not be > 100
-    public float highNoonPercent = 0;
+    
     public float highNoonPerSecond = 2;
 
     public float invTime;
@@ -48,6 +46,7 @@ public class PlayerAttributes : Attributes {
 
     public void Start()
     {
+        highNoon.charge = 100;
         WeaponAttributes[] preWeps = this.GetComponentsInChildren<WeaponAttributes>();
         for (int i = 0; i < preWeps.Length; i++)
         {
@@ -263,9 +262,16 @@ public class PlayerAttributes : Attributes {
 
     public void setActiveWeapon(WeaponAttributes wep)
     {
-        activeWep.gameObject.SetActive(false);
-        wep.gameObject.SetActive(true);
+        if (activeWep)
+        {
+            activeWep.gameObject.SetActive(false);
+        }
         activeWep = wep;
+        if (!wep)
+        {
+            return;
+        }
+        wep.gameObject.SetActive(true);
         activeWepSlot = 0;
         for (int i = 0; i < weapons.Count; i++)
         {

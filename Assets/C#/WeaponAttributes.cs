@@ -93,7 +93,7 @@ public class WeaponAttributes : MonoBehaviour {
             altCam = cam.AddComponent<AlternateCamera>();
             altCam.enabled = false;
         }
-
+        
         projectileSpawner = this.gameObject.AddComponent<ProjectileSpawner>();
 
         audioSource = this.GetComponentInParent<AudioSource>();
@@ -118,6 +118,10 @@ public class WeaponAttributes : MonoBehaviour {
         myCollider = this.gameObject.GetComponent<Collider2D>();
         myRigid = this.gameObject.GetComponent<Rigidbody2D>();
         owner = this.gameObject.GetComponentInParent<Attributes>();
+        if (!owner && !myRigid)
+        {
+            myRigid = this.gameObject.AddComponent<Rigidbody2D>();
+        }
 
     }
 
@@ -155,7 +159,10 @@ public class WeaponAttributes : MonoBehaviour {
     public void setOwner(Attributes attrib)
     {
         owner = attrib;
-        projectileSpawner.setRigidBody(owner.GetComponent<Rigidbody2D>());
+        if (projectileSpawner)
+        {
+            projectileSpawner.setRigidBody(owner.GetComponent<Rigidbody2D>());
+        }
         if (myCollider)
         {
             myCollider.enabled = false;
@@ -210,7 +217,7 @@ public class WeaponAttributes : MonoBehaviour {
         ammoCount = Mathf.Min(clipSize, ammoCount);
     }
 
-    public WEAPONS getType()
+    public WEAPONS getWeaponType()
     {
         return type;
     }
