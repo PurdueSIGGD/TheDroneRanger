@@ -29,6 +29,7 @@ public class Attributes : MonoBehaviour {
         if (health <= 0)
         {
             health = 0;
+            Destroy(this.gameObject);
             return false;
         }
         return true;

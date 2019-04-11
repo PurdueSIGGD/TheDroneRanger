@@ -169,6 +169,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2e822453d8d6d44aafb9ee3a0036702, type: 3}
+--- !u!1001 &27135138
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1905802165}
+    m_Modifications:
+    - target: {fileID: 1786939519797682, guid: 09de769693463614c9f7cf83147d5105, type: 3}
+      propertyPath: m_Name
+      value: BossTutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101633580935162, guid: 09de769693463614c9f7cf83147d5105, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.2460938
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101633580935162, guid: 09de769693463614c9f7cf83147d5105, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101633580935162, guid: 09de769693463614c9f7cf83147d5105, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101633580935162, guid: 09de769693463614c9f7cf83147d5105, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101633580935162, guid: 09de769693463614c9f7cf83147d5105, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101633580935162, guid: 09de769693463614c9f7cf83147d5105, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101633580935162, guid: 09de769693463614c9f7cf83147d5105, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101633580935162, guid: 09de769693463614c9f7cf83147d5105, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101633580935162, guid: 09de769693463614c9f7cf83147d5105, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101633580935162, guid: 09de769693463614c9f7cf83147d5105, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101633580935162, guid: 09de769693463614c9f7cf83147d5105, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 09de769693463614c9f7cf83147d5105, type: 3}
 --- !u!1001 &28661810
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5013,6 +5070,14 @@ MonoBehaviour:
   ydir: 1
   flipSprite: 1
   jumpHeight: 3
+  hasCustom: 0
+  customRange: 0
+  customVStart: 0
+  customVEnd: 0
+  oldRange: 0
+  oldVStart: 0
+  oldVEnd: 0
+  master: {fileID: 0}
   enemyRigid: {fileID: 0}
   speed: 3
 --- !u!1 &1387862315
@@ -6612,7 +6677,7 @@ PrefabInstance:
     - target: {fileID: 114623225053763910, guid: e4d3374e12b31994d88360dd2265e103,
         type: 3}
       propertyPath: jumpImpulse
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114297417838248002, guid: e4d3374e12b31994d88360dd2265e103,
         type: 3}
