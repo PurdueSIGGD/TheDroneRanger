@@ -61,6 +61,12 @@ public class Projectile : MonoBehaviour {
 
     void Update()
     {
+        Camera cam = Camera.main;
+        Vector2 screenPos = cam.WorldToScreenPoint(this.transform.position);
+        if (screenPos.x > cam.pixelWidth || screenPos.x < 0 || screenPos.y > cam.pixelHeight || screenPos.y < 0)
+        {
+            Destroy(this.gameObject);
+        }
         this.transform.rotation = Quaternion.FromToRotation(Vector3.right, new Vector3(myRigid.velocity.x, myRigid.velocity.y, 0));
     }
 
