@@ -89,6 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6140017060922589007}
   - component: {fileID: 5104037730497751981}
+  - component: {fileID: 1392969036}
   m_Layer: 0
   m_Name: Blue Tile
   m_TagString: Untagged
@@ -158,6 +159,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1392969036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347523546971114346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efffc12b9a404c948ac6db8376913574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endColor: {r: 0.7411765, g: 0.74509805, b: 0.7411765, a: 1}
+  duration: 4
+  offset: 3
+  highFidelity: 1
+  fidelity: 100
 --- !u!1 &403917790677761440
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,6 +265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7757787788239800647}
   - component: {fileID: 1405344159800573173}
+  - component: {fileID: 1169922766}
   m_Layer: 0
   m_Name: Blue Tile
   m_TagString: Untagged
@@ -316,6 +335,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1169922766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955278718426104125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efffc12b9a404c948ac6db8376913574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endColor: {r: 0.7411765, g: 0.74509805, b: 0.7411765, a: 1}
+  duration: 4
+  offset: 1
+  highFidelity: 1
+  fidelity: 100
 --- !u!1 &1393584019356666211
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,6 +362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1635976391622512871}
   - component: {fileID: 7558100774164019634}
+  - component: {fileID: 651516290}
   m_Layer: 0
   m_Name: Blue Tile
   m_TagString: Untagged
@@ -395,6 +432,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &651516290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393584019356666211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efffc12b9a404c948ac6db8376913574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endColor: {r: 0.7411765, g: 0.74509805, b: 0.7411765, a: 1}
+  duration: 4
+  offset: 2
+  highFidelity: 1
+  fidelity: 100
 --- !u!1 &1816193897989633227
 GameObject:
   m_ObjectHideFlags: 0
@@ -1233,6 +1287,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3460509491553754614}
   - component: {fileID: 4537535849607744181}
+  - component: {fileID: 1636056879}
   m_Layer: 0
   m_Name: Blue Tile
   m_TagString: Untagged
@@ -1302,6 +1357,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1636056879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7571622160648397998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efffc12b9a404c948ac6db8376913574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endColor: {r: 0.7411765, g: 0.74509805, b: 0.7411765, a: 1}
+  duration: 4
+  offset: 0
+  highFidelity: 1
+  fidelity: 100
 --- !u!1 &7640665736349354678
 GameObject:
   m_ObjectHideFlags: 0
