@@ -22,6 +22,7 @@ public class PlayerAttributes : Attributes {
     public float invTime;
     public float hurtTime;
     private bool invincible;
+    private bool canInput = true;
     private HighNoon highNoon = null;
     public static GameObject control;
     [SerializeField]
@@ -53,7 +54,7 @@ public class PlayerAttributes : Attributes {
             weapons.Add(preWeps[i]);
         }
         
-       // giveWeapon(WEAPONS.BLADE);
+        //giveWeapon(WEAPONS.BLADE);
         //giveWeapon(WEAPONS.SHOTGUN);
         //giveWeapon(WEAPONS.PLASMA);
         //giveWeapon(WEAPONS.SNIPER);
@@ -62,6 +63,11 @@ public class PlayerAttributes : Attributes {
 
         anim = this.GetComponent<Animator>();
         move = this.GetComponent<PlayerMovement>();
+    }
+
+    public void enableInput(bool enable)
+    {
+        canInput = enable;
     }
 
     private void iterateWeapon(bool forward)
@@ -79,6 +85,10 @@ public class PlayerAttributes : Attributes {
 
     public void Update()
     {
+        if (!canInput)
+        {
+            return;
+        }
 
         if ((activeWep.rapidFire && Input.GetButton("Fire1")) ||
             (!activeWep.rapidFire && Input.GetButtonDown("Fire1")))
