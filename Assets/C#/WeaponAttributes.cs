@@ -6,8 +6,9 @@ using UnityEngine;
 public enum WEAPONS
 {
     REVOLVER,
-    REVOLVER_FUTURE,
     REVOLVER_GOLDEN,
+    REVOLVER_FUTURE,
+    REVOLVER_GOLDEN_FUTURE,
     BLADE,
     SHOTGUN,
     PLASMA,
@@ -21,8 +22,9 @@ public class WeaponAttributes : MonoBehaviour {
     private static string[] WEAPON_PATHS =
     {
         "Weapons/Revolver",
-        "Weapons/Revolver_Future",
         "Weapons/Revolver_Golden",
+        "Weapons/Revolver_Future",
+        "Weapons/Revolver_Golden_Future",
         "Weapons/Revolver_Blade",
         "Weapons/Shotgun",
         "Weapons/Plasma_Cannon",
@@ -54,6 +56,12 @@ public class WeaponAttributes : MonoBehaviour {
     private CooldownAbility reloadAbility = null;
     private AudioSource audioSource = null;
     private AudioSource emptySoundSource = null;
+	
+    private Collider2D myCollider = null;
+    private Rigidbody2D myRigid = null;
+    private Attributes owner = null;
+    private bool dropped = false;
+	
     private CameraControl cam = null;
     private CameraMode lastCamMode = CameraMode.Target;
 
@@ -75,7 +83,7 @@ public class WeaponAttributes : MonoBehaviour {
     }
 
     void Start () {
-
+		
         cam = Camera.main.gameObject.GetComponent<CameraControl>();
 
         projectileSpawner = this.gameObject.GetComponentInParent<ProjectileSpawner>();
@@ -103,7 +111,15 @@ public class WeaponAttributes : MonoBehaviour {
 
         ammoCount = clipSize;//Start full
 
-	}
+        myCollider = this.gameObject.GetComponent<Collider2D>();
+        myRigid = this.gameObject.GetComponent<Rigidbody2D>();
+        owner = this.gameObject.GetComponentInParent<Attributes>();
+        if (!owner && !myRigid)
+        {
+            myRigid = this.gameObject.AddComponent<Rigidbody2D>();
+        }
+
+    }
 
     void OnDestroy()
     {
@@ -113,6 +129,57 @@ public class WeaponAttributes : MonoBehaviour {
         }
         catch (Exception){
             //Prevent errors if destroyed together
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (owner)//Is already owned
+        {
+            return;
+        }
+        PlayerAttributes player = other.collider.GetComponent<PlayerAttributes>();
+        if (!player) //Only allow player pickup
+        {
+            dropped = false;
+            return;
+        }
+        if (!dropped)
+        {
+            player.giveWeapon(this);
+        }
+        
+    }
+
+    public void setOwner(Attributes attrib)
+    {
+        owner = attrib;
+        if (projectileSpawner)
+        {
+            projectileSpawner.setRigidBody(owner.GetComponent<Rigidbody2D>());
+        }
+        if (myCollider)
+        {
+            myCollider.enabled = false;
+        }
+        if (myRigid)
+        {
+            Destroy(myRigid);
+        }
+    }
+
+    public void drop()
+    {
+        if (owner)
+        {
+            owner = null;
+            this.transform.parent = null;
+            if (myCollider)
+            {
+                myCollider.enabled = true;
+            }
+            myRigid = this.gameObject.AddComponent<Rigidbody2D>();
+            dropped = true;
         }
     }
 
@@ -145,7 +212,7 @@ public class WeaponAttributes : MonoBehaviour {
         ammoCount = Mathf.Min(clipSize, ammoCount);
     }
 
-    public WEAPONS getType()
+    public WEAPONS getWeaponType()
     {
         return type;
     }
@@ -160,6 +227,10 @@ public class WeaponAttributes : MonoBehaviour {
 
     public void Update()
     {
+        if (!owner) //Acting as a pickup
+        {
+            return;
+        }
         if (reloading && reloadAbility.canUse())
         {
             if (oneReload)

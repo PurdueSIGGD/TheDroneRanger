@@ -30,6 +30,7 @@ Transform:
   m_LocalPosition: {x: -0.026, y: 0.043, z: 0}
   m_LocalScale: {x: -0.5, y: 0.5, z: 0.1}
   m_Children:
+  - {fileID: 4218268100621141561}
   - {fileID: 4322387154571316}
   m_Father: {fileID: 4635459508465866}
   m_RootOrder: 0
@@ -362,6 +363,7 @@ MonoBehaviour:
   health: 80
   maxHealth: 100
   reloadKey: 114
+  weaponPosition: {fileID: 9074002499895053469}
   maxWeapons: 3
   highNoonPercent: 0
   highNoonPerSecond: 2
@@ -499,6 +501,36 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &9074002499895053469
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4218268100621141561}
+  m_Layer: 0
+  m_Name: WeaponPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4218268100621141561
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9074002499895053469}
+  m_LocalRotation: {x: -0, y: 0, z: 0.0013414627, w: 0.9999991}
+  m_LocalPosition: {x: -0.409, y: -0.04, z: -0.001}
+  m_LocalScale: {x: -0.4, y: 0.4, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4103082889992742}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.15400001}
 --- !u!1001 &6633914132927874836
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -506,11 +538,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4103082889992742}
     m_Modifications:
-    - target: {fileID: 6634858366013539138, guid: 671dcb61805f8704287cbe1314c190c3,
-        type: 3}
-      propertyPath: m_Name
-      value: PlayerWeapon
-      objectReference: {fileID: 0}
     - target: {fileID: 6638093583485376288, guid: 671dcb61805f8704287cbe1314c190c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -549,7 +576,7 @@ PrefabInstance:
     - target: {fileID: 6638093583485376288, guid: 671dcb61805f8704287cbe1314c190c3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6638093583485376288, guid: 671dcb61805f8704287cbe1314c190c3,
         type: 3}
@@ -575,6 +602,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634858366013539138, guid: 671dcb61805f8704287cbe1314c190c3,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerWeapon
       objectReference: {fileID: 0}
     - target: {fileID: 3347999263294230753, guid: 671dcb61805f8704287cbe1314c190c3,
         type: 3}

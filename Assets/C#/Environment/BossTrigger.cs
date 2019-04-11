@@ -51,6 +51,10 @@ class BossTrigger : MonoBehaviour
         {
             return;
         }
+        if (other.GetComponent<PlayerAttributes>() == null)
+        {
+            return;
+        }
         if (camCenter)
         {
             CameraControl cam = Camera.main.GetComponent<CameraControl>();
