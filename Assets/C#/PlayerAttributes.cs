@@ -47,17 +47,11 @@ public class PlayerAttributes : Attributes {
 
     public void Start()
     {
-        highNoon.charge = 100;
         WeaponAttributes[] preWeps = this.GetComponentsInChildren<WeaponAttributes>();
         for (int i = 0; i < preWeps.Length; i++)
         {
             weapons.Add(preWeps[i]);
         }
-        
-        //giveWeapon(WEAPONS.BLADE);
-        //giveWeapon(WEAPONS.SHOTGUN);
-        //giveWeapon(WEAPONS.PLASMA);
-        //giveWeapon(WEAPONS.SNIPER);
 
         activeWep = weapons[0];
 
@@ -68,6 +62,10 @@ public class PlayerAttributes : Attributes {
     public void enableInput(bool enable)
     {
         canInput = enable;
+        if (!enable && isHighNoon())
+        {
+            highNoon.endHighNoon();
+        }
     }
 
     private void iterateWeapon(bool forward)

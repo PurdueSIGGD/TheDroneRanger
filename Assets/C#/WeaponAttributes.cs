@@ -6,8 +6,9 @@ using UnityEngine;
 public enum WEAPONS
 {
     REVOLVER,
-    REVOLVER_FUTURE,
     REVOLVER_GOLDEN,
+    REVOLVER_FUTURE,
+    REVOLVER_GOLDEN_FUTURE,
     BLADE,
     SHOTGUN,
     PLASMA,
@@ -21,8 +22,9 @@ public class WeaponAttributes : MonoBehaviour {
     private static string[] WEAPON_PATHS =
     {
         "Weapons/Revolver",
-        "Weapons/Revolver_Future",
         "Weapons/Revolver_Golden",
+        "Weapons/Revolver_Future",
+        "Weapons/Revolver_Golden_Future",
         "Weapons/Revolver_Blade",
         "Weapons/Shotgun",
         "Weapons/Plasma_Cannon",
