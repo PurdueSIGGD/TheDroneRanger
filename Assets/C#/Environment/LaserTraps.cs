@@ -16,9 +16,15 @@ public class LaserTraps : MonoBehaviour
 	public float damage;
 	public bool hurtEnemies;
 
-	void Start()
+    public AudioClip laserOnSound = null;
+    public AudioClip laserOffSound = null;
+    private AudioSource audioSource = null;
+
+    void Start()
     {
-		laser = transform.GetChild(0).gameObject;
+        audioSource = this.GetComponent<AudioSource>();
+
+        laser = transform.GetChild(0).gameObject;
 		laser.transform.localScale = new Vector3(1f, laserLength, 0f);
 		laser.transform.localPosition = new Vector3(0f, 0.32f * laserLength - 0.05f, 0f);
 		laser.GetComponent<LaserDamage>().setValues(damage, hurtEnemies);
@@ -40,9 +46,11 @@ public class LaserTraps : MonoBehaviour
 		while (true)
 		{
 			laser.SetActive(true);
-			yield return new WaitForSeconds(onTime);
+            audioSource.PlayOneShot(laserOnSound);
+            yield return new WaitForSeconds(onTime);
 			laser.SetActive(false);
-			yield return new WaitForSeconds(offTime);
+            audioSource.PlayOneShot(laserOffSound);
+            yield return new WaitForSeconds(offTime);
 		}
 	}
 }
