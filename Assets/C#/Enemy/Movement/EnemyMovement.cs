@@ -36,7 +36,7 @@ public class EnemyMovement : MonoBehaviour {
 	public virtual void Update () {
 		//Debug.Log ("still");
 
-		Vector2 bottom = (Vector2)transform.position + new Vector2 (0, -gameObject.GetComponent<Collider2D> ().bounds.size.y / 2.0f - .01f);
+		//Vector2 bottom = (Vector2)transform.position + new Vector2 (0, -gameObject.GetComponent<Collider2D> ().bounds.size.y / 2.0f - .01f);
 
 		//if (master.canJump() && Physics2D.Raycast(bottom, -Vector2.up, .01f))
 		//{
