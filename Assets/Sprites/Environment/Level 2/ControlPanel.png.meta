@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: e1605d0a4af70ef4abd377d527299824
+guid: 3e4f52e94fb2cd547a0272346c97d386
 TextureImporter:
   fileIDToRecycleName:
-    21300000: KeyLab_0
+    21300000: ControlPanel_0
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 200
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,7 +63,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -74,7 +74,7 @@ TextureImporter:
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -85,13 +85,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: KeyLab_0
+      name: ControlPanel_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 4
-        width: 20
-        height: 13
+        x: 9
+        y: 23
+        width: 16
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -99,7 +99,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 36490489501935442992ecc9ea1137f8
+      spriteID: 09a2cdf920453f04bbae00b1b7302443
       vertices: []
       indices: 
       edges: []
@@ -107,7 +107,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 85bf45de35dc4e942b82cc826b5ec1c6
+    spriteID: fddf28bbc02e7874e9e566cf8ffdd839
     vertices: []
     indices: 
     edges: []

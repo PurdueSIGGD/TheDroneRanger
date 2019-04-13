@@ -17,10 +17,10 @@ public class ColorFlash : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         flashColor = sprite.color;
         usualColor.a = 1;
-        StartCoroutine("ColorFlash");
+        StartCoroutine("Flash");
     }
 
-    IEnumerator ColorFlash()
+    IEnumerator Flash()
     {
         sprite.color = usualColor;
         yield return new WaitForSeconds(waitTime - offset);
