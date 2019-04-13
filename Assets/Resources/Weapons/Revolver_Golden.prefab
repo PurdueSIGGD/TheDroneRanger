@@ -60,6 +60,7 @@ MonoBehaviour:
   fireSound: {fileID: 0}
   reloadSound: {fileID: 8300000, guid: b853337031e77a24491671ffb48741ff, type: 3}
   emptySound: {fileID: 0}
+  type: 1
 --- !u!61 &3702820309678098979
 BoxCollider2D:
   m_ObjectHideFlags: 0
