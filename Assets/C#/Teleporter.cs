@@ -12,9 +12,14 @@ public class Teleporter : MonoBehaviour
 	private Vector2 teleportTo;
 	private bool canTeleport; //player can only teleport again if they exit the teleporter
 
+    public AudioClip teleportSound = null;
+    private AudioSource audioSource = null;
+
     void Start()
     {
-		canTeleport = true;
+        audioSource = this.GetComponent<AudioSource>();
+
+        canTeleport = true;
         if (correspondingTeleporter != null)
         {
             if (correspondingTeleporter.GetComponent<Teleporter>().correspondingTeleporter != null && correspondingTeleporter.GetComponent<Teleporter>().correspondingTeleporter != gameObject)
@@ -34,8 +39,9 @@ public class Teleporter : MonoBehaviour
 		if (canTeleport && player.name.Equals("Player"))
 		{
 			if (correspondingTeleporter != null)
-			{
-				player.transform.position = teleportTo;
+            {
+                audioSource.PlayOneShot(teleportSound);
+                player.transform.position = teleportTo;
 				correspondingTeleporter.GetComponent<Teleporter>().setCanTeleport(false);
 			} 
 		}
