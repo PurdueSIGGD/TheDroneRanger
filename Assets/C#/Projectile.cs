@@ -114,22 +114,15 @@ public class Projectile : MonoBehaviour {
                     if (hurt < 1.0f)
                         continue;
                     mAttr.takeDamage(hurt);
-                    hasHit = true;
                 }
             }
-        } else if (attr != null)
+        } else if (attr != null && attr.health > 0)
         {
-            if(attr.health > 0)
-            {
-                attr.takeDamage(damage);
-                hasHit = true;
-                destroyThis();
-            }
-        }else
-        {
-            hasHit = true;
-            destroyThis();
+            attr.takeDamage(damage);
         }
+
+        hasHit = true;
+        destroyThis();
     }
 
     private void destroyThis()
