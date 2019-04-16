@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 platformSpeed;
 
+    private PlayerAttributes player;
     private Rigidbody2D myRigid;
     private AudioSource audioSource = null;
     private Animator anim;
@@ -44,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
         myRigid = this.GetComponent<Rigidbody2D>();
         audioSource = this.GetComponent<AudioSource>();
         anim = this.GetComponent<Animator>();
+        player = this.GetComponent<PlayerAttributes>();
 
         gravity = myRigid.gravityScale;
         platformSpeed = new Vector2(0, 0);
@@ -61,6 +63,10 @@ public class PlayerMovement : MonoBehaviour
         if (isDead)
         {
             myRigid.velocity = new Vector2(0, 0);
+            return;
+        }
+        if (!player.canInput()) //Don't allow input
+        {
             return;
         }
         float verticalMovement = Input.GetAxis("Vertical");
