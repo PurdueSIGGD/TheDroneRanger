@@ -30,7 +30,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   durability: 1
   destroyedSprite: {fileID: 0}
-  breakSound: {fileID: 0}
+  breakSound: {fileID: 8300000, guid: 88991e2237527c64cb803b6c2f472054, type: 3}
   damage: 30
   explosionCol: {fileID: 1879614468889718034}
   explosionEffect: {fileID: 9207108904460762629}
@@ -95,6 +95,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: d5da3d836ce446e44a132b626d2b0971,
         type: 3}
+    - target: {fileID: 4355337777414233849, guid: 6d31063a882c4c147806db2073b47193,
+        type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2213695425692259101, guid: 6d31063a882c4c147806db2073b47193,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
