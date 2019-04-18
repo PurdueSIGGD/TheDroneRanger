@@ -61,6 +61,12 @@ public class Projectile : MonoBehaviour {
 
     void Update()
     {
+        Camera cam = Camera.main;
+        Vector2 screenPos = cam.WorldToScreenPoint(this.transform.position);
+        if (screenPos.x > cam.pixelWidth || screenPos.x < 0 || screenPos.y > cam.pixelHeight || screenPos.y < 0)
+        {
+            Destroy(this.gameObject);
+        }
         this.transform.rotation = Quaternion.FromToRotation(Vector3.right, new Vector3(myRigid.velocity.x, myRigid.velocity.y, 0));
     }
 
@@ -69,10 +75,12 @@ public class Projectile : MonoBehaviour {
 
         /* CHECKS FOR HIT VALIDIDTY */
         if (hasHit && dieOnHit) return; // We only want to hit one object... for some reason it collides multiple times before destroying itself
-        if (col.isTrigger) return; // Only want our own trigger effects
-        if (!sourceObj) return;
-        if (col == sourceObj.GetComponent<Collider2D>()) return;
-        if (col.GetComponent<Projectile>()) return; // Ignore other projectiles
+        if (col.isTrigger && col.GetComponentInParent<Projectile>() == false) return; // Only want our own trigger effects
+        if (sourceObj)
+        {
+            if (col == sourceObj.GetComponent<Collider2D>()) return;
+        }
+        if (col.GetComponentInParent<Projectile>() && col.GetComponentInParent<Attributes>() == false) return; // Ignore other projectiles
         Attributes attr;
         Prop p;
         attr = col.GetComponentInParent<Attributes>();
@@ -87,11 +95,11 @@ public class Projectile : MonoBehaviour {
             if (!p.isDestroyed())
             {
                 p.decreaseDurability(damage);
+                hasHit = true;
             }
             else { return; }
         }
         /* ACTIONS TO TAKE POST-HIT */
-        hasHit = true;
 
         if (explosive)
         {
@@ -106,26 +114,19 @@ public class Projectile : MonoBehaviour {
                     if (hurt < 1.0f)
                         continue;
                     mAttr.takeDamage(hurt);
-                    if (mAttr is PlayerAttributes)
-                    {
-                        Vector2 direction = (colDist.pointA - colDist.pointB).normalized;
-                        if (direction.magnitude == 0)
-                        {
-                            direction = (victims[i].gameObject.transform.position - this.transform.position).normalized;
-                        }
-                        //((PlayerAttributes)mAttr).knockBack((colDist.pointA - colDist.pointB).normalized, hurt);
-                    }
                 }
             }
         } else if (attr != null)
         {
-            if(attr.health > 0)
-            {
+            if(attr.health > 0) {
                 attr.takeDamage(damage);
+                hasHit = true;
                 destroyThis();
             }
-        }else
+        }
+        else
         {
+            hasHit = true;
             destroyThis();
         }
     }

@@ -22,6 +22,7 @@ public class EnemyAIMaster : MonoBehaviour {
 	//public GameObject PrimaryWeap;
 	//public GameObject SecondWeap;
 	public float cycleTime = -1;
+	private Animator anim;
 	private float timeCounter = 0;
 	private float moveTimer = 0;
 	private float jumpTimer = 0;
@@ -34,6 +35,7 @@ public class EnemyAIMaster : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		EnemyStats = GetComponent<EnemyAttributes> ();
+		anim = GetComponent<Animator> ();
 		//projSpawner.setProjectile (weaponList[currWeap]);
 
 		spawnList = new EnemyProjectileSpawner[spawnSeq.Length];
@@ -57,6 +59,9 @@ public class EnemyAIMaster : MonoBehaviour {
 
 		moveList = new EnemyMovement[moveSeq.Length];
 		EnemyMovement[] allMoves = GetComponents<EnemyMovement> ();
+		for (int i = 0; i < allMoves.Length; i++) {
+			allMoves [i].master = this;
+		}
 
 		for (int i = 0; i < allMoves.Length; i++) {
 			allMoves [i].enabled = false;
@@ -74,8 +79,10 @@ public class EnemyAIMaster : MonoBehaviour {
 			}
 		}
 		if (GetComponent<SpriteRenderer> ().flipX) {
+			GetComponent<SpriteRenderer> ().flipX = false;
 			moveList [0].xdir = -1;
 		}
+		moveList [0].switchTo ();
 		moveList [0].enabled = true;
 		for (int x = 0; x < allMoves.Length; x++) {
 			if (aggromove.Equals(allMoves[x].label))
@@ -100,42 +107,57 @@ public class EnemyAIMaster : MonoBehaviour {
 			}
 
 		}
-		if (!aggroed || aMove == null) {
-			moveTimer += Time.deltaTime;
-			if (moveTimer >= Mathf.Abs (moveDur [currMove])) {
-				moveTimer -= Mathf.Abs (moveDur [currMove]);
-				changeMovement ();
+		if (EnemyStats.helpless <= 0) {
+			if (!aggroed || aMove == null) {
+				moveTimer += Time.deltaTime;
+				if (moveTimer >= Mathf.Abs (moveDur [currMove])) {
+					moveTimer -= Mathf.Abs (moveDur [currMove]);
+					changeMovement ();
+				}
 			}
-		}
-		jumpTimer = Mathf.Max (0, jumpTimer - Time.deltaTime);
+			jumpTimer = Mathf.Max (0, jumpTimer - Time.deltaTime);
 
 
-		if (EnemyStats.getAggro () != null) {
-			if (!aggroDelay || currMove >= moveLoopStart) {
-				if (!aggroed) {
-					aggroed = true;
-					if (aMove != null) {
-						getCycleMove ().enabled = false;
-						if (aMove.xdir != getCycleMove ().xdir) {
-							aMove.xdir = getCycleMove ().xdir;
+			if (EnemyStats.getAggro () != null) {
+				if (!aggroDelay || currMove >= moveLoopStart) {
+					if (!aggroed) {
+						aggroed = true;
+						if (aMove != null) {
+							getCycleMove ().switchFrom ();
+							getCycleMove ().enabled = false;
+							if (aMove.xdir != getCycleMove ().xdir) {
+								aMove.xdir = getCycleMove ().xdir;
+							}
+							aMove.switchTo ();
+							aMove.enabled = true;
 						}
-						aMove.enabled = true;
 					}
 				}
-			}
 
+			} else {
+				if (aggroed) {
+					aggroed = false;
+					if (aMove != null) {
+						aMove.switchFrom ();
+						aMove.enabled = false;
+						if (aMove.xdir != getCycleMove ().xdir) {
+							getCycleMove ().xdir = aMove.xdir;
+						}
+						getCycleMove().switchTo ();
+						getCycleMove ().enabled = true;
+					}
+				}
+
+
+			}
 		} else {
-			if (aggroed) {
-				aggroed = false;
-				if (aMove != null) {
-					aMove.enabled = false;
-					if (aMove.xdir != getCycleMove ().xdir) {
-						getCycleMove ().xdir = aMove.xdir;
-					}
-					getCycleMove ().enabled = true;
-				}
+			getCurrMove().switchFrom ();
+			getCurrMove ().enabled = false;
+			EnemyStats.helpless -= Time.deltaTime;
+			if (EnemyStats.helpless <= 0) {
+				getCurrMove ().switchTo ();
+				getCurrMove ().enabled = true;
 			}
-
 
 		}
 
@@ -169,6 +191,10 @@ public class EnemyAIMaster : MonoBehaviour {
 		return moveList [currMove];
 	}
 
+	public void setAnimState(string prop, bool dir) {
+		anim.SetBool (prop, dir);
+	}
+
 	public virtual void changePattern()
 	{
 		/*
@@ -189,6 +215,7 @@ public class EnemyAIMaster : MonoBehaviour {
 	public virtual void changeMovement()
 	{
 		int tempxdir = moveList [currMove].xdir;
+		moveList [currMove].switchFrom ();
 		moveList [currMove].enabled = false;
 		currMove++;
 
@@ -208,6 +235,7 @@ public class EnemyAIMaster : MonoBehaviour {
 		} else {
 			moveList [currMove].xdir = tempxdir;
 		} 
+		moveList [currMove].switchTo ();
 		moveList [currMove].enabled = true;
 		//Debug.Log (moveList [currMove].label);
 	}

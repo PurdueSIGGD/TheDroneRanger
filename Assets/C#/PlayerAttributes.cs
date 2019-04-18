@@ -6,22 +6,26 @@ using UnityEngine.SceneManagement;
 public class PlayerAttributes : Attributes {
 
     public KeyCode reloadKey = KeyCode.R;
+    public GameObject weaponPosition = null;
 
     public int maxWeapons = 3; //Values <= 0 allow infinite amount
 
     private List<WeaponAttributes> weapons = new List<WeaponAttributes>();
     private int activeWepSlot = 0;
     private WeaponAttributes activeWep = null;
-
-    //high noon at 100, should not be > 100
-    public float highNoonPercent = 0;
+    private PlayerMovement move = null;
+    private Animator anim = null;
+    
     public float highNoonPerSecond = 2;
 
     public float invTime;
     public float hurtTime;
     private bool invincible;
+    private bool canInput = true;
     private HighNoon highNoon = null;
     public static GameObject control;
+    [SerializeField]
+    private GameObject arm;
 
     public void Awake()
     {
@@ -48,18 +52,28 @@ public class PlayerAttributes : Attributes {
         {
             weapons.Add(preWeps[i]);
         }
-        
-       // giveWeapon(WEAPONS.BLADE);
-        //giveWeapon(WEAPONS.SHOTGUN);
-        giveWeapon(WEAPONS.PLASMA);
-        giveWeapon(WEAPONS.SNIPER);
 
         activeWep = weapons[0];
 
+        anim = this.GetComponent<Animator>();
+        move = this.GetComponent<PlayerMovement>();
+    }
+
+    public void enableInput(bool enable)
+    {
+        canInput = enable;
+        if (!enable && isHighNoon())
+        {
+            highNoon.endHighNoon();
+        }
     }
 
     private void iterateWeapon(bool forward)
     {
+        if(weapons.Count == 0)
+        {
+            return;
+        }
 
         int newSlot = activeWepSlot +( forward ? 1 : weapons.Count - 1);
         newSlot %= weapons.Count;
@@ -71,9 +85,33 @@ public class PlayerAttributes : Attributes {
 
     }
 
+    public void dropActiveWeapon()
+    {
+        if (weapons.Count == 0)
+        {
+            return;
+        }
+        activeWep.drop();
+        weapons.RemoveAt(activeWepSlot);
+        if (weapons.Count > 0)
+        {
+            int newSlot = activeWepSlot % weapons.Count;
+            activeWep = weapons[newSlot];
+            activeWepSlot = newSlot;
+            activeWep.gameObject.SetActive(true);
+        }
+        else
+        {
+            activeWep = null;
+        }
+    }
+
     public void Update()
     {
-
+        if (!activeWep || !canInput)
+        {
+            return;
+        }
         if ((activeWep.rapidFire && Input.GetButton("Fire1")) ||
             (!activeWep.rapidFire && Input.GetButtonDown("Fire1")))
         {
@@ -90,8 +128,11 @@ public class PlayerAttributes : Attributes {
             {
                 iterateWeapon(Input.GetAxis("Mouse ScrollWheel") >= 0f);
             }
+            else if (Input.GetKeyDown(KeyCode.G))
+            {
+                dropActiveWeapon();
+            }
         }
-
     }
 
     /*
@@ -105,7 +146,7 @@ public class PlayerAttributes : Attributes {
         if (health <= 0)
         {
             health = 0;
-            die();
+            StartCoroutine("Die");
             return false;
         }
 
@@ -116,13 +157,26 @@ public class PlayerAttributes : Attributes {
 
     private void die()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single); //Load a new scene
+        StartCoroutine("Die");
+    }
 
+    private IEnumerator Die()
+    {
+        SpriteRenderer sprite = this.GetComponent<SpriteRenderer>();
+        anim.SetBool("IsDead", true);
+        anim.SetTrigger("Died");
+        if (!anim.GetBool("LookingRight")) { sprite.flipX = false; }
+        arm.SetActive(false);
+        move.isDead = true;
+        yield return new WaitForSeconds(1.3f);
+        anim.SetBool("IsDead", false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single); //Load a new scene
         //Restore starting conditions
-        health = 100;
+        health = maxHealth;
         weapons[activeWepSlot].setAmmo(weapons[activeWepSlot].clipSize);
         this.transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
-        PlayerMovement move = this.GetComponent<PlayerMovement>();
+        arm.SetActive(true);
+        move.isDead = false;
         move.respawn();
     }
 
@@ -180,12 +234,28 @@ public class PlayerAttributes : Attributes {
             return false;
         }
 
-        obj.transform.position = weapons[0].transform.position;
-        obj.transform.rotation = weapons[0].transform.rotation;
-        obj.transform.parent = weapons[0].transform.parent;
-        obj.transform.eulerAngles = weapons[0].transform.eulerAngles;
-        obj.transform.localScale = weapons[0].transform.localScale;
-        obj.gameObject.SetActive(false);
+        Transform trans = this.transform;
+        if (weaponPosition)
+        {
+            trans = weaponPosition.transform;
+        }
+
+        obj.transform.position = trans.position;
+        obj.transform.rotation = trans.rotation;
+        obj.transform.parent = trans.parent;
+        obj.transform.eulerAngles = trans.eulerAngles;
+        obj.transform.localScale = trans.localScale;
+        obj.setOwner(this);
+
+        if (weapons.Count > 0)
+        {
+            obj.gameObject.SetActive(false);
+        }
+        else
+        {
+            activeWep = obj;
+            activeWepSlot = 0;
+        }
 
         if (addToArray)
         {
@@ -196,9 +266,16 @@ public class PlayerAttributes : Attributes {
 
     public void setActiveWeapon(WeaponAttributes wep)
     {
-        activeWep.gameObject.SetActive(false);
-        wep.gameObject.SetActive(true);
+        if (activeWep)
+        {
+            activeWep.gameObject.SetActive(false);
+        }
         activeWep = wep;
+        if (!wep)
+        {
+            return;
+        }
+        wep.gameObject.SetActive(true);
         activeWepSlot = 0;
         for (int i = 0; i < weapons.Count; i++)
         {

@@ -8,7 +8,13 @@ public class EnemyAttributes : Attributes {
 	public float moveSpeed = 1;
 	public float jumpCool = .5f;
 	public Rigidbody2D aggroRigid = null;
+	public float knockBack;
+	public float knockBackAngle;
+
+	public float helplessDur;
 	private bool inRange;
+	[HideInInspector]
+	public float helpless;
 
 	//accessors
     
@@ -73,6 +79,10 @@ public class EnemyAttributes : Attributes {
 	{
 		health -= damage;
 		//Debug.Log ("Enemy Damage taken");
+		if (helplessDur > 0) {
+			helpless = helplessDur;
+		}
+
 		if (health <= 0)
 		{
 			health = 0;
