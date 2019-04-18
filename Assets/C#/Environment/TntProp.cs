@@ -13,6 +13,10 @@ class TntProp : Prop
     public override void destroy(){
         if (isDestroyed())
         {
+            if (this.GetComponent<AudioSource>() != null)
+            {
+                this.GetComponent<AudioSource>().PlayOneShot(breakSound);
+            }
             this.GetComponent<SpriteRenderer>().sprite = destroyedSprite;
             BoxCollider2D box = this.GetComponent<BoxCollider2D>();
             this.GetComponent<Rigidbody2D>().gravityScale = 0;
