@@ -61,6 +61,12 @@ public class Projectile : MonoBehaviour {
 
     void Update()
     {
+        Camera cam = Camera.main;
+        Vector2 screenPos = cam.WorldToScreenPoint(this.transform.position);
+        if (screenPos.x > cam.pixelWidth || screenPos.x < 0 || screenPos.y > cam.pixelHeight || screenPos.y < 0)
+        {
+            Destroy(this.gameObject);
+        }
         this.transform.rotation = Quaternion.FromToRotation(Vector3.right, new Vector3(myRigid.velocity.x, myRigid.velocity.y, 0));
     }
 
@@ -108,18 +114,17 @@ public class Projectile : MonoBehaviour {
                     if (hurt < 1.0f)
                         continue;
                     mAttr.takeDamage(hurt);
-                    hasHit = true;
                 }
             }
         } else if (attr != null)
         {
-            if(attr.health > 0)
-            {
+            if(attr.health > 0) {
                 attr.takeDamage(damage);
                 hasHit = true;
                 destroyThis();
             }
-        }else
+        }
+        else
         {
             hasHit = true;
             destroyThis();
