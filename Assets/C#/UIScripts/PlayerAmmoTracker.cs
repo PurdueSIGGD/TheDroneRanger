@@ -17,12 +17,14 @@ public class PlayerAmmoTracker : MonoBehaviour
     void Update()
     {
         WeaponAttributes wep = Player.getActiveWeapon();
+        Rect uvrec = img.uvRect;
         if (!wep)
         {
+            uvrec.width = 0;
+            img.uvRect = uvrec;
             return;
         }
-
-        Rect uvrec = img.uvRect;
+        
         uvrec.width = wep.getAmmo();
         img.uvRect = uvrec;
         img.transform.localScale = new Vector3(wep.getAmmo(), 1.0f, 1.0f);

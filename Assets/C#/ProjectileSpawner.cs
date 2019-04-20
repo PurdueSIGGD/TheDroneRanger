@@ -65,4 +65,9 @@ public class ProjectileSpawner : CooldownAbility
         myRigid = this.GetComponentInParent<Rigidbody2D>();
 
     }
+
+    public void setRigidBody(Rigidbody2D rigid)
+    {
+        myRigid = rigid;
+    }
 }

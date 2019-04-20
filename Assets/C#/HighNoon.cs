@@ -42,7 +42,7 @@ public class HighNoon : MonoBehaviour
         active = true;
     }
 
-    private void endHighNoon()
+    public void endHighNoon()
     {
         active = false;
         audioSource.pitch = 1;
