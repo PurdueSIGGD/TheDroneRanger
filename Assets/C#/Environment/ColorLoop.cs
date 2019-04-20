@@ -35,6 +35,13 @@ public class ColorLoop : MonoBehaviour
                     sprite.color = newColor;
                     yield return new WaitForSeconds(duration / 10);
                 }
+                for (float i = duration; i > 0; i -= duration / 10)
+                {
+                    Color newColor = ((startColor) * (duration - i)) + ((endColor) * (i));
+                    newColor /= duration;
+                    sprite.color = newColor;
+                    yield return new WaitForSeconds(duration / 10);
+                }
             }
             if(offset > duration)
             {
