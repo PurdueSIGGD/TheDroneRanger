@@ -35,7 +35,9 @@ public class EnemyAIMaster : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		EnemyStats = GetComponent<EnemyAttributes> ();
-		anim = GetComponent<Animator> ();
+
+		if (anim = GetComponent<Animator> ());
+
 		attackScript.initDefaults ();
 		//projSpawner.setProjectile (weaponList[currWeap]);
 
@@ -193,7 +195,8 @@ public class EnemyAIMaster : MonoBehaviour {
 	}
 
 	public void setAnimState(string prop, bool dir) {
-		anim.SetBool (prop, dir);
+		if (anim)
+			anim.SetBool (prop, dir);
 	}
 
 	public virtual void changePattern()
