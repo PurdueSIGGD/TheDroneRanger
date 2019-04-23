@@ -48,7 +48,7 @@ class TutorialBoss : BossTrigger
         msg.Time = 3.0f;
         diagBox.Message(msg);
         Destroy(player.gameObject);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene("Scenes/MainMenu");
     }
 
     protected override void OnBossFightEnd()
