@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceObj: {fileID: 0}
-  damage: 5
+  damage: 15
   lifetime: 0.2
   dieOnHit: 1
   hurtPlayer: 0
@@ -149,5 +149,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6317735, y: 0.92656183}
+  m_Size: {x: 5, y: 1}
   m_EdgeRadius: 0
