@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,7 +37,7 @@ class TutorialBoss : BossTrigger
         }
         canvasImage = GameObject.FindGameObjectWithTag("UIScreen").GetComponent<Image>();
         diagBox = GameObject.FindGameObjectWithTag("UI").GetComponent<DialogueBox>();
-
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttributes>();
     }
 
     private void OnExplosionsEnd()
@@ -46,7 +47,8 @@ class TutorialBoss : BossTrigger
         msg.Message = "Carefully now, he's a hero.";
         msg.Time = 3.0f;
         diagBox.Message(msg);
-        //Change scenes
+        Destroy(player.gameObject);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
     protected override void OnBossFightEnd()
@@ -84,7 +86,8 @@ class TutorialBoss : BossTrigger
                 particles.Clear();
                 OnExplosionsEnd();
                 Destroy(this);
-            }else if (Time.time >= last_expl + explode_interval)
+            }
+            else if (Time.time >= last_expl + explode_interval)
             {
                 createExplosion();
                 last_expl = Time.time;
@@ -102,7 +105,7 @@ class TutorialBoss : BossTrigger
         obj.transform.position = position;
         ParticleSystem ps = obj.GetComponent<ParticleSystem>();
         var psmain = ps.main;
-        psmain.startSize = 10.0f;
+        psmain.startSize = 5.0f;
         psmain.startLifetime = 4.0f;
         psmain.duration = 4.0f;
         var emit = ps.emission;
