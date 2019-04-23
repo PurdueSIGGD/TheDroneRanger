@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,12 +27,13 @@ class TutorialBoss : BossTrigger
         cam = Camera.main.GetComponent<CameraControl>();
         music = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
         canvasImage = GameObject.FindGameObjectWithTag("UIScreen").GetComponent<Image>();
-        
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttributes>();
     }
 
     private void OnExplosionsEnd()
     {
-        //Change scene
+        Destroy(player.gameObject);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
     protected override void OnBossFightEnd()
@@ -62,7 +64,8 @@ class TutorialBoss : BossTrigger
                 particles.Clear();
                 OnExplosionsEnd();
                 Destroy(this);
-            }else if (Time.time >= last_expl + explode_interval)
+            }
+            else if (Time.time >= last_expl + explode_interval)
             {
                 createExplosion();
                 last_expl = Time.time;
@@ -79,7 +82,7 @@ class TutorialBoss : BossTrigger
         obj.transform.position = position;
         ParticleSystem ps = obj.GetComponent<ParticleSystem>();
         var psmain = ps.main;
-        psmain.startSize = 10.0f;
+        psmain.startSize = 5.0f;
         psmain.startLifetime = 4.0f;
         psmain.duration = 4.0f;
         var emit = ps.emission;
