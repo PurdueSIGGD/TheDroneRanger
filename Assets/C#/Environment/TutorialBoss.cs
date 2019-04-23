@@ -19,7 +19,6 @@ class TutorialBoss : BossTrigger
     private CameraControl cam = null;
     private AudioSource music = null;
     private Image canvasImage = null;
-    private PlayerAttributes player = null;
     private List<GameObject> particles = new List<GameObject>();
 
     protected override void Start()
@@ -33,6 +32,7 @@ class TutorialBoss : BossTrigger
 
     private void OnExplosionsEnd()
     {
+        Destroy(player.gameObject);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
