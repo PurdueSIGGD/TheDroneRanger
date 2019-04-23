@@ -167,6 +167,10 @@ MonoBehaviour:
   moveSpeed: 1
   jumpCool: 1
   aggroRigid: {fileID: 0}
+  knockBack: 0
+  knockBackAngle: 0
+  helplessDur: 0
+  helpless: 0
 --- !u!114 &114939775262628064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,6 +214,14 @@ MonoBehaviour:
   ydir: 1
   flipSprite: 1
   jumpHeight: 3
+  hasCustom: 0
+  customRange: 0
+  customVStart: 0
+  customVEnd: 0
+  oldRange: 0
+  oldVStart: 0
+  oldVEnd: 0
+  master: {fileID: 0}
   enemyRigid: {fileID: 0}
 --- !u!114 &114701677160397766
 MonoBehaviour:
@@ -228,6 +240,14 @@ MonoBehaviour:
   ydir: 1
   flipSprite: 1
   jumpHeight: 3
+  hasCustom: 0
+  customRange: 0
+  customVStart: 0
+  customVEnd: 0
+  oldRange: 0
+  oldVStart: 0
+  oldVEnd: 0
+  master: {fileID: 0}
   enemyRigid: {fileID: 0}
   speed: 3
 --- !u!114 &5957321479375890392
@@ -257,7 +277,7 @@ MonoBehaviour:
   master: {fileID: 0}
   offsetDist: 1
   offsetAngle: 0
-  atkRange: 2
+  atkRange: 3
 --- !u!95 &724771936
 Animator:
   serializedVersion: 3
