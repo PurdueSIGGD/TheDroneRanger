@@ -79,7 +79,7 @@ class TutorialBoss : BossTrigger
         obj.transform.position = position;
         ParticleSystem ps = obj.GetComponent<ParticleSystem>();
         var psmain = ps.main;
-        psmain.startSize = 10.0f;
+        psmain.startSize = 5.0f;
         psmain.startLifetime = 4.0f;
         psmain.duration = 4.0f;
         var emit = ps.emission;
