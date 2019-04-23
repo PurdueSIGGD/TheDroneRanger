@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 2ad38d6baeef0994bb8f25dc824ca045
+guid: 3e4f52e94fb2cd547a0272346c97d386
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Cowboy_Body_0
+    21300000: ControlPanel_0
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -44,8 +44,8 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.29604846, y: 0.3151689}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 200
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -63,8 +63,8 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
+    textureFormat: 4
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -75,23 +75,23 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: 4
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 1
+    overridden: 0
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Cowboy_Body_0
+      name: ControlPanel_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 27
-        width: 35
-        height: 91
+        x: 9
+        y: 23
+        width: 16
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -99,7 +99,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 20d2aafd3a910514ba1d9e8dcc9bdf75
+      spriteID: 09a2cdf920453f04bbae00b1b7302443
       vertices: []
       indices: 
       edges: []
@@ -107,7 +107,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 438b72783b70b2745836507c73bba327
+    spriteID: fddf28bbc02e7874e9e566cf8ffdd839
     vertices: []
     indices: 
     edges: []
