@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceObj: {fileID: 0}
-  damage: 15
+  damage: 10
   lifetime: 4
   dieOnHit: 1
   hurtPlayer: 0
