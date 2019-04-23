@@ -19,6 +19,7 @@ class TutorialBoss : BossTrigger
     private CameraControl cam = null;
     private AudioSource music = null;
     private Image canvasImage = null;
+    private PlayerAttributes player = null;
     private List<GameObject> particles = new List<GameObject>();
 
     protected override void Start()
@@ -27,12 +28,12 @@ class TutorialBoss : BossTrigger
         cam = Camera.main.GetComponent<CameraControl>();
         music = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
         canvasImage = GameObject.FindGameObjectWithTag("UIScreen").GetComponent<Image>();
-        
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttributes>();
     }
 
     private void OnExplosionsEnd()
     {
-        //Change scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
     protected override void OnBossFightEnd()
@@ -63,7 +64,6 @@ class TutorialBoss : BossTrigger
                 particles.Clear();
                 OnExplosionsEnd();
                 Destroy(this);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
             }
             else if (Time.time >= last_expl + explode_interval)
             {

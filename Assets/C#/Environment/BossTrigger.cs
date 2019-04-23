@@ -32,7 +32,7 @@ class BossTrigger : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (triggered && !ended && (player.getHealth() == 0 || !boss || boss.getHealth() == 0))
+        if (triggered && !ended && (!boss || boss.getHealth() == 0))
         {
             healthBar.setBoss(null);
             healthBar.transform.parent.gameObject.SetActive(false);
