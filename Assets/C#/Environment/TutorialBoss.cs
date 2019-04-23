@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -62,7 +63,9 @@ class TutorialBoss : BossTrigger
                 particles.Clear();
                 OnExplosionsEnd();
                 Destroy(this);
-            }else if (Time.time >= last_expl + explode_interval)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            }
+            else if (Time.time >= last_expl + explode_interval)
             {
                 createExplosion();
                 last_expl = Time.time;
