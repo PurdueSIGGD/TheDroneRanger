@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 2ad38d6baeef0994bb8f25dc824ca045
+guid: cc25939905ca2c9409868d88e3213784
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Cowboy_Body_0
+    21300000: LeftOpenDoorLab_0
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -44,9 +44,9 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.29604846, y: 0.3151689}
-  spritePixelsToUnits: 200
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -64,7 +64,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -74,32 +74,32 @@ TextureImporter:
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 4
-    textureCompression: 2
+    textureFormat: -1
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 1
+    overridden: 0
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Cowboy_Body_0
+      name: LeftOpenDoorLab_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 27
-        width: 35
-        height: 91
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 9
+        y: 23
+        width: 16
+        height: 33
+      alignment: 9
+      pivot: {x: 0.875, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 20d2aafd3a910514ba1d9e8dcc9bdf75
+      spriteID: e9d016c7b4b256f45a5b58f091f44ee7
       vertices: []
       indices: 
       edges: []
@@ -107,7 +107,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 438b72783b70b2745836507c73bba327
+    spriteID: 69df19d9623d3ea4ca4233b923c1411f
     vertices: []
     indices: 
     edges: []
