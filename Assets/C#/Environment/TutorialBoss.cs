@@ -17,21 +17,36 @@ class TutorialBoss : BossTrigger
     private float last_expl = 0.0f;
     private int last_area_index = 0;
     private CameraControl cam = null;
-    private AudioSource music = null;
+    private List<AudioSource> music = new List<AudioSource>();
     private Image canvasImage = null;
+    private DialogueBox diagBox = null;
     private List<GameObject> particles = new List<GameObject>();
 
     protected override void Start()
     {
         base.Start();
         cam = Camera.main.GetComponent<CameraControl>();
-        music = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
+        GameObject[] musicObjs = GameObject.FindGameObjectsWithTag("Music");
+        for (int i = 0; i < musicObjs.GetLength(0); i++)
+        {
+            AudioSource src = null;
+            if ((src = musicObjs[i].GetComponent<AudioSource>()) != null)
+            {
+                music.Add(src);
+            }
+        }
         canvasImage = GameObject.FindGameObjectWithTag("UIScreen").GetComponent<Image>();
+        diagBox = GameObject.FindGameObjectWithTag("UI").GetComponent<DialogueBox>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttributes>();
     }
 
     private void OnExplosionsEnd()
     {
+        DialogueMessage msg = new DialogueMessage();
+        msg.Character = "Scientist";
+        msg.Message = "Carefully now, he's a hero.";
+        msg.Time = 3.0f;
+        diagBox.Message(msg);
         Destroy(player.gameObject);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
@@ -39,7 +54,10 @@ class TutorialBoss : BossTrigger
     protected override void OnBossFightEnd()
     {
         player.enableInput(false);
-        music.Stop();
+        for (int i = 0; i < music.Count; i++)
+        {
+            music[i].Stop();
+        }
         cam.Pan(endCamCenter.transform.position, panDuration);
         cam.zoom(0.85f);
         exploding = true;
@@ -50,13 +68,17 @@ class TutorialBoss : BossTrigger
         base.Update();
         if (exploding && cam.getMode() != CameraMode.Pan) //Wait for panning to end before explosions
         {
-            canvasImage.color = new Color(0, 0, 0, (Time.time - first_expl) / explode_duration);
             if (first_expl == 0.0f)//First explosion
             {
                 createExplosion();
                 first_expl = Time.time;
                 last_expl = first_expl;
             }else if (Time.time >= first_expl + explode_duration){
+                canvasImage.color = new Color(0, 0, 0, 1.0f);
+                if (particles[particles.Count - 1].GetComponent<AudioSource>().isPlaying)
+                {
+                    return; //Don't end until sounds stop
+                }
                 for (int i = 0; i < particles.Count; i++)
                 {
                     Destroy(particles[i]);
@@ -69,6 +91,7 @@ class TutorialBoss : BossTrigger
             {
                 createExplosion();
                 last_expl = Time.time;
+                canvasImage.color = new Color(0, 0, 0, (Time.time - first_expl) / explode_duration);
             }
         }
     }

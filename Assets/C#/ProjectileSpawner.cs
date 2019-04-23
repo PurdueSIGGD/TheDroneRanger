@@ -26,11 +26,17 @@ public class ProjectileSpawner : CooldownAbility
         {
             Camera cam = Camera.main;
             Vector2 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
-            Direction = (mouseWorldPos - SpawnPosition).normalized;
-
-            if (onlyForward && Vector2.Dot((Vector2)(transform.rotation * Vector2.right), Direction) < 0)
+            Direction = (mouseWorldPos - SpawnPosition);
+            if (Direction.magnitude <= 2.0f) //For close aiming
             {
-                Direction *= -1.0f;
+                Direction = transform.rotation * Vector2.right;
+            }else
+            {
+                Direction = Direction.normalized;
+                if (onlyForward && Vector2.Dot((Vector2)(transform.rotation * Vector2.right), Direction) < 0)
+                {
+                    Direction *= -1.0f;
+                }
             }
 
         }
