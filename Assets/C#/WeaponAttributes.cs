@@ -51,7 +51,7 @@ public class WeaponAttributes : MonoBehaviour {
     private int ammoCount = 0;
     private bool reloading = false;
 
-    protected WEAPONS type = 0;
+    public WEAPONS type = 0;
     private ProjectileSpawner projectileSpawner = null;
     private CooldownAbility reloadAbility = null;
     private AudioSource audioSource = null;
@@ -110,7 +110,7 @@ public class WeaponAttributes : MonoBehaviour {
         reloadAbility.cooldown = reloadDelay;
 
         ammoCount = clipSize;//Start full
-
+        
         myCollider = this.gameObject.GetComponent<Collider2D>();
         myRigid = this.gameObject.GetComponent<Rigidbody2D>();
         owner = this.gameObject.GetComponentInParent<Attributes>();
@@ -210,11 +210,6 @@ public class WeaponAttributes : MonoBehaviour {
     {
         clipSize = amount;
         ammoCount = Mathf.Min(clipSize, ammoCount);
-    }
-
-    public WEAPONS getWeaponType()
-    {
-        return type;
     }
 
     void OnDisable()

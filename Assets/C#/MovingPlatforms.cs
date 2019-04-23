@@ -10,10 +10,6 @@ public class MovingPlatforms : MonoBehaviour
 	public List<Coordinates> movePoints; //the points the platform will travel to
 	public int nextNodeIndex; //used for setplatform speed
 
-	private Vector3 lastPosition;
-
-	private Rigidbody2D rb2d;
-
 	[System.Serializable]
 	public class Coordinates : System.Object
 	{
@@ -48,9 +44,7 @@ public class MovingPlatforms : MonoBehaviour
 
 	void Start()
     {
-		rb2d = GetComponent<Rigidbody2D>();
 		SetPosition(movePoints[0], gameObject);
-		lastPosition = transform.position;
 		if (!loop)
 		{
 			StartCoroutine(MoveBackAndForth());
