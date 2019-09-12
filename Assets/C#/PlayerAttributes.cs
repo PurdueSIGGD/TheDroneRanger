@@ -21,7 +21,7 @@ public class PlayerAttributes : Attributes {
     public float invTime;
     public float hurtTime;
     private bool invincible;
-    private bool canInput = true;
+    private bool allowInput = true;
     private HighNoon highNoon = null;
     public static GameObject control;
     [SerializeField]
@@ -61,11 +61,16 @@ public class PlayerAttributes : Attributes {
 
     public void enableInput(bool enable)
     {
-        canInput = enable;
+        allowInput = enable;
         if (!enable && isHighNoon())
         {
             highNoon.endHighNoon();
         }
+    }
+
+    public bool canInput()
+    {
+        return allowInput;
     }
 
     private void iterateWeapon(bool forward)
@@ -108,7 +113,7 @@ public class PlayerAttributes : Attributes {
 
     public void Update()
     {
-        if (!activeWep || !canInput)
+        if (!activeWep || !allowInput)
         {
             return;
         }

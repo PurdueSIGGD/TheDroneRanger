@@ -10,6 +10,16 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Scenes/Tutorial");
     }
 
+    public void AllWeaponsButton()
+    {
+        SceneManager.LoadScene("Scenes/Tutorial_All_Weapons");
+        PlayerAttributes player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttributes>();
+        for (int i = 1; i < (int)WEAPONS.MAX_WEAPONS; i++)
+        {
+            player.giveWeapon((WEAPONS)i);
+        }
+    }
+
     public void NextScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
